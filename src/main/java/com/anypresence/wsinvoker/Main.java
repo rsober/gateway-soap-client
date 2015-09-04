@@ -35,7 +35,7 @@ public class Main {
 
 		ServerSocket server = null;
 		try {
-			server = new ServerSocket(11111);
+			server = new ServerSocket(19083);
 			while(true) {
 				Socket sock = server.accept();
 				//handleConnection(sock);
