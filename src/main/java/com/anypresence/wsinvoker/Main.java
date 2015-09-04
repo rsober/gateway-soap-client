@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URI;
@@ -32,10 +33,22 @@ import com.google.gson.Gson;
 public class Main {
 
 	public static void main(String[] args) {
-
+		
+		String host = null;
+		Integer port = null;
+		
+		if (args.length == 2) {
+			host = args[0];
+			port = Integer.parseInt(args[1]);
+		} else {
+			host = "localhost";
+			port = 19083;
+		}
+		
 		ServerSocket server = null;
 		try {
-			server = new ServerSocket(19083);
+			server = new ServerSocket();
+			server.bind(new InetSocketAddress(host, port));
 			while(true) {
 				Socket sock = server.accept();
 				//handleConnection(sock);
