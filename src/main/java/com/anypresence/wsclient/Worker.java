@@ -41,43 +41,67 @@ public class Worker implements Runnable {
 	
 	@Override
 	public void run() {
+		StringBuilder builder = new StringBuilder("");
+		
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
 			String line = null;
-			StringBuilder builder = new StringBuilder("");
 			while((line = reader.readLine()) != null) {
 				builder.append(line).append("\n");
 				if (builder.toString().endsWith("\n\n")) {
 					break;
 				}
 			}
-			String payload = builder.toString().trim();
-			
-			String response = processRequestPayload(payload);
-			
-			System.out.println("Writing");
-			//sock.getOutputStream().write(response.getBytes());
-			//sock.getOutputStream().flush();
-			//sock.close();
-			//sock.getOutputStream().close();
-			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
-			writer.write(response);
-			writer.close();
-			//sock.close();
-			System.out.println("Done");
-		} catch(IOException | SoapClientException e) {
-			// TODO
-			e.printStackTrace();
+		} catch(IOException e) {
+			// TODO - return error response
+			return;
 		} finally {
 			if (sock != null) {
 				try {
 					sock.close();
 				} catch(IOException e) {
-					
+					// Ignore
 				}
 			}
 		}
 		
+		String payload = builder.toString().trim();
+			
+		String response = null;
+		try {
+			response = processRequestPayload(payload);
+		} catch (SoapClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();	
+		}
+		
+		System.out.println("Writing");
+		
+		BufferedWriter writer = null;
+		try {
+			writer = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
+			writer.write(response);
+		} catch(IOException e) {
+			// TODO - return error response
+		} finally {
+			if (writer != null) {
+				try {
+					writer.close();
+				} catch(IOException e) {
+					// Ignore
+				}
+			}
+			
+			if (sock != null) {
+				try {
+					sock.close();
+				} catch(IOException e) {
+					// Ignore
+				}
+			}
+		}
+		
+		System.out.println("Done");
 	}
 	
 	@SuppressWarnings(RAWTYPES)
