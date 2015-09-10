@@ -1,4 +1,4 @@
-package com.anypresence.wsinvoker;
+package com.anypresence.wsclient;
 
 public class WssePasswordSecurityCredentials {
 

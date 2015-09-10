@@ -1,4 +1,4 @@
-package com.anypresence.wsinvoker;
+package com.anypresence.wsclient;
 
 import java.io.BufferedReader;
 import java.io.IOException;

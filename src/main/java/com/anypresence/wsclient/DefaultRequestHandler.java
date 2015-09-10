@@ -1,4 +1,4 @@
-package com.anypresence.wsinvoker;
+package com.anypresence.wsclient;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
