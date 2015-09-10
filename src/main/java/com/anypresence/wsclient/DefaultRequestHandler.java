@@ -2,6 +2,7 @@ package com.anypresence.wsclient;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 
@@ -17,7 +18,7 @@ public class DefaultRequestHandler extends RequestHandler {
 	}
 	
 	@Override
-	protected void handleImpl(OperationRequest req, Object requestInstance, Object responseInstance) throws Exception {
+	protected void handleImpl(OperationRequest req, Object requestInstance, Object responseInstance) throws SoapClientException {
 		Parameter[] parameters = operationMethod.getParameters();
 		Object[] parameterValues = new Object[parameters.length];
 		int idx = 0;
@@ -32,26 +33,44 @@ public class DefaultRequestHandler extends RequestHandler {
 				
 				String paramName = webParam.name();
 				String methodName = "get" + Character.toUpperCase(paramName.charAt(0)) + paramName.substring(1);
-				Method getter = requestInstance.getClass().getMethod(methodName);
-				parameterValues[idx++] = getter.invoke(requestInstance);
+				Method getter;
+				try {
+					getter = requestInstance.getClass().getMethod(methodName);
+				} catch (NoSuchMethodException | SecurityException e) {
+					throw new SoapClientException("Unable to get getter method " + methodName + " due to " + e.getClass().getSimpleName() + ": " + e.getMessage(), e);
+				}
+				try {
+					parameterValues[idx++] = getter.invoke(requestInstance);
+				} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+					throw new SoapClientException("Unable to invoke getter method " + methodName + " due to " + e.getClass().getSimpleName() + ": " + e.getMessage(), e);
+				}
 			}
 		}
 		
-		Object response = operationMethod.invoke(endpoint, parameterValues);
+		Object response;
+		try {
+			response = operationMethod.invoke(endpoint, parameterValues);
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			throw new SoapClientException("Unable to invoke operation due to " + e.getClass().getSimpleName() + ": " + e.getMessage(), e);
+		}
 		
 		Field[] fields = responseInstance.getClass().getDeclaredFields();
 		Field returnField = null;
 		for (Field field: fields) {
 			if (field.getType() == operationMethod.getReturnType()) {
 				field.setAccessible(true);
-				field.set(responseInstance, response);
+				try {
+					field.set(responseInstance, response);
+				} catch (IllegalArgumentException | IllegalAccessException e) {
+					throw new SoapClientException("Unable to invoke setter to hold response due to " + e.getClass().getSimpleName() + ": " + e.getMessage(), e);
+				}
 				returnField = field;
 				break;
 			}
 		}
 		
 		if (returnField == null) {
-			throw new RuntimeException("Unable to find field of type " + operationMethod.getReturnType() + " on response object " + responseInstance);
+			throw new SoapClientException("Unable to find field of type " + operationMethod.getReturnType() + " on response object " + responseInstance);
 		}
 	}
 

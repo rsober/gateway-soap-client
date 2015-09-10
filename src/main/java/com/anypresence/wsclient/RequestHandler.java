@@ -22,7 +22,7 @@ public abstract class RequestHandler {
 		this.endpoint = endpoint;
 	}
 	
-	public String handle(OperationRequest req) throws Exception {
+	public String handle(OperationRequest req) throws SoapClientException {
 		System.out.println("operationMethod: " + operationMethod);
 		Annotation[] requestWrappers = operationMethod.getAnnotationsByType(RequestWrapper.class);
 		Annotation[] responseWrappers = operationMethod.getAnnotationsByType(ResponseWrapper.class);
@@ -37,18 +37,33 @@ public abstract class RequestHandler {
 			
 		RequestWrapper requestWrapperAnnotation = (RequestWrapper)requestWrappers[0];
 		String requestWrapperClassName = requestWrapperAnnotation.className();
-		Class<?> requestWrapperClass = classLoader.loadClass(requestWrapperClassName);
+		Class<?> requestWrapperClass;
+		try {
+			requestWrapperClass = classLoader.loadClass(requestWrapperClassName);
+		} catch (ClassNotFoundException e) {
+			throw new SoapClientException("Unable to find request wrapper class " + requestWrapperClassName, e);
+		}
 		Object requestWrapper = gson.fromJson(req.getParams(), requestWrapperClass);		
 		
 		ResponseWrapper responseWrapperAnnotation = (ResponseWrapper)responseWrappers[0];
 		String responseClassName = responseWrapperAnnotation.className();
-		Class<?> responseClass = classLoader.loadClass(responseClassName);
-		Object responseInstance = responseClass.newInstance();
+		Class<?> responseClass;
+		try {
+			responseClass = classLoader.loadClass(responseClassName);
+		} catch (ClassNotFoundException e) {
+			throw new SoapClientException("Unable to find response class " + responseClassName, e);
+		}
+		Object responseInstance;
+		try {
+			responseInstance = responseClass.newInstance();
+		} catch (InstantiationException | IllegalAccessException e) {
+			throw new SoapClientException("Unable to instantiate class " + responseClassName + " due to " + e.getClass().getSimpleName() + ": " + e.getMessage(), e);
+		}
 		
 		handleImpl(req, requestWrapper, responseInstance);
 		
 		return gson.toJson(responseInstance);
 	}
 
-	protected abstract void handleImpl(OperationRequest req, Object requestInstance, Object responseInstance) throws Exception;
+	protected abstract void handleImpl(OperationRequest req, Object requestInstance, Object responseInstance) throws SoapClientException;
 }

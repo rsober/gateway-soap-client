@@ -8,11 +8,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.InetSocketAddress;
+import java.net.MalformedURLException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
@@ -74,6 +77,7 @@ public class Main {
 	
 	private static class Worker implements Runnable {
 
+		private static final String RAWTYPES = "rawtypes";
 		private Socket sock;
 		
 		public Worker(Socket sock) {
@@ -96,22 +100,17 @@ public class Main {
 				
 				String response = processRequestPayload(payload);
 				
-				if (response == null) {
-					// TODO ?
-					System.out.println("Error - TODO");
-				} else {
-					System.out.println("Writing");
-					//sock.getOutputStream().write(response.getBytes());
-					//sock.getOutputStream().flush();
-					//sock.close();
-					//sock.getOutputStream().close();
-					BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
-					writer.write(response);
-					writer.close();
-					//sock.close();
-					System.out.println("Done");
-				}
-			} catch(Exception e) {
+				System.out.println("Writing");
+				//sock.getOutputStream().write(response.getBytes());
+				//sock.getOutputStream().flush();
+				//sock.close();
+				//sock.getOutputStream().close();
+				BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
+				writer.write(response);
+				writer.close();
+				//sock.close();
+				System.out.println("Done");
+			} catch(IOException | SoapClientException e) {
 				// TODO
 				e.printStackTrace();
 			} finally {
@@ -126,7 +125,8 @@ public class Main {
 			
 		}
 		
-		private String processRequestPayload(String payload) throws Exception {
+		@SuppressWarnings(RAWTYPES)
+		private String processRequestPayload(String payload) throws SoapClientException {
 			System.out.println("payload: " + payload);
 			
 			// Deserialize the JSON
@@ -134,7 +134,19 @@ public class Main {
 			
 			OperationRequest req = gson.fromJson(payload,OperationRequest.class);
 			
-			URLClassLoader child = new URLClassLoader(new URL[] { new URI(req.getJarUrl()).toURL() }, this.getClass().getClassLoader());
+			URI jarURI;
+			try {
+				jarURI = new URI(req.getJarUrl());
+			} catch (URISyntaxException e) {
+				throw new SoapClientException("Invalid URI syntax for jar URL: " + req.getJarUrl(), e);
+			}
+			
+			URLClassLoader child;
+			try {
+				child = new URLClassLoader(new URL[] { jarURI.toURL() }, this.getClass().getClassLoader());
+			} catch (MalformedURLException e) {
+				throw new SoapClientException("Malformed jar URL for jar URI: " + jarURI.toString());
+			}
 			
 			WssePasswordSecurityCredentials creds = req.getWssePasswordCredentials();
 			SecurityHandler handler = null;
@@ -145,7 +157,12 @@ public class Main {
 			System.out.println("Received request: " + req);
 			
 			// Crack open the jar file and look for the service to instantiate
-			JarFile file = new JarFile(new File(new URI(req.getJarUrl())));
+			JarFile file;
+			try {
+				file = new JarFile(new File(jarURI));
+			} catch (IOException e) {
+				throw new SoapClientException("Unable to open file at " + req.getJarUrl() + " due to IOException: " + e.getMessage(), e);
+			}
 			
 			Enumeration<JarEntry> enumerator = file.entries();
 			
@@ -160,7 +177,13 @@ public class Main {
 					className = className.replaceAll("/", ".");
 					className = className.substring(0,  className.length() - 6);
 					
-					Class<?> clazzToLoad = child.loadClass(className);
+					Class<?> clazzToLoad;
+					try {
+						clazzToLoad = child.loadClass(className);
+					} catch (ClassNotFoundException e) {
+						throw new SoapClientException("Unable to load class for class name " + className + " due to ClassNotFoundException", e);
+					}
+					
 					for (Annotation anno : clazzToLoad.getDeclaredAnnotationsByType(WebServiceClient.class)) {
 						System.out.println(anno.toString());
 						if (anno.annotationType() == WebServiceClient.class) {
@@ -177,10 +200,7 @@ public class Main {
 			}
 			
 			if (serviceClass == null) {
-				// TODO
-				
-				System.out.println("No handler found");
-				return null;
+				throw new SoapClientException("Unable to locate service class");
 			}
 			
 			
@@ -208,11 +228,22 @@ public class Main {
 				return null;
 			}
 			
-			Object service = serviceClass.newInstance();
-			Object endpoint = endpointMethod.invoke(service, new Object[0]);
+			Object service;
+			try {
+				service = serviceClass.newInstance();
+			} catch (InstantiationException | IllegalAccessException e) {
+				throw new SoapClientException("Unable to instantiate class " + serviceClass.getName() + " due to " + e.getClass().getSimpleName() + ": " + e.getMessage(), e);
+			}
+			
+			Object endpoint;
+			try {
+				endpoint = endpointMethod.invoke(service, new Object[0]);
+			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+				throw new SoapClientException("Unable to invoke method " + endpointMethod.getName() + " due to " + e.getClass().getSimpleName() + ": " + e.getMessage(), e);
+			}
 			
 		    Binding binding = ((BindingProvider) endpoint).getBinding();
-		    List<Handler> handlerList = binding.getHandlerChain();
+			List<Handler> handlerList = binding.getHandlerChain();
 		    if (handlerList == null) {
 		      handlerList = new ArrayList<Handler>();
 		    }

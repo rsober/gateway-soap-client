@@ -1,6 +1,7 @@
 package com.anypresence.wsclient;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.HashMap;
@@ -19,7 +20,7 @@ public class VoidRequestHandler extends RequestHandler {
 		super(classLoader, gson, operationMethod, endpoint);
 	}
 	
-	protected void handleImpl(OperationRequest req, Object requestInstance, Object responseInstance) throws Exception {
+	protected void handleImpl(OperationRequest req, Object requestInstance, Object responseInstance) throws SoapClientException {
 		Parameter[] parameters = operationMethod.getParameters();
 		Object[] parameterValues = new Object[parameters.length];
 		Map<String, Holder<?>> resultHolders = new HashMap<String, Holder<?>>();
@@ -30,8 +31,18 @@ public class VoidRequestHandler extends RequestHandler {
 				if (webParam.mode() == Mode.IN) {
 					String paramName = webParam.name();
 					String methodName = "get" + Character.toUpperCase(paramName.charAt(0)) + paramName.substring(1);
-					Method getter = requestInstance.getClass().getMethod(methodName);
-					parameterValues[idx++] = getter.invoke(requestInstance);
+					Method getter;
+					try {
+						getter = requestInstance.getClass().getMethod(methodName);
+					} catch (NoSuchMethodException | SecurityException e) {
+						throw new SoapClientException("Encountered exception attempting to retrieve Method object for method " + methodName + " due to " + e.getClass().getSimpleName() + ": " + e.getMessage(), e);
+					}
+					
+					try {
+						parameterValues[idx++] = getter.invoke(requestInstance);
+					} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+						throw new SoapClientException("Unable to successfully invoke method " + methodName + " on object due to " + e.getClass().getSimpleName() + ": " + e.getMessage(), e);
+					}
 				} else if (webParam.mode() == Mode.OUT) {
 					System.out.println("Found out param! " + webParam.name());
 					if (parameter.getType() == Holder.class) {
@@ -49,7 +60,11 @@ public class VoidRequestHandler extends RequestHandler {
 			}
 		}
 		System.out.println("Invoking");
-		operationMethod.invoke(endpoint, parameterValues);
+		try {
+			operationMethod.invoke(endpoint, parameterValues);
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			throw new SoapClientException("Unable to successfully invoke operation due to " + e.getClass().getSimpleName() + ": " + e.getMessage());
+		}
 		System.out.println("Done invoking");
 		
 		for (Map.Entry<String, Holder<?>> resultHolder: resultHolders.entrySet()) {
@@ -64,16 +79,29 @@ public class VoidRequestHandler extends RequestHandler {
 				}
 			}
 			if (setter == null) {
-				Field field = responseInstance.getClass().getDeclaredField(resultHolder.getKey());
+				Field field;
+				try {
+					field = responseInstance.getClass().getDeclaredField(resultHolder.getKey());
+				} catch (NoSuchFieldException | SecurityException e) {
+					throw new SoapClientException("Unable to successfully get field " + resultHolder.getKey() + " due to " + e.getClass().getSimpleName() + ": " + e.getMessage(), e);
+				}
 				if (field.getType() == List.class) {
 					field.setAccessible(true);
-					field.set(responseInstance, resultHolder.getValue().value);
+					try {
+						field.set(responseInstance, resultHolder.getValue().value);
+					} catch (IllegalArgumentException | IllegalAccessException e) {
+						throw new SoapClientException("Unable to inoke setter on result holder due to " + e.getClass().getSimpleName() + ": " + e.getMessage(), e);
+					}
 				} else {
 					// TODO ?
 				}
 			} else {
 				System.out.println("Invoking setter");
-				setter.invoke(responseInstance, resultHolder.getValue().value);
+				try {
+					setter.invoke(responseInstance, resultHolder.getValue().value);
+				} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+					throw new SoapClientException("Unable to inoke setter on result holder due to " + e.getClass().getSimpleName() + ": " + e.getMessage(), e);
+				}
 			}
 		}
 	}
