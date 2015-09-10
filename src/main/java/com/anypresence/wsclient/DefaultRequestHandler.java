@@ -28,7 +28,7 @@ public class DefaultRequestHandler extends RequestHandler {
 			for (Annotation annotation: webParams) {
 				WebParam webParam = (WebParam)annotation;
 				if (webParam.mode() != Mode.IN) {
-					throw new RuntimeException("Expected only Mode.IN parameters");
+					throw new SoapClientException("Expected only Mode.IN parameters");
 				}
 				
 				String paramName = webParam.name();

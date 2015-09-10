@@ -177,10 +177,7 @@ public class Worker implements Runnable {
 		}
 		
 		if (endpointMethod == null) {
-			// TODO
-			
-			System.out.println("No endpoint found");
-			return null;
+			throw new SoapClientException("Unable to find endpoint");
 		}
 		
 		Object service;
@@ -225,10 +222,7 @@ public class Worker implements Runnable {
 		}
 		
 		if (operationMethod == null) {
-			// TODO
-			
-			System.out.println("No operation found");
-			return null;
+			throw new SoapClientException("Unable to find operation to invoke");
 		}
 		
 		return getRequestResponseHandler(child, gson, operationMethod, endpoint).handle(req);

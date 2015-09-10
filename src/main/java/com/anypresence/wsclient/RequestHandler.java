@@ -28,11 +28,11 @@ public abstract class RequestHandler {
 		Annotation[] responseWrappers = operationMethod.getAnnotationsByType(ResponseWrapper.class);
 		
 		if (requestWrappers.length != 1) {
-			throw new RuntimeException("Expected to find one and only one @RequestWrapper annotation on operation method, but instead found " + requestWrappers.length);
+			throw new SoapClientException("Expected to find one and only one @RequestWrapper annotation on operation method, but instead found " + requestWrappers.length);
 		}
 		
 		if (responseWrappers.length != 1) {
-			throw new RuntimeException("Expected to find one and only one @ResponseWrapper annotation on operation method, but instead found " + responseWrappers.length);
+			throw new SoapClientException("Expected to find one and only one @ResponseWrapper annotation on operation method, but instead found " + responseWrappers.length);
 		}
 			
 		RequestWrapper requestWrapperAnnotation = (RequestWrapper)requestWrappers[0];

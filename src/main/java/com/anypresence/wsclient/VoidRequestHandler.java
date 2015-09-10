@@ -50,13 +50,13 @@ public class VoidRequestHandler extends RequestHandler {
 						parameterValues[idx++] = holder;
 						resultHolders.put(webParam.name(), holder);
 					} else {
-						// TODO
+						throw new SoapClientException("Found a WebParam with Mode.OUT that was not of type Holder");
 					}
 				} else {
-					// TODO
+					throw new SoapClientException("Found a WebParam that was not Mode.IN or Mode.OUT");
 				}
 			} else {
-				// TODO (huh?)
+				throw new SoapClientException("Found a parameter that was not annotated by @WebParam");
 			}
 		}
 		System.out.println("Invoking");
@@ -93,7 +93,7 @@ public class VoidRequestHandler extends RequestHandler {
 						throw new SoapClientException("Unable to inoke setter on result holder due to " + e.getClass().getSimpleName() + ": " + e.getMessage(), e);
 					}
 				} else {
-					// TODO ?
+					throw new SoapClientException("Field " + resultHolder.getKey() + " was not of type List");
 				}
 			} else {
 				System.out.println("Invoking setter");
