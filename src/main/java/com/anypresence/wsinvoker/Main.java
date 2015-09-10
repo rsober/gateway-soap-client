@@ -32,6 +32,9 @@ import com.google.gson.Gson;
 
 public class Main {
 
+	private static final String DEFAULT_HOST = "localhost";
+	private static final int DEFAULT_PORT = 19083;
+	
 	public static void main(String[] args) {
 		
 		String host = null;
@@ -41,8 +44,8 @@ public class Main {
 			host = args[0];
 			port = Integer.parseInt(args[1]);
 		} else {
-			host = "localhost";
-			port = 19083;
+			host = DEFAULT_HOST;
+			port = DEFAULT_PORT;
 		}
 		
 		ServerSocket server = null;
@@ -51,7 +54,6 @@ public class Main {
 			server.bind(new InetSocketAddress(host, port));
 			while(true) {
 				Socket sock = server.accept();
-				//handleConnection(sock);
 				new Thread(new Worker(sock)).run();
 			}
 		} catch(IOException e) {
