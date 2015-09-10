@@ -84,148 +84,167 @@ public class Worker implements Runnable {
 	private String processRequestPayload(String payload) throws SoapClientException {
 		System.out.println("payload: " + payload);
 		
-		// Deserialize the JSON
-		Gson gson = new Gson();
+		URLClassLoader child = null;
+		JarFile file = null;
 		
-		OperationRequest req = gson.fromJson(payload,OperationRequest.class);
-		
-		URI jarURI;
 		try {
-			jarURI = new URI(req.getJarUrl());
-		} catch (URISyntaxException e) {
-			throw new SoapClientException("Invalid URI syntax for jar URL: " + req.getJarUrl(), e);
-		}
-		
-		URLClassLoader child;
-		try {
-			child = new URLClassLoader(new URL[] { jarURI.toURL() }, this.getClass().getClassLoader());
-		} catch (MalformedURLException e) {
-			throw new SoapClientException("Malformed jar URL for jar URI: " + jarURI.toString());
-		}
-		
-		WssePasswordSecurityCredentials creds = req.getWssePasswordCredentials();
-		SecurityHandler handler = null;
-		if (creds != null) {
-			System.out.println("Creds::: " + creds);
-			handler = new SecurityHandler(creds.getUsername(), creds.getPassword());
-		}
-		System.out.println("Received request: " + req);
-		
-		// Crack open the jar file and look for the service to instantiate
-		JarFile file;
-		try {
-			file = new JarFile(new File(jarURI));
-		} catch (IOException e) {
-			throw new SoapClientException("Unable to open file at " + req.getJarUrl() + " due to IOException: " + e.getMessage(), e);
-		}
-		
-		Enumeration<JarEntry> enumerator = file.entries();
-		
-		Class<?> serviceClass = null;
-		
-		outer:
-		while (enumerator.hasMoreElements()) {
-			JarEntry entry = enumerator.nextElement();
-			String className = entry.getName();
-			System.out.println("Entry " + className);
-			if (className.endsWith(".class")) {
-				className = className.replaceAll("/", ".");
-				className = className.substring(0,  className.length() - 6);
-				
-				Class<?> clazzToLoad;
-				try {
-					clazzToLoad = child.loadClass(className);
-				} catch (ClassNotFoundException e) {
-					throw new SoapClientException("Unable to load class for class name " + className + " due to ClassNotFoundException", e);
-				}
-				
-				for (Annotation anno : clazzToLoad.getDeclaredAnnotationsByType(WebServiceClient.class)) {
-					System.out.println(anno.toString());
-					if (anno.annotationType() == WebServiceClient.class) {
-						WebServiceClient cl = (WebServiceClient)anno;
-						if (cl.name().equals(req.getServiceName())) {
-							// found the service!
-							System.out.println("We've found our service!  " + clazzToLoad);
-							serviceClass = clazzToLoad;
-							break outer;
+			// Deserialize the JSON
+			Gson gson = new Gson();
+			
+			OperationRequest req = gson.fromJson(payload,OperationRequest.class);
+			
+			URI jarURI;
+			try {
+				jarURI = new URI(req.getJarUrl());
+			} catch (URISyntaxException e) {
+				throw new SoapClientException("Invalid URI syntax for jar URL: " + req.getJarUrl(), e);
+			}
+			
+			try {
+				child = new URLClassLoader(new URL[] { jarURI.toURL() }, this.getClass().getClassLoader());
+			} catch (MalformedURLException e) {
+				throw new SoapClientException("Malformed jar URL for jar URI: " + jarURI.toString());
+			}
+			
+			WssePasswordSecurityCredentials creds = req.getWssePasswordCredentials();
+			SecurityHandler handler = null;
+			if (creds != null) {
+				System.out.println("Creds::: " + creds);
+				handler = new SecurityHandler(creds.getUsername(), creds.getPassword());
+			}
+			System.out.println("Received request: " + req);
+			
+			// Crack open the jar file and look for the service to instantiate
+			
+			try {
+				file = new JarFile(new File(jarURI));
+			} catch (IOException e) {
+				throw new SoapClientException("Unable to open file at " + req.getJarUrl() + " due to IOException: " + e.getMessage(), e);
+			}
+			
+			Enumeration<JarEntry> enumerator = file.entries();
+			
+			Class<?> serviceClass = null;
+			
+			outer:
+			while (enumerator.hasMoreElements()) {
+				JarEntry entry = enumerator.nextElement();
+				String className = entry.getName();
+				System.out.println("Entry " + className);
+				if (className.endsWith(".class")) {
+					className = className.replaceAll("/", ".");
+					className = className.substring(0,  className.length() - 6);
+					
+					Class<?> clazzToLoad;
+					try {
+						clazzToLoad = child.loadClass(className);
+					} catch (ClassNotFoundException e) {
+						throw new SoapClientException("Unable to load class for class name " + className + " due to ClassNotFoundException", e);
+					}
+					
+					for (Annotation anno : clazzToLoad.getDeclaredAnnotationsByType(WebServiceClient.class)) {
+						System.out.println(anno.toString());
+						if (anno.annotationType() == WebServiceClient.class) {
+							WebServiceClient cl = (WebServiceClient)anno;
+							if (cl.name().equals(req.getServiceName())) {
+								// found the service!
+								System.out.println("We've found our service!  " + clazzToLoad);
+								serviceClass = clazzToLoad;
+								break outer;
+							}
 						}
 					}
 				}
 			}
-		}
-		
-		if (serviceClass == null) {
-			throw new SoapClientException("Unable to locate service class");
-		}
-		
-		
-		Method[] methods = serviceClass.getMethods();
-		Method endpointMethod = null;
-		outer:
-		for (Method method: methods) {
-			if (method.getParameterCount() > 0) {
-				continue;
+			
+			if (serviceClass == null) {
+				throw new SoapClientException("Unable to locate service class");
 			}
-			Annotation[] annos = method.getAnnotationsByType(WebEndpoint.class);
-			for (Annotation anno: annos) {
-				WebEndpoint we = (WebEndpoint)anno;
-				if (we.name().equals(req.getEndpointName())) {
-					endpointMethod = method;
-					break outer;
+			
+			
+			Method[] methods = serviceClass.getMethods();
+			Method endpointMethod = null;
+			outer:
+			for (Method method: methods) {
+				if (method.getParameterCount() > 0) {
+					continue;
+				}
+				Annotation[] annos = method.getAnnotationsByType(WebEndpoint.class);
+				for (Annotation anno: annos) {
+					WebEndpoint we = (WebEndpoint)anno;
+					if (we.name().equals(req.getEndpointName())) {
+						endpointMethod = method;
+						break outer;
+					}
+				}
+			}
+			
+			if (endpointMethod == null) {
+				throw new SoapClientException("Unable to find endpoint");
+			}
+			
+			Object service;
+			try {
+				service = serviceClass.newInstance();
+			} catch (InstantiationException | IllegalAccessException e) {
+				throw new SoapClientException("Unable to instantiate class " + serviceClass.getName() + " due to " + e.getClass().getSimpleName() + ": " + e.getMessage(), e);
+			}
+			
+			Object endpoint;
+			try {
+				endpoint = endpointMethod.invoke(service, new Object[0]);
+			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+				throw new SoapClientException("Unable to invoke method " + endpointMethod.getName() + " due to " + e.getClass().getSimpleName() + ": " + e.getMessage(), e);
+			}
+			
+		    Binding binding = ((BindingProvider) endpoint).getBinding();
+			List<Handler> handlerList = binding.getHandlerChain();
+		    if (handlerList == null) {
+		      handlerList = new ArrayList<Handler>();
+		    }
+	
+		    if (handler != null) {
+		    	handlerList.add(handler);
+		    }
+		    
+		    binding.setHandlerChain(handlerList);
+			
+			Class<?> returnType = endpointMethod.getReturnType();
+			
+			Method operationMethod = null;
+			Method[] serviceMethods = returnType.getMethods();
+			outer:
+			for (Method method: serviceMethods) {
+				for (Annotation anno : method.getAnnotationsByType(WebMethod.class)) {
+					WebMethod wm = (WebMethod)anno;
+					if ((req.getActionName() != null && req.getActionName().equals(wm.action())) || (req.getOperationName() != null && req.getOperationName().equals(wm.operationName()))) {
+						operationMethod = method;
+						break outer;
+					}
+				}
+			}
+			
+			if (operationMethod == null) {
+				throw new SoapClientException("Unable to find operation to invoke");
+			}
+			
+			return getRequestResponseHandler(child, gson, operationMethod, endpoint).handle(req);
+		} finally {
+			if (file != null) {
+				try {
+					file.close();
+				} catch(IOException e) {
+					// Ignore
+				}
+			}
+			if (child != null) {
+				try {
+					child.close();
+				} catch(IOException e) {
+					// Ignore
 				}
 			}
 		}
-		
-		if (endpointMethod == null) {
-			throw new SoapClientException("Unable to find endpoint");
-		}
-		
-		Object service;
-		try {
-			service = serviceClass.newInstance();
-		} catch (InstantiationException | IllegalAccessException e) {
-			throw new SoapClientException("Unable to instantiate class " + serviceClass.getName() + " due to " + e.getClass().getSimpleName() + ": " + e.getMessage(), e);
-		}
-		
-		Object endpoint;
-		try {
-			endpoint = endpointMethod.invoke(service, new Object[0]);
-		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-			throw new SoapClientException("Unable to invoke method " + endpointMethod.getName() + " due to " + e.getClass().getSimpleName() + ": " + e.getMessage(), e);
-		}
-		
-	    Binding binding = ((BindingProvider) endpoint).getBinding();
-		List<Handler> handlerList = binding.getHandlerChain();
-	    if (handlerList == null) {
-	      handlerList = new ArrayList<Handler>();
-	    }
-
-	    if (handler != null) {
-	    	handlerList.add(handler);
-	    }
-	    
-	    binding.setHandlerChain(handlerList);
-		
-		Class<?> returnType = endpointMethod.getReturnType();
-		
-		Method operationMethod = null;
-		Method[] serviceMethods = returnType.getMethods();
-		outer:
-		for (Method method: serviceMethods) {
-			for (Annotation anno : method.getAnnotationsByType(WebMethod.class)) {
-				WebMethod wm = (WebMethod)anno;
-				if ((req.getActionName() != null && req.getActionName().equals(wm.action())) || (req.getOperationName() != null && req.getOperationName().equals(wm.operationName()))) {
-					operationMethod = method;
-					break outer;
-				}
-			}
-		}
-		
-		if (operationMethod == null) {
-			throw new SoapClientException("Unable to find operation to invoke");
-		}
-		
-		return getRequestResponseHandler(child, gson, operationMethod, endpoint).handle(req);
 	}
 	
 	private static RequestHandler getRequestResponseHandler(ClassLoader loader, Gson gson, Method endpointMethod, Object endpoint) {
