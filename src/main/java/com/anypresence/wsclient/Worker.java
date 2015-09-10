@@ -42,19 +42,50 @@ public class Worker implements Runnable {
 	@Override
 	public void run() {
 		StringBuilder builder = new StringBuilder("");
-		
 		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-			String line = null;
-			while((line = reader.readLine()) != null) {
-				builder.append(line).append("\n");
-				if (builder.toString().endsWith("\n\n")) {
-					break;
+			
+			try {
+				BufferedReader reader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+				String line = null;
+				while((line = reader.readLine()) != null) {
+					builder.append(line).append("\n");
+					if (builder.toString().endsWith("\n\n")) {
+						break;
+					}
+				}
+			} catch(IOException e) {
+				// TODO - return error response
+				return;
+			} 
+			
+			String payload = builder.toString().trim();
+				
+			String response = null;
+			try {
+				response = processRequestPayload(payload);
+			} catch (SoapClientException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();	
+			}
+			
+			System.out.println("Writing");
+			
+			BufferedWriter writer = null;
+			try {
+				writer = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
+				writer.write(response);
+				
+			} catch(IOException e) {
+				// TODO - return error response
+			} finally {
+				if (writer != null) {
+					try {
+						writer.close();
+					} catch(IOException e) {
+						// Ignore
+					}
 				}
 			}
-		} catch(IOException e) {
-			// TODO - return error response
-			return;
 		} finally {
 			if (sock != null) {
 				try {
@@ -64,43 +95,6 @@ public class Worker implements Runnable {
 				}
 			}
 		}
-		
-		String payload = builder.toString().trim();
-			
-		String response = null;
-		try {
-			response = processRequestPayload(payload);
-		} catch (SoapClientException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();	
-		}
-		
-		System.out.println("Writing");
-		
-		BufferedWriter writer = null;
-		try {
-			writer = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
-			writer.write(response);
-		} catch(IOException e) {
-			// TODO - return error response
-		} finally {
-			if (writer != null) {
-				try {
-					writer.close();
-				} catch(IOException e) {
-					// Ignore
-				}
-			}
-			
-			if (sock != null) {
-				try {
-					sock.close();
-				} catch(IOException e) {
-					// Ignore
-				}
-			}
-		}
-		
 		System.out.println("Done");
 	}
 	
