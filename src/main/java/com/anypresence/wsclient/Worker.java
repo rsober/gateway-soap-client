@@ -68,7 +68,7 @@ public class Worker implements Runnable {
 				e.printStackTrace();	
 			}
 			
-			System.out.println("Writing");
+			Log.debug("Writing");
 			
 			BufferedWriter writer = null;
 			try {
@@ -95,12 +95,12 @@ public class Worker implements Runnable {
 				}
 			}
 		}
-		System.out.println("Done");
+		Log.debug("Done");
 	}
 	
 	@SuppressWarnings(RAWTYPES)
 	private String processRequestPayload(String payload) throws SoapClientException {
-		System.out.println("payload: " + payload);
+		Log.debug("payload: " + payload);
 		
 		URLClassLoader child = null;
 		JarFile file = null;
@@ -127,10 +127,10 @@ public class Worker implements Runnable {
 			WssePasswordSecurityCredentials creds = req.getWssePasswordCredentials();
 			SecurityHandler handler = null;
 			if (creds != null) {
-				System.out.println("Creds::: " + creds);
+				Log.debug("Creds::: " + creds);
 				handler = new SecurityHandler(creds.getUsername(), creds.getPassword());
 			}
-			System.out.println("Received request: " + req);
+			Log.debug("Received request: " + req);
 			
 			// Crack open the jar file and look for the service to instantiate
 			
@@ -148,7 +148,7 @@ public class Worker implements Runnable {
 			while (enumerator.hasMoreElements()) {
 				JarEntry entry = enumerator.nextElement();
 				String className = entry.getName();
-				System.out.println("Entry " + className);
+				Log.debug("Entry " + className);
 				if (className.endsWith(".class")) {
 					className = className.replaceAll("/", ".");
 					className = className.substring(0,  className.length() - 6);
@@ -161,12 +161,12 @@ public class Worker implements Runnable {
 					}
 					
 					for (Annotation anno : clazzToLoad.getDeclaredAnnotationsByType(WebServiceClient.class)) {
-						System.out.println(anno.toString());
+						Log.debug(anno.toString());
 						if (anno.annotationType() == WebServiceClient.class) {
 							WebServiceClient cl = (WebServiceClient)anno;
 							if (cl.name().equals(req.getServiceName())) {
 								// found the service!
-								System.out.println("We've found our service!  " + clazzToLoad);
+								Log.debug("We've found our service!  " + clazzToLoad);
 								serviceClass = clazzToLoad;
 								break outer;
 							}

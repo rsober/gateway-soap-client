@@ -23,7 +23,7 @@ public abstract class RequestHandler {
 	}
 	
 	public String handle(OperationRequest req) throws SoapClientException {
-		System.out.println("operationMethod: " + operationMethod);
+		Log.debug("operationMethod: " + operationMethod);
 		Annotation[] requestWrappers = operationMethod.getAnnotationsByType(RequestWrapper.class);
 		Annotation[] responseWrappers = operationMethod.getAnnotationsByType(ResponseWrapper.class);
 		

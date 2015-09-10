@@ -44,7 +44,7 @@ public class VoidRequestHandler extends RequestHandler {
 						throw new SoapClientException("Unable to successfully invoke method " + methodName + " on object due to " + e.getClass().getSimpleName() + ": " + e.getMessage(), e);
 					}
 				} else if (webParam.mode() == Mode.OUT) {
-					System.out.println("Found out param! " + webParam.name());
+					Log.debug("Found out param! " + webParam.name());
 					if (parameter.getType() == Holder.class) {
 						Holder<Object> holder = new Holder<Object>();
 						parameterValues[idx++] = holder;
@@ -59,17 +59,17 @@ public class VoidRequestHandler extends RequestHandler {
 				throw new SoapClientException("Found a parameter that was not annotated by @WebParam");
 			}
 		}
-		System.out.println("Invoking");
+		Log.debug("Invoking");
 		try {
 			operationMethod.invoke(endpoint, parameterValues);
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			throw new SoapClientException("Unable to successfully invoke operation due to " + e.getClass().getSimpleName() + ": " + e.getMessage());
 		}
-		System.out.println("Done invoking");
+		Log.debug("Done invoking");
 		
 		for (Map.Entry<String, Holder<?>> resultHolder: resultHolders.entrySet()) {
 			String setterName = "set" + Character.toUpperCase(resultHolder.getKey().charAt(0)) + resultHolder.getKey().substring(1);
-			System.out.println("setterName: " + setterName);
+			Log.debug("setterName: " + setterName);
 			Method[] meths = responseInstance.getClass().getMethods();
 			Method setter = null;
 			for (Method meth: meths) {
@@ -96,7 +96,7 @@ public class VoidRequestHandler extends RequestHandler {
 					throw new SoapClientException("Field " + resultHolder.getKey() + " was not of type List");
 				}
 			} else {
-				System.out.println("Invoking setter");
+				Log.debug("Invoking setter");
 				try {
 					setter.invoke(responseInstance, resultHolder.getValue().value);
 				} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {

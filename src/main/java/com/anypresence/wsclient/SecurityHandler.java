@@ -34,12 +34,12 @@ public class SecurityHandler implements SOAPHandler<SOAPMessageContext> {
 	}
 
 	public boolean handleMessage(SOAPMessageContext messageContext) {
-		System.out.println("HANDLE");
+		Log.debug("Entered method handleMessage in SecurityHandler");
 		Boolean outboundProperty = (Boolean) messageContext.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
 
 		if (outboundProperty.booleanValue()) {
-			System.out.println("\nOutbound message:");
-			System.out.println("** Request:");
+			Log.debug("\nOutbound message:");
+			Log.debug("** Request:");
 			try {
 				SOAPMessage message = messageContext.getMessage();
 				SOAPEnvelope envelope = message.getSOAPPart().getEnvelope();
@@ -62,19 +62,23 @@ public class SecurityHandler implements SOAPHandler<SOAPMessageContext> {
 						"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText");
 				password.addTextNode(this.password);
 
-				messageContext.getMessage().writeTo(System.out);
-				System.out.println();
+				if (Log.isDebugEnabled()) {
+					messageContext.getMessage().writeTo(System.out);
+				}
+				Log.debug("");
 			} catch (SOAPException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		} else {
-			System.out.println("\nInbound message:");
-			System.out.println("** Response:");
+			Log.debug("\nInbound message:");
+			Log.debug("** Response:");
 			try {
-				messageContext.getMessage().writeTo(System.out);
-				System.out.println();
+				if (Log.isDebugEnabled()) {
+					messageContext.getMessage().writeTo(System.out);
+				}
+				Log.debug("");
 			} catch (SOAPException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -86,7 +90,7 @@ public class SecurityHandler implements SOAPHandler<SOAPMessageContext> {
 	}
 
 	public boolean handleFault(SOAPMessageContext messageContext) {
-		System.out.println("RECEIVED FAULT");
+		Log.debug("RECEIVED FAULT");
 		return true;
 	}
 
