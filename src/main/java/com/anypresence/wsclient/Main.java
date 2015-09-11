@@ -1,6 +1,5 @@
 package com.anypresence.wsclient;
 
-
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
@@ -13,14 +12,14 @@ public class Main implements Runnable {
 
 	private static final int EXIT_CODE_BAD_ARGS = 1;
 	private static final int EXIT_CODE_UNABLE_TO_BIND = 2;
-	
+
 	private static final String DEFAULT_HOST = "localhost";
 	private static final int DEFAULT_PORT = 19083;
-	
+
 	private String host;
 	private int port;
 	private ExecutorService pool;
-	
+
 	public Main(String host, int port, int workerPoolSize) {
 		this.host = host;
 		this.port = port;
@@ -28,21 +27,22 @@ public class Main implements Runnable {
 			this.pool = Executors.newFixedThreadPool(workerPoolSize);
 		}
 	}
-	
+
 	public void run() {
 		ServerSocket server = null;
-		
+
 		try {
 			server = new ServerSocket();
 			server.bind(new InetSocketAddress(host, port));
-		} catch(IOException e) {
-			Log.info("Unable to bind to socket due to IOException: " + e.getMessage() + ".  Exiting with code " + EXIT_CODE_UNABLE_TO_BIND);
+		} catch (IOException e) {
+			Log.info("Unable to bind to socket due to IOException: " + e.getMessage() + ".  Exiting with code "
+					+ EXIT_CODE_UNABLE_TO_BIND);
 			if (Log.isDebugEnabled()) {
 				e.printStackTrace(System.out);
 			}
 			System.exit(EXIT_CODE_UNABLE_TO_BIND);
 		}
-		
+
 		final ServerSocket finalServer = server;
 		Thread hook = new Thread(() -> {
 			if (finalServer != null) {
@@ -52,32 +52,32 @@ public class Main implements Runnable {
 					// Ignore - we're shutting down anyway
 				}
 			}
-			
+
 			if (pool == null) {
 				return;
 			}
-			
+
 			pool.shutdown();
-			
+
 			try {
-			    // Wait a while for existing tasks to terminate
-			    if (!pool.awaitTermination(60, TimeUnit.SECONDS)) {
-			    	pool.shutdownNow(); // Cancel currently executing tasks
-			    	// Wait a while for tasks to respond to being cancelled
-			    	if (!pool.awaitTermination(60, TimeUnit.SECONDS)) {
-			    		Log.info("Pool did not terminate");
-			    	}
-			    }
+				// Wait a while for existing tasks to terminate
+				if (!pool.awaitTermination(60, TimeUnit.SECONDS)) {
+					pool.shutdownNow(); // Cancel currently executing tasks
+					// Wait a while for tasks to respond to being cancelled
+					if (!pool.awaitTermination(60, TimeUnit.SECONDS)) {
+						Log.info("Pool did not terminate");
+					}
+				}
 			} catch (InterruptedException ie) {
 				// (Re-)Cancel if current thread also interrupted
-			    pool.shutdownNow();
-			    // Preserve interrupt status
-			    Thread.currentThread().interrupt();
+				pool.shutdownNow();
+				// Preserve interrupt status
+				Thread.currentThread().interrupt();
 			}
 		});
 		Runtime.getRuntime().addShutdownHook(hook);
-		
-		while(true) {
+
+		while (true) {
 			Socket sock;
 			try {
 				sock = finalServer.accept();
@@ -96,13 +96,13 @@ public class Main implements Runnable {
 			}
 		}
 	}
-	
+
 	public static void main(String[] args) {
-		
+
 		String host = null;
 		Integer port = null;
 		Integer workerPoolSize = null;
-		
+
 		if (args.length == 3) {
 			host = args[0];
 			port = Integer.parseInt(args[1]);
@@ -115,7 +115,7 @@ public class Main implements Runnable {
 			System.out.println("Expected either 0 arguments or 3.  Exiting with code " + EXIT_CODE_BAD_ARGS);
 			System.exit(EXIT_CODE_BAD_ARGS);
 		}
-		
+
 		Main main = new Main(host, port, workerPoolSize);
 		main.run();
 	}

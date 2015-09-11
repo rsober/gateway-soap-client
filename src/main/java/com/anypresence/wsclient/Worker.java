@@ -43,6 +43,11 @@ public class Worker implements Runnable {
 	public void run() {
 		StringBuilder builder = new StringBuilder("");
 		withSocket(sock, () ->	{
+			Gson gson = new Gson();
+			
+			boolean proceed = true;
+			String readError = null;
+			
 			try {
 				BufferedReader reader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
 				String line = null;
@@ -54,26 +59,48 @@ public class Worker implements Runnable {
 				}
 			} catch(IOException e) {
 				// TODO - return error response
-				return;
-			} 
-			
-			String payload = builder.toString().trim();
-				
-			String response = null;
-			try {
-				response = processRequestPayload(payload);
-			} catch (SoapClientException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();	
+				Log.info("Unable to fully read request due to IOException: " + e.getMessage());
+				if (Log.isDebugEnabled()) {
+					e.printStackTrace(System.out);
+				}
+				proceed = false;
+				readError = e.getMessage();
 			}
 			
-			Log.debug("Writing");
+			String response = null;
+			if (proceed) {
+				String payload = builder.toString().trim();
+				
+				try {
+					response = processRequestPayload(gson, payload);
+				} catch (SoapClientException e) {
+					Log.info("Encountered SoapClientException while trying to process request: " + e.getMessage());
+					if (Log.isDebugEnabled()) {
+						e.printStackTrace(System.out);
+					}
+					response = gson.toJson(OperationResponse.newFailedOperationResponse(e.getMessage()));
+				} catch(Exception e) {
+					Log.info("Encountered " + e.getClass().getSimpleName() + " while trying to process request: " + e.getMessage());
+					if (Log.isDebugEnabled()) {
+						e.printStackTrace(System.out);
+					}
+					response = gson.toJson(OperationResponse.newFailedOperationResponse(e.getMessage()));
+				}
+				
+				Log.debug("Writing");
+			} else {
+				response = gson.toJson(OperationResponse.newFailedOperationResponse(readError));
+			}
 			
 			try(BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()))) {
 				writer.write(response);
 			} catch(IOException e) {
 				// TODO - return error response
-			}
+				Log.info("Unable to fully write response due to IOException: " + e.getMessage());
+				if (Log.isDebugEnabled()) {
+					e.printStackTrace(System.out);
+				}
+			} 
 			Log.debug("Done");
 		});
 	}
@@ -93,15 +120,13 @@ public class Worker implements Runnable {
 	}
 	
 	@SuppressWarnings(RAWTYPES)
-	private String processRequestPayload(String payload) throws SoapClientException {
+	private String processRequestPayload(Gson gson, String payload) throws SoapClientException {
 		Log.debug("payload: " + payload);
 		
 		URLClassLoader child = null;
 		JarFile file = null;
 		
 		try {
-			// Deserialize the JSON
-			Gson gson = new Gson();
 			
 			OperationRequest req = gson.fromJson(payload,OperationRequest.class);
 			

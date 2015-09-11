@@ -62,7 +62,7 @@ public abstract class RequestHandler {
 		
 		handleImpl(req, requestWrapper, responseInstance);
 		
-		return gson.toJson(responseInstance);
+		return gson.toJson(OperationResponse.newSuccessfulOperationResponse(responseInstance));
 	}
 
 	protected abstract void handleImpl(OperationRequest req, Object requestInstance, Object responseInstance) throws SoapClientException;
