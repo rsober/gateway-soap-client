@@ -44,38 +44,35 @@ public class Main implements Runnable {
 		}
 		
 		final ServerSocket finalServer = server;
-		Thread hook = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				if (finalServer != null) {
-					try {
-						finalServer.close();
-					} catch (IOException e) {
-						// Ignore - we're shutting down anyway
-					}
-				}
-				
-				if (pool == null) {
-					return;
-				}
-				
-				pool.shutdown();
-				
+		Thread hook = new Thread(() -> {
+			if (finalServer != null) {
 				try {
-				    // Wait a while for existing tasks to terminate
-				    if (!pool.awaitTermination(60, TimeUnit.SECONDS)) {
-				    	pool.shutdownNow(); // Cancel currently executing tasks
-				    	// Wait a while for tasks to respond to being cancelled
-				    	if (!pool.awaitTermination(60, TimeUnit.SECONDS)) {
-				    		Log.info("Pool did not terminate");
-				    	}
-				    }
-				} catch (InterruptedException ie) {
-					// (Re-)Cancel if current thread also interrupted
-				    pool.shutdownNow();
-				    // Preserve interrupt status
-				    Thread.currentThread().interrupt();
+					finalServer.close();
+				} catch (IOException e) {
+					// Ignore - we're shutting down anyway
 				}
+			}
+			
+			if (pool == null) {
+				return;
+			}
+			
+			pool.shutdown();
+			
+			try {
+			    // Wait a while for existing tasks to terminate
+			    if (!pool.awaitTermination(60, TimeUnit.SECONDS)) {
+			    	pool.shutdownNow(); // Cancel currently executing tasks
+			    	// Wait a while for tasks to respond to being cancelled
+			    	if (!pool.awaitTermination(60, TimeUnit.SECONDS)) {
+			    		Log.info("Pool did not terminate");
+			    	}
+			    }
+			} catch (InterruptedException ie) {
+				// (Re-)Cancel if current thread also interrupted
+			    pool.shutdownNow();
+			    // Preserve interrupt status
+			    Thread.currentThread().interrupt();
 			}
 		});
 		Runtime.getRuntime().addShutdownHook(hook);
