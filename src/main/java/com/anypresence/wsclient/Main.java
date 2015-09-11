@@ -36,6 +36,10 @@ public class Main implements Runnable {
 			server = new ServerSocket();
 			server.bind(new InetSocketAddress(host, port));
 		} catch(IOException e) {
+			Log.info("Unable to bind to socket due to IOException: " + e.getMessage() + ".  Exiting with code " + EXIT_CODE_UNABLE_TO_BIND);
+			if (Log.isDebugEnabled()) {
+				e.printStackTrace(System.out);
+			}
 			System.exit(EXIT_CODE_UNABLE_TO_BIND);
 		}
 		
@@ -81,8 +85,10 @@ public class Main implements Runnable {
 			try {
 				sock = finalServer.accept();
 			} catch (IOException e) {
-				System.err.println("Unable to accept socket connection!");
-				e.printStackTrace();
+				Log.info("Unable to accept socket connection! " + e.getMessage());
+				if (Log.isDebugEnabled()) {
+					e.printStackTrace(System.out);
+				}
 				continue;
 			}
 			Worker worker = new Worker(sock);
@@ -91,7 +97,7 @@ public class Main implements Runnable {
 			} else {
 				pool.execute(worker);
 			}
-		}	
+		}
 	}
 	
 	public static void main(String[] args) {
@@ -109,7 +115,7 @@ public class Main implements Runnable {
 			port = DEFAULT_PORT;
 			workerPoolSize = 0;
 		} else {
-			System.err.println("Expected either 0 arguments or 3.");
+			System.out.println("Expected either 0 arguments or 3.  Exiting with code " + EXIT_CODE_BAD_ARGS);
 			System.exit(EXIT_CODE_BAD_ARGS);
 		}
 		
