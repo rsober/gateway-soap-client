@@ -58,7 +58,6 @@ public class Worker implements Runnable {
 					}
 				}
 			} catch(IOException e) {
-				// TODO - return error response
 				Log.info("Unable to fully read request due to IOException: " + e.getMessage());
 				if (Log.isDebugEnabled()) {
 					e.printStackTrace(System.out);
@@ -95,7 +94,6 @@ public class Worker implements Runnable {
 			try(BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()))) {
 				writer.write(response);
 			} catch(IOException e) {
-				// TODO - return error response
 				Log.info("Unable to fully write response due to IOException: " + e.getMessage());
 				if (Log.isDebugEnabled()) {
 					e.printStackTrace(System.out);
