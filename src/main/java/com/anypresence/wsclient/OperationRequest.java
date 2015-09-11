@@ -12,6 +12,7 @@ public class OperationRequest {
 	private String actionName;
 	private JsonElement params;
 	private WssePasswordSecurityCredentials wssePasswordCredentials;
+	private String url;
 	
 	public OperationRequest() {
 		// Empty constructor
@@ -44,12 +45,18 @@ public class OperationRequest {
 	public WssePasswordSecurityCredentials getWssePasswordCredentials() {
 		return wssePasswordCredentials;
 	}
+	
+	public String getUrl() {
+		return url;
+	}
 
 	@Override
 	public String toString() {
 		return "OperationRequest [jarUrl=" + jarUrl + ", serviceName=" + serviceName + ", endpointName=" + endpointName
 				+ ", operationName=" + operationName + ", actionName=" + actionName + ", params=" + params
-				+ ", wssePasswordCredentials=" + wssePasswordCredentials + "]";
+				+ ", wssePasswordCredentials=" + wssePasswordCredentials + ", url=" + url + "]";
 	}
+
+	
 	
 }

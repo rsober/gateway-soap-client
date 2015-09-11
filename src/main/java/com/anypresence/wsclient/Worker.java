@@ -232,7 +232,12 @@ public class Worker implements Runnable {
 				throw new SoapClientException("Unable to invoke method " + endpointMethod.getName() + " due to " + e.getClass().getSimpleName() + ": " + e.getMessage(), e);
 			}
 			
-		    Binding binding = ((BindingProvider) endpoint).getBinding();
+			BindingProvider bp = ((BindingProvider)endpoint);
+			if (req.getUrl() != null) {
+				bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, req.getUrl());
+			}
+			
+		    Binding binding = bp.getBinding();
 			List<Handler> handlerList = binding.getHandlerChain();
 		    if (handlerList == null) {
 		      handlerList = new ArrayList<Handler>();
