@@ -22,13 +22,16 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 import javax.jws.WebMethod;
+import javax.xml.soap.SOAPFault;
 import javax.xml.ws.Binding;
 import javax.xml.ws.BindingProvider;
 import javax.xml.ws.WebEndpoint;
 import javax.xml.ws.WebServiceClient;
 import javax.xml.ws.handler.Handler;
+import javax.xml.ws.soap.SOAPFaultException;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class Worker implements Runnable {
 
@@ -43,7 +46,7 @@ public class Worker implements Runnable {
 	public void run() {
 		StringBuilder builder = new StringBuilder("");
 		withSocket(sock, () ->	{
-			Gson gson = new Gson();
+			Gson gson = new GsonBuilder().registerTypeAdapter(SOAPFault.class, new SoapFaultSerializer()).setPrettyPrinting().create();
 			
 			boolean proceed = true;
 			String readError = null;
@@ -73,11 +76,16 @@ public class Worker implements Runnable {
 				try {
 					response = processRequestPayload(gson, payload);
 				} catch (SoapClientException e) {
-					Log.info("Encountered SoapClientException while trying to process request: " + e.getMessage());
-					if (Log.isDebugEnabled()) {
-						e.printStackTrace(System.out);
+					if (e.getCause() != null && e.getCause() instanceof InvocationTargetException && e.getCause().getCause() != null && e.getCause().getCause() instanceof SOAPFaultException) {
+						SOAPFaultException soapFaultExc = (SOAPFaultException)e.getCause().getCause();
+						response = gson.toJson(OperationResponse.newFaultOperationResponse(soapFaultExc.getFault()));
+					} else {
+						Log.info("Encountered SoapClientException while trying to process request: " + e.getMessage());
+						if (Log.isDebugEnabled()) {
+							e.printStackTrace(System.out);
+						}
+						response = gson.toJson(OperationResponse.newFailedOperationResponse(e.getMessage()));
 					}
-					response = gson.toJson(OperationResponse.newFailedOperationResponse(e.getMessage()));
 				} catch(Exception e) {
 					Log.info("Encountered " + e.getClass().getSimpleName() + " while trying to process request: " + e.getMessage());
 					if (Log.isDebugEnabled()) {
