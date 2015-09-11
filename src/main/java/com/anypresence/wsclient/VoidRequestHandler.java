@@ -63,7 +63,7 @@ public class VoidRequestHandler extends RequestHandler {
 		try {
 			operationMethod.invoke(endpoint, parameterValues);
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-			throw new SoapClientException("Unable to successfully invoke operation due to " + e.getClass().getSimpleName() + ": " + e.getMessage());
+			throw new SoapClientException("Unable to successfully invoke operation due to " + e.getClass().getSimpleName() + ": " + e.getMessage(), e);
 		}
 		Log.debug("Done invoking");
 		
