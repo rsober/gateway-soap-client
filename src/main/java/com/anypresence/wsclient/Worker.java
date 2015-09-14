@@ -241,7 +241,7 @@ public class Worker implements Runnable {
 			}
 
 			BindingProvider bp = ((BindingProvider)endpoint);
-			if (req.getUrl() != null && !req.getUrl().equals("")) {
+			if (req.getUrl() != null) {
 				bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, req.getUrl());
 			}
 
