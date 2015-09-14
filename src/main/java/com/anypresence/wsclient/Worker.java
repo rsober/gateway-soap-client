@@ -37,20 +37,20 @@ public class Worker implements Runnable {
 
 	private static final String RAWTYPES = "rawtypes";
 	private Socket sock;
-	
+
 	public Worker(Socket sock) {
 		this.sock = sock;
 	}
-	
+
 	@Override
 	public void run() {
 		StringBuilder builder = new StringBuilder("");
 		withSocket(sock, () ->	{
 			Gson gson = new GsonBuilder().registerTypeAdapter(SOAPFault.class, new SoapFaultSerializer()).setPrettyPrinting().create();
-			
+
 			boolean proceed = true;
 			String readError = null;
-			
+
 			try {
 				BufferedReader reader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
 				String line = null;
@@ -68,11 +68,11 @@ public class Worker implements Runnable {
 				proceed = false;
 				readError = e.getMessage();
 			}
-			
+
 			String response = null;
 			if (proceed) {
 				String payload = builder.toString().trim();
-				
+
 				try {
 					response = processRequestPayload(gson, payload);
 				} catch (SoapClientException e) {
@@ -93,12 +93,12 @@ public class Worker implements Runnable {
 					}
 					response = gson.toJson(OperationResponse.newFailedOperationResponse(e.getMessage()));
 				}
-				
+
 				Log.debug("Writing");
 			} else {
 				response = gson.toJson(OperationResponse.newFailedOperationResponse(readError));
 			}
-			
+
 			try(BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()))) {
 				writer.write(response);
 			} catch(IOException e) {
@@ -106,11 +106,11 @@ public class Worker implements Runnable {
 				if (Log.isDebugEnabled()) {
 					e.printStackTrace(System.out);
 				}
-			} 
+			}
 			Log.debug("Done");
 		});
 	}
-	
+
 	private void withSocket(Socket sock, Runnable r) {
 		try {
 			r.run();
@@ -124,31 +124,31 @@ public class Worker implements Runnable {
 			}
 		}
 	}
-	
+
 	@SuppressWarnings(RAWTYPES)
 	private String processRequestPayload(Gson gson, String payload) throws SoapClientException {
 		Log.debug("payload: " + payload);
-		
+
 		URLClassLoader child = null;
 		JarFile file = null;
-		
+
 		try {
-			
+
 			OperationRequest req = gson.fromJson(payload,OperationRequest.class);
-			
+
 			URI jarURI;
 			try {
 				jarURI = new URI(req.getJarUrl());
 			} catch (URISyntaxException e) {
 				throw new SoapClientException("Invalid URI syntax for jar URL: " + req.getJarUrl(), e);
 			}
-			
+
 			try {
 				child = new URLClassLoader(new URL[] { jarURI.toURL() }, this.getClass().getClassLoader());
 			} catch (MalformedURLException e) {
 				throw new SoapClientException("Malformed jar URL for jar URI: " + jarURI.toString());
 			}
-			
+
 			WssePasswordSecurityCredentials creds = req.getWssePasswordCredentials();
 			SecurityHandler handler = null;
 			if (creds != null) {
@@ -156,19 +156,19 @@ public class Worker implements Runnable {
 				handler = new SecurityHandler(creds.getUsername(), creds.getPassword());
 			}
 			Log.debug("Received request: " + req);
-			
+
 			// Crack open the jar file and look for the service to instantiate
-			
+
 			try {
 				file = new JarFile(new File(jarURI));
 			} catch (IOException e) {
 				throw new SoapClientException("Unable to open file at " + req.getJarUrl() + " due to IOException: " + e.getMessage(), e);
 			}
-			
+
 			Enumeration<JarEntry> enumerator = file.entries();
-			
+
 			Class<?> serviceClass = null;
-			
+
 			outer:
 			while (enumerator.hasMoreElements()) {
 				JarEntry entry = enumerator.nextElement();
@@ -177,14 +177,14 @@ public class Worker implements Runnable {
 				if (className.endsWith(".class")) {
 					className = className.replaceAll("/", ".");
 					className = className.substring(0,  className.length() - 6);
-					
+
 					Class<?> clazzToLoad;
 					try {
 						clazzToLoad = child.loadClass(className);
 					} catch (ClassNotFoundException e) {
 						throw new SoapClientException("Unable to load class for class name " + className + " due to ClassNotFoundException", e);
 					}
-					
+
 					for (Annotation anno : clazzToLoad.getDeclaredAnnotationsByType(WebServiceClient.class)) {
 						Log.debug(anno.toString());
 						if (anno.annotationType() == WebServiceClient.class) {
@@ -199,12 +199,12 @@ public class Worker implements Runnable {
 					}
 				}
 			}
-			
+
 			if (serviceClass == null) {
 				throw new SoapClientException("Unable to locate service class");
 			}
-			
-			
+
+
 			Method[] methods = serviceClass.getMethods();
 			Method endpointMethod = null;
 			outer:
@@ -221,44 +221,44 @@ public class Worker implements Runnable {
 					}
 				}
 			}
-			
+
 			if (endpointMethod == null) {
 				throw new SoapClientException("Unable to find endpoint");
 			}
-			
+
 			Object service;
 			try {
 				service = serviceClass.newInstance();
 			} catch (InstantiationException | IllegalAccessException e) {
 				throw new SoapClientException("Unable to instantiate class " + serviceClass.getName() + " due to " + e.getClass().getSimpleName() + ": " + e.getMessage(), e);
 			}
-			
+
 			Object endpoint;
 			try {
 				endpoint = endpointMethod.invoke(service, new Object[0]);
 			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 				throw new SoapClientException("Unable to invoke method " + endpointMethod.getName() + " due to " + e.getClass().getSimpleName() + ": " + e.getMessage(), e);
 			}
-			
+
 			BindingProvider bp = ((BindingProvider)endpoint);
-			if (req.getUrl() != null) {
+			if (req.getUrl() != null && !req.getUrl().equals("")) {
 				bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, req.getUrl());
 			}
-			
+
 		    Binding binding = bp.getBinding();
 			List<Handler> handlerList = binding.getHandlerChain();
 		    if (handlerList == null) {
 		      handlerList = new ArrayList<Handler>();
 		    }
-	
+
 		    if (handler != null) {
 		    	handlerList.add(handler);
 		    }
-		    
+
 		    binding.setHandlerChain(handlerList);
-			
+
 			Class<?> returnType = endpointMethod.getReturnType();
-			
+
 			Method operationMethod = null;
 			Method[] serviceMethods = returnType.getMethods();
 			outer:
@@ -271,11 +271,11 @@ public class Worker implements Runnable {
 					}
 				}
 			}
-			
+
 			if (operationMethod == null) {
 				throw new SoapClientException("Unable to find operation to invoke");
 			}
-			
+
 			return getRequestResponseHandler(child, gson, operationMethod, endpoint).handle(req);
 		} finally {
 			if (file != null) {
@@ -294,14 +294,14 @@ public class Worker implements Runnable {
 			}
 		}
 	}
-	
+
 	private static RequestHandler getRequestResponseHandler(ClassLoader loader, Gson gson, Method endpointMethod, Object endpoint) {
 		if (endpointMethod.getReturnType() == Void.TYPE) {
 			return new VoidRequestHandler(loader, gson, endpointMethod, endpoint);
 		} else {
 			return new DefaultRequestHandler(loader, gson, endpointMethod, endpoint);
 		}
-		
+
 	}
-	
+
 }
