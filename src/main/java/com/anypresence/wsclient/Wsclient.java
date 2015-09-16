@@ -8,7 +8,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-public class Main implements Runnable {
+public class Wsclient implements Runnable {
 
 	private static final int EXIT_CODE_BAD_ARGS = 1;
 	private static final int EXIT_CODE_UNABLE_TO_BIND = 2;
@@ -20,7 +20,7 @@ public class Main implements Runnable {
 	private int port;
 	private ExecutorService pool;
 
-	public Main(String host, int port, int workerPoolSize) {
+	public Wsclient(String host, int port, int workerPoolSize) {
 		this.host = host;
 		this.port = port;
 		if (workerPoolSize > 0) {
@@ -119,7 +119,7 @@ public class Main implements Runnable {
 			System.exit(EXIT_CODE_BAD_ARGS);
 		}
 
-		Main main = new Main(host, port, workerPoolSize);
+		Wsclient main = new Wsclient(host, port, workerPoolSize);
 		main.run();
 	}
 
