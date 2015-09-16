@@ -71,12 +71,14 @@ public class Worker implements Runnable {
 
 			String response = null;
 			if (proceed) {
+				Log.debug("Proceeding with processing of payload");
 				String payload = builder.toString().trim();
 
 				try {
 					response = processRequestPayload(gson, payload);
 				} catch (SoapClientException e) {
 					if (e.getCause() != null && e.getCause() instanceof InvocationTargetException && e.getCause().getCause() != null && e.getCause().getCause() instanceof SOAPFaultException) {
+						Log.debug("Detected SOAPFault scenario");
 						SOAPFaultException soapFaultExc = (SOAPFaultException)e.getCause().getCause();
 						response = gson.toJson(OperationResponse.newFaultOperationResponse(soapFaultExc.getFault()));
 					} else {
@@ -94,11 +96,12 @@ public class Worker implements Runnable {
 					response = gson.toJson(OperationResponse.newFailedOperationResponse(e.getMessage()));
 				}
 
-				Log.debug("Writing");
 			} else {
+				Log.debug("Returning failed response");
 				response = gson.toJson(OperationResponse.newFailedOperationResponse(readError));
 			}
 
+			Log.debug("Writing response to socket");
 			try(BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()))) {
 				writer.write(response);
 			} catch(IOException e) {
@@ -127,7 +130,7 @@ public class Worker implements Runnable {
 
 	@SuppressWarnings(RAWTYPES)
 	private String processRequestPayload(Gson gson, String payload) throws SoapClientException {
-		Log.debug("payload: " + payload);
+		Log.debug("Attempting to process request payload: " + payload);
 
 		URLClassLoader child = null;
 		JarFile file = null;
@@ -152,7 +155,7 @@ public class Worker implements Runnable {
 			WssePasswordSecurityCredentials creds = req.getWssePasswordCredentials();
 			SecurityHandler handler = null;
 			if (creds != null) {
-				Log.debug("Creds::: " + creds);
+				Log.debug("Using security handler due to presence of wssePasswordCredentials");
 				handler = new SecurityHandler(creds.getUsername(), creds.getPassword());
 			}
 			Log.debug("Received request: " + req);
@@ -173,7 +176,7 @@ public class Worker implements Runnable {
 			while (enumerator.hasMoreElements()) {
 				JarEntry entry = enumerator.nextElement();
 				String className = entry.getName();
-				Log.debug("Entry " + className);
+				Log.debug("Jar entry: " + className);
 				if (className.endsWith(".class")) {
 					className = className.replaceAll("/", ".");
 					className = className.substring(0,  className.length() - 6);
@@ -186,12 +189,12 @@ public class Worker implements Runnable {
 					}
 
 					for (Annotation anno : clazzToLoad.getDeclaredAnnotationsByType(WebServiceClient.class)) {
-						Log.debug(anno.toString());
 						if (anno.annotationType() == WebServiceClient.class) {
 							WebServiceClient cl = (WebServiceClient)anno;
 							if (cl.name().equals(req.getServiceName())) {
+
 								// found the service!
-								Log.debug("We've found our service!  " + clazzToLoad);
+								Log.debug("Successfully located service in class:  " + clazzToLoad);
 								serviceClass = clazzToLoad;
 								break outer;
 							}
@@ -201,7 +204,7 @@ public class Worker implements Runnable {
 			}
 
 			if (serviceClass == null) {
-				throw new SoapClientException("Unable to locate service class");
+				throw new SoapClientException("Unable to locate service class ");
 			}
 
 

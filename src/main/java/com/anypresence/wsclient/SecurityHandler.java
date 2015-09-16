@@ -19,12 +19,12 @@ public class SecurityHandler implements SOAPHandler<SOAPMessageContext> {
 
 	private String username;
 	private String password;
-	
+
 	public SecurityHandler(String username, String password) {
 		this.username = username;
 		this.password = password;
 	}
-	
+
 	public Set<QName> getHeaders() {
 		QName securityHeader = new QName(
 				"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd", "Security");
@@ -34,12 +34,12 @@ public class SecurityHandler implements SOAPHandler<SOAPMessageContext> {
 	}
 
 	public boolean handleMessage(SOAPMessageContext messageContext) {
-		Log.debug("Entered method handleMessage in SecurityHandler");
 		Boolean outboundProperty = (Boolean) messageContext.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
 
 		if (outboundProperty.booleanValue()) {
-			Log.debug("\nOutbound message:");
-			Log.debug("** Request:");
+			Log.debug("Adding security credentials to outbound request via SecurityHandler");
+
+			Log.debug("Sending the following request to SOAP service:");
 			try {
 				SOAPMessage message = messageContext.getMessage();
 				SOAPEnvelope envelope = message.getSOAPPart().getEnvelope();
@@ -64,21 +64,20 @@ public class SecurityHandler implements SOAPHandler<SOAPMessageContext> {
 
 				if (Log.isDebugEnabled()) {
 					messageContext.getMessage().writeTo(System.out);
+					System.out.println();
 				}
-				Log.debug("");
 			} catch (SOAPException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		} else {
-			Log.debug("\nInbound message:");
-			Log.debug("** Response:");
+			Log.debug("Received the following response from SOAP service:");
 			try {
 				if (Log.isDebugEnabled()) {
 					messageContext.getMessage().writeTo(System.out);
+					System.out.println();
 				}
-				Log.debug("");
 			} catch (SOAPException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -90,7 +89,7 @@ public class SecurityHandler implements SOAPHandler<SOAPMessageContext> {
 	}
 
 	public boolean handleFault(SOAPMessageContext messageContext) {
-		Log.debug("RECEIVED FAULT");
+		Log.debug("Received SOAPFault");
 		return true;
 	}
 

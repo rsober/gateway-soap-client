@@ -45,7 +45,7 @@ public class Main implements Runnable {
 
 		final ServerSocket finalServer = server;
 		Thread hook = new Thread(() -> {
-			Log.info("JVM received shutdown signal");
+			Log.debug("JVM received shutdown signal");
 			if (finalServer != null) {
 				try {
 					finalServer.close();
@@ -75,6 +75,8 @@ public class Main implements Runnable {
 				// Preserve interrupt status
 				Thread.currentThread().interrupt();
 			}
+
+			Log.debug("JVM shutdown complete");
 		});
 		Runtime.getRuntime().addShutdownHook(hook);
 
