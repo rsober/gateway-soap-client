@@ -31,7 +31,7 @@ public class DefaultRequestHandler extends RequestHandler {
 					throw new SoapClientException("Expected only Mode.IN parameters");
 				}
 				
-				String paramName = webParam.name();
+				String paramName = parameter.getName();
 				String methodName = "get" + Character.toUpperCase(paramName.charAt(0)) + paramName.substring(1);
 				Method getter;
 				try {
