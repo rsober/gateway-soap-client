@@ -37,52 +37,57 @@ public class MockServer implements Runnable {
 		}
 	}
 	
-	private void runImpl() throws Throwable {
+	private void runImpl() throws IOException{
 		Socket sock = null;
+		server = new ServerSocket();
+		server.bind(new InetSocketAddress("localhost", 51311));
+	
 		try {
-			server = new ServerSocket();
-			server.bind(new InetSocketAddress("localhost", 51311));
 			sock = server.accept();
-			
-			StringBuilder builder = new StringBuilder();
-			BufferedReader reader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-			String line = null;
-			int contentLength = 0;
-			char[] content = new char[0];
-			while((line = reader.readLine()) != null) {
-				if (line.startsWith("Content-Length:")) {
-					String token = line.split(":")[1].trim();
-					contentLength = Integer.parseInt(token);
-				}
-				
-				builder.append(line).append("\n");
-				
-				if (builder.toString().endsWith("\n\n")) {
-					content = new char[contentLength];
-					reader.read(content);
-					builder.append(new String(content));
-					break;
-				}
-			}
-			
-			String actualRequest = new String(content);
-			
-			String exp = Utilities.prettyXml(expectedRequest);
-			String act = Utilities.prettyXml(actualRequest);
-			
-			if (!exp.trim().equals(act.trim())) {
-				System.out.println("Expected:\n\n" + exp + "\n\nActual:\n\n" + act);
-				throw new RuntimeException("Actual request did not equal expected request");
-			}
-			
-			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
-			writer.write("HTTP/1.1 200 OK\n");
-			writer.write("Content-Type: text/xml; charset=utf-8\n");
-			writer.write("Content-Length: " + cannedResponse.length() + "\n\n");
-			writer.write(Utilities.prettyXml(cannedResponse));
-			writer.flush();
 		} catch(SocketException e) {
-			// Ignore - this will happen when the close method is called if 'accept' is still blocking on trying to accept a client connection
+			return;
+		}
+		
+		try {
+			if (sock != null) {
+				StringBuilder builder = new StringBuilder();
+				BufferedReader reader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+				String line = null;
+				int contentLength = 0;
+				char[] content = new char[0];
+				while((line = reader.readLine()) != null) {
+					if (line.startsWith("Content-Length:")) {
+						String token = line.split(":")[1].trim();
+						contentLength = Integer.parseInt(token);
+					}
+					
+					builder.append(line).append("\n");
+					
+					if (builder.toString().endsWith("\n\n")) {
+						content = new char[contentLength];
+						reader.read(content);
+						builder.append(new String(content));
+						break;
+					}
+				}
+				
+				String actualRequest = new String(content);
+				
+				String exp = Utilities.prettyXml(expectedRequest);
+				String act = Utilities.prettyXml(actualRequest);
+				
+				if (!exp.trim().equals(act.trim())) {
+					System.out.println("Expected:\n\n" + exp + "\n\nActual:\n\n" + act);
+					throw new RuntimeException("Actual request did not equal expected request");
+				}
+				
+				BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
+				writer.write("HTTP/1.1 200 OK\n");
+				writer.write("Content-Type: text/xml; charset=utf-8\n");
+				writer.write("Content-Length: " + cannedResponse.length() + "\n\n");
+				writer.write(Utilities.prettyXml(cannedResponse));
+				writer.flush();
+			}
 		} finally {
 			try {
 				if (sock != null) {
