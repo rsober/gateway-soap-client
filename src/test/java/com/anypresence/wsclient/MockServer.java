@@ -8,6 +8,7 @@ import java.io.OutputStreamWriter;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 
 public class MockServer implements Runnable {
 	
@@ -80,6 +81,8 @@ public class MockServer implements Runnable {
 			writer.write("Content-Length: " + cannedResponse.length() + "\n\n");
 			writer.write(Utilities.prettyXml(cannedResponse));
 			writer.flush();
+		} catch(SocketException e) {
+			// Ignore - this will happen when the close method is called if 'accept' is still blocking on trying to accept a client connection
 		} finally {
 			try {
 				if (sock != null) {
