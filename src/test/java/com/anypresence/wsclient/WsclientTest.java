@@ -94,42 +94,6 @@ public class WsclientTest {
 		this.testCase = testCase;
 	}
 	
-	
-	/*@Test
-	public void test() throws Exception {
-		//fail("Not yet implemented");
-		URL jsonRequests = getClass().getResource("/json_requests");
-		URL jsonResponses = getClass().getResource("/json_responses");
-		URL soapRequests = getClass().getResource("/soap_requests");
-		URL soapResponses = getClass().getResource("/soap_responses");
-		
-		File jsonRequestsDir = new File(jsonRequests.toURI());
-		File jsonResponsesDir = new File(jsonResponses.toURI());
-		File soapRequestsDir = new File(soapRequests.toURI());
-		File soapResponsesDir = new File(soapResponses.toURI());
-		
-		List<String> jsonRequestFiles = Arrays.asList(jsonRequestsDir.list());
-		List<String> jsonResponseFiles = Arrays.asList(jsonResponsesDir.list());
-		List<String> soapRequestFiles = Arrays.asList(soapRequestsDir.list());
-		List<String> soapResponseFiles = Arrays.asList(soapResponsesDir.list());
-		
-		if (jsonRequestFiles.size() != jsonResponseFiles.size() || jsonRequestFiles.size() != soapRequestFiles.size() || jsonRequestFiles.size() != soapResponseFiles.size()) {
-			Assert.fail("Each test case must contain a json request, a json response, a soap request, and a soap response");
-		}
-		
-		List<String> cases = new ArrayList<String>();
-		
-		for (String file : jsonRequestFiles) {
-			String currentCase = file.split("\\.")[0];
-			cases.add(currentCase);
-			Assert.assertTrue(jsonResponseFiles.contains(currentCase + ".json"));
-			Assert.assertTrue(soapRequestFiles.contains(currentCase + ".xml"));
-			Assert.assertTrue(soapResponseFiles.contains(currentCase + ".xml"));
-			
-			executeCase(currentCase);
-		}
-	}*/
-	
 	private String jsonRequest(String caseName) throws Exception {
 		Map<String, Object> ctx = new HashMap<String, Object>();
 		ctx.put("jarUrl", jars.get(this.testCase).toURI());
