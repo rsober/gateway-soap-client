@@ -39,7 +39,4 @@ test {
     minHeapSize = '256m'
     maxHeapSize = '512m'
     
-    systemProperties = [
-    	DEBUG: true
-    ]
 }

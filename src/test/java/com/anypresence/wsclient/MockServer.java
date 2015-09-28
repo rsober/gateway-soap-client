@@ -47,13 +47,11 @@ public class MockServer implements Runnable {
 				if (line.startsWith("Content-Length:")) {
 					String token = line.split(":")[1].trim();
 					contentLength = Integer.parseInt(token);
-					System.out.println("Content length of : " + contentLength);
 				}
 				
 				builder.append(line).append("\n");
 				
 				if (builder.toString().endsWith("\n\n")) {
-					System.out.println("Attempting to read ...");
 					content = new char[contentLength];
 					reader.read(content);
 					builder.append(new String(content));
@@ -66,9 +64,8 @@ public class MockServer implements Runnable {
 			String exp = Utilities.prettyXml(expectedRequest);
 			String act = Utilities.prettyXml(actualRequest);
 			
-			System.out.println("Expected:\n\n" + exp + "\n\nActual:\n\n" + act);
-			
 			if (!exp.trim().equals(act.trim())) {
+				System.out.println("Expected:\n\n" + exp + "\n\nActual:\n\n" + act);
 				throw new RuntimeException("Actual request did not equal expected request");
 			}
 			
