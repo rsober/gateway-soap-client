@@ -9,7 +9,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +33,18 @@ public class WsclientTest {
 	
 	@Parameters
 	public static Iterable<? extends Object> data() {
-		return Arrays.asList("chargepoint", "weather", "aeropost");
+		URL uri = WsclientTest.class.getResource("/wsdl");
+		List<String> testNames = new ArrayList<String>();
+		try {
+			File wsdlDir = new File(uri.toURI());
+			for (File f : wsdlDir.listFiles()) {
+				String filename = f.getName();
+				testNames.add(filename.split("\\.")[0]);
+			}
+		} catch (URISyntaxException e) {
+			throw new RuntimeException("Failed to get list of test cases due to URISyntaxException", e);
+		}
+		return testNames;
 	}
 	
 	@BeforeClass
