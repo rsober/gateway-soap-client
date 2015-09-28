@@ -1,0 +1,8 @@
+{
+  "serviceName": "Weather",
+  "endpointName": "WeatherSoap",
+  "operationName": "GetWeatherInformation",
+  "params": null,
+  "url": "http://localhost:51311", 
+  "jarUrl": "${jarUrl}"
+}

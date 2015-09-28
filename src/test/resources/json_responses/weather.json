@@ -1,0 +1,144 @@
+{
+  "success": true,
+  "response": {
+    "getWeatherInformationResult": {
+      "weatherDescription": [
+        {
+          "weatherID": 1,
+          "description": "Thunder Storms",
+          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/thunderstorms.gif"
+        },
+        {
+          "weatherID": 2,
+          "description": "Partly Cloudy",
+          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/partlycloudy.gif"
+        },
+        {
+          "weatherID": 3,
+          "description": "Mostly Cloudy",
+          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/mostlycloudy.gif"
+        },
+        {
+          "weatherID": 4,
+          "description": "Sunny",
+          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/sunny.gif"
+        },
+        {
+          "weatherID": 5,
+          "description": "Rain",
+          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/rain.gif"
+        },
+        {
+          "weatherID": 6,
+          "description": "Showers",
+          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/showers.gif"
+        },
+        {
+          "weatherID": 7,
+          "description": "Haze",
+          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/haze.gif"
+        },
+        {
+          "weatherID": 9,
+          "description": "Partly Sunny",
+          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/mostlycloudy.gif"
+        },
+        {
+          "weatherID": 10,
+          "description": "Mostly Sunny",
+          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/partlycloudy.gif"
+        },
+        {
+          "weatherID": 11,
+          "description": "Clear",
+          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/sunny.gif"
+        },
+        {
+          "weatherID": 12,
+          "description": "Fair",
+          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/partlycloudy.gif"
+        },
+        {
+          "weatherID": 14,
+          "description": "Cloudy",
+          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/mostlycloudy.gif"
+        },
+        {
+          "weatherID": 15,
+          "description": "N\/A",
+          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/na.gif"
+        },
+        {
+          "weatherID": 17,
+          "description": "Drizzle",
+          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/drizzle.gif"
+        },
+        {
+          "weatherID": 18,
+          "description": "Fog",
+          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/fog.gif"
+        },
+        {
+          "weatherID": 20,
+          "description": "Flurries",
+          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/blowingsnow.gif"
+        },
+        {
+          "weatherID": 21,
+          "description": "Snow and Fog",
+          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/blowingsnow.gif"
+        },
+        {
+          "weatherID": 26,
+          "description": "Blowing Snow and Fog",
+          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/blowingsnow.gif"
+        },
+        {
+          "weatherID": 27,
+          "description": "Snow",
+          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/snow.gif"
+        },
+        {
+          "weatherID": 28,
+          "description": "Rain and Fog",
+          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/rain.gif"
+        },
+        {
+          "weatherID": 29,
+          "description": "Blowing Snow",
+          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/blowingsnow.gif"
+        },
+        {
+          "weatherID": 32,
+          "description": "Light Rain",
+          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/rain.gif"
+        },
+        {
+          "weatherID": 33,
+          "description": "Heavy Rain",
+          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/rain.gif"
+        },
+        {
+          "weatherID": 34,
+          "description": "Missing Data",
+          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/na.gif"
+        },
+        {
+          "weatherID": 35,
+          "description": "Snow, Blowing Snow, and Fog",
+          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/blowingsnow.gif"
+        },
+        {
+          "weatherID": 36,
+          "description": "Unknown Precipitation",
+          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/na.gif"
+        },
+        {
+          "weatherID": 37,
+          "description": "AM CLOUDS",
+          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/partlycloudy.gif"
+        }
+      ]
+    }
+  }
+}

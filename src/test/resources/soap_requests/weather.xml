@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Body>
+    <GetWeatherInformation xmlns="http://ws.cdyne.com/WeatherWS/"/>
+  </S:Body>
+</S:Envelope>

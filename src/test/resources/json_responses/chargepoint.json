@@ -1,0 +1,150 @@
+{
+  "success": true,
+  "response": {
+    "responseCode": "100",
+    "responseText": "API input request executed successfully.",
+    "stationData": [
+      {
+        "orgID": "1:ORG08313",
+        "organizationName": "Schneider Demo",
+        "sgID": "42407, 38623, 40815, 45487, 45677, 49167",
+        "sgName": "SchneiderDemo, Public Stations, Available and In Use 2, Level 2 Ports, All OnRamp Stations, SouthEast",
+        "stationID": "1:87815",
+        "stationManufacturer": "Schneider",
+        "stationModel": "EV230PDRACNG",
+        "stationMacAddr": "000D:6F00:009D:5F06",
+        "stationSerialNum": "1333411001A0",
+        "address": "8001 Knightdale Blvd",
+        "city": "Knightdale",
+        "state": "North Carolina",
+        "country": "United States",
+        "postalCode": "27545",
+        "port": [
+          {
+            "portNumber": 1,
+            "stationName": "SCHNEIDER DEMO \/ SCHNEIDERNGW1",
+            "geo": {
+              "lat": "35.808067831140570",
+              "_long": "-78.461020392521000"
+            },
+            "reservable": 0,
+            "status": "INUSE",
+            "level": "L2",
+            "connector": "J1772",
+            "voltage": "240",
+            "current": "30",
+            "power": "7.2",
+            "estimatedCost": 0.0
+          },
+          {
+            "portNumber": 2,
+            "stationName": "SCHNEIDER DEMO \/ SCHNEIDERNGW1",
+            "geo": {
+              "lat": "35.808067831140570",
+              "_long": "-78.461020392521000"
+            },
+            "reservable": 0,
+            "status": "INUSE",
+            "level": "L2",
+            "connector": "J1772",
+            "voltage": "240",
+            "current": "30",
+            "power": "7.2",
+            "estimatedCost": 0.0
+          }
+        ],
+        "numPorts": 2,
+        "mainPhone": "1-888-758-4389",
+        "currencyCode": "USD"
+      },
+      {
+        "orgID": "1:ORG08313",
+        "organizationName": "Schneider Demo",
+        "sgID": "55267, 38623, 45487, 45677, 49167",
+        "sgName": "SCE_Test, Public Stations, Level 2 Ports, All OnRamp Stations, SouthEast",
+        "stationID": "1:91249",
+        "stationManufacturer": "Schneider",
+        "stationModel": "EV230PSRACG",
+        "stationMacAddr": "000D:6F00:009D:7262",
+        "stationSerialNum": "1430310003A0",
+        "address": "8001 Knightdale Blvd",
+        "city": "Knightdale",
+        "state": "North Carolina",
+        "country": "United States",
+        "postalCode": "27545",
+        "port": [
+          {
+            "portNumber": 1,
+            "stationName": "SCHNEIDER DEMO \/ SCE_TEST",
+            "geo": {
+              "lat": "35.809180449265384",
+              "_long": "-78.462498289688200"
+            },
+            "reservable": 0,
+            "status": "UNREACHABLE",
+            "level": "L2",
+            "connector": "J1772",
+            "voltage": "240",
+            "current": "30",
+            "power": "7.2",
+            "estimatedCost": 0.0
+          }
+        ],
+        "numPorts": 1,
+        "mainPhone": "1-888-758-4389",
+        "currencyCode": "USD"
+      },
+      {
+        "orgID": "1:ORG08313",
+        "organizationName": "Schneider Demo",
+        "sgID": "42407, 38623, 40815, 45487, 45677, 49167",
+        "sgName": "SchneiderDemo, Public Stations, Available and In Use 2, Level 2 Ports, All OnRamp Stations, SouthEast",
+        "stationID": "1:112151",
+        "stationMacAddr": "000D:6F00:01DA:1A64",
+        "stationSerialNum": "1307311001A0",
+        "address": "8001 Knightdale Blvd",
+        "city": "Knightdale",
+        "state": "North Carolina",
+        "country": "United States",
+        "postalCode": "27545",
+        "port": [
+          {
+            "portNumber": 1,
+            "stationName": "SCHNEIDER DEMO \/ SCHNEIDERGW1",
+            "geo": {
+              "lat": "35.808086320523174",
+              "_long": "-78.460966748340700"
+            },
+            "reservable": 0,
+            "status": "INUSE",
+            "level": "L2",
+            "connector": "J1772",
+            "voltage": "240",
+            "current": "30",
+            "power": "7.2",
+            "estimatedCost": 0.0
+          },
+          {
+            "portNumber": 2,
+            "stationName": "SCHNEIDER DEMO \/ SCHNEIDERGW1",
+            "geo": {
+              "lat": "35.808086320523174",
+              "_long": "-78.460966748340700"
+            },
+            "reservable": 0,
+            "status": "AVAILABLE",
+            "level": "L2",
+            "connector": "J1772",
+            "voltage": "240",
+            "current": "30",
+            "power": "7.2",
+            "estimatedCost": 0.0
+          }
+        ],
+        "numPorts": 2,
+        "mainPhone": "1-888-758-4389",
+        "currencyCode": "USD"
+      }
+    ]
+  }
+}
