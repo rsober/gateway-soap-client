@@ -18,6 +18,7 @@ targetCompatibility = 1.8
 
 dependencies {
 	compile "com.google.code.gson:gson:2.3.1"
+	testCompile "junit:junit:4.12"
 }
 
 jar {
@@ -27,4 +28,18 @@ jar {
 
 task wrapper(type: Wrapper) {
 	gradleVersion = '2.2.1'
+}
+
+test {
+	testLogging {
+		showStandardStreams = true
+        exceptionFormat = 'full'
+    }
+    
+    minHeapSize = '256m'
+    maxHeapSize = '512m'
+    
+    systemProperties = [
+    	DEBUG: true
+    ]
 }
