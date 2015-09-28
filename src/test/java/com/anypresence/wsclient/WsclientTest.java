@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -126,7 +127,8 @@ public class WsclientTest {
 	@Test
 	public void executeCase() throws Exception{
 		
-		Thread mockServerThread = new Thread(new MockServer(soapRequest(testCase), soapResponse(testCase)));
+		MockServer ms = new MockServer(soapRequest(testCase), soapResponse(testCase));
+		Thread mockServerThread = new Thread(ms);
 		Socket sock = null;
 		try {
 			mockServerThread.start();
@@ -154,6 +156,7 @@ public class WsclientTest {
 			}
 		} finally {
 			sock.close();
+			ms.close();
 			mockServerThread.interrupt();
 		}
 		

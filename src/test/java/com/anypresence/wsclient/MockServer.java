@@ -10,13 +10,19 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class MockServer implements Runnable {
-
+	
+	private ServerSocket server;
 	private String expectedRequest;
 	private String cannedResponse;
 	
 	public MockServer(String expectedRequest, String cannedResponse) {
 		this.expectedRequest = expectedRequest;
 		this.cannedResponse = cannedResponse;
+		this.server = null;
+	}
+	
+	public void close() throws IOException {
+		server.close();
 	}
 	
 	public void run() {
@@ -31,7 +37,6 @@ public class MockServer implements Runnable {
 	}
 	
 	private void runImpl() throws Throwable {
-		ServerSocket server = null;
 		Socket sock = null;
 		try {
 			server = new ServerSocket();
