@@ -45,7 +45,7 @@ public class MockServer implements Runnable {
 		try {
 			sock = server.accept();
 		} catch(SocketException e) {
-			return;
+			// Ignore a SocketException -- probably caused by the close method getting called while still blocking on server.accept() above.
 		}
 		
 		try {
