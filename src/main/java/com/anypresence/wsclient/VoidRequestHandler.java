@@ -1,5 +1,9 @@
 package com.anypresence.wsclient;
 
+import java.beans.BeanInfo;
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -10,9 +14,12 @@ import java.util.Map;
 
 import javax.jws.WebParam;
 import javax.jws.WebParam.Mode;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.ws.Holder;
 
 import com.google.gson.Gson;
+import com.sun.xml.bind.api.impl.NameConverter;
 
 public class VoidRequestHandler extends RequestHandler {
 
@@ -30,18 +37,45 @@ public class VoidRequestHandler extends RequestHandler {
 			if (webParam != null) {
 				if (webParam.mode() == Mode.IN) {
 					String paramName = webParam.name();
-					String methodName = "get" + Character.toUpperCase(paramName.charAt(0)) + paramName.substring(1);
-					Method getter;
+					Field field = null;
+					String xmlEltName = null;
+					
+					for (Field f:  requestInstance.getClass().getDeclaredFields()) {
+						XmlElementRef xmlEltRef = f.getDeclaredAnnotation(XmlElementRef.class);
+						XmlElement xmlElt = f.getDeclaredAnnotation(XmlElement.class);
+						
+						if (xmlEltRef != null) {
+							if (xmlEltRef.name().equals(paramName)) {
+								field = f;
+								xmlEltName = xmlEltRef.name();
+							}
+						} else if (xmlElt != null) {
+							if (xmlElt.name().equals(paramName)) {
+								field = f;
+								xmlEltName = xmlElt.name();
+							}
+						}
+					}
+					
+					Method getter = null;
+					
 					try {
-						getter = requestInstance.getClass().getMethod(methodName);
-					} catch (NoSuchMethodException | SecurityException e) {
-						throw new SoapClientException("Encountered exception attempting to retrieve Method object for method " + methodName + " due to " + e.getClass().getSimpleName() + ": " + e.getMessage(), e);
+						BeanInfo info = Introspector.getBeanInfo(requestInstance.getClass());
+						
+						PropertyDescriptor[] pds = info.getPropertyDescriptors();
+						for (PropertyDescriptor pd : pds) {
+							if (NameConverter.standard.toVariableName(xmlEltName).equals(field.getName())) {
+								getter = pd.getReadMethod();
+							}
+						}
+					} catch(IntrospectionException e) {
+						throw new SoapClientException("Unable to introspect on class " + requestInstance.getClass(), e);
 					}
 
 					try {
 						parameterValues[idx++] = getter.invoke(requestInstance);
 					} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-						throw new SoapClientException("Unable to successfully invoke method " + methodName + " on object due to " + e.getClass().getSimpleName() + ": " + e.getMessage(), e);
+						throw new SoapClientException("Unable to successfully invoke method " + getter.getName() + " on object due to " + e.getClass().getSimpleName() + ": " + e.getMessage(), e);
 					}
 				} else if (webParam.mode() == Mode.OUT) {
 					Log.debug("Found output holder paratmer " + webParam.name());
