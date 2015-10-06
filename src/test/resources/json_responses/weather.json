@@ -1,142 +1,142 @@
 {
   "success": true,
   "response": {
-    "getWeatherInformationResult": {
-      "weatherDescription": [
+    "GetWeatherInformationResult": {
+      "WeatherDescription": [
         {
-          "weatherID": 1,
-          "description": "Thunder Storms",
-          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/thunderstorms.gif"
+          "WeatherID": 1,
+          "Description": "Thunder Storms",
+          "PictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/thunderstorms.gif"
         },
         {
-          "weatherID": 2,
-          "description": "Partly Cloudy",
-          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/partlycloudy.gif"
+          "WeatherID": 2,
+          "Description": "Partly Cloudy",
+          "PictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/partlycloudy.gif"
         },
         {
-          "weatherID": 3,
-          "description": "Mostly Cloudy",
-          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/mostlycloudy.gif"
+          "WeatherID": 3,
+          "Description": "Mostly Cloudy",
+          "PictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/mostlycloudy.gif"
         },
         {
-          "weatherID": 4,
-          "description": "Sunny",
-          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/sunny.gif"
+          "WeatherID": 4,
+          "Description": "Sunny",
+          "PictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/sunny.gif"
         },
         {
-          "weatherID": 5,
-          "description": "Rain",
-          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/rain.gif"
+          "WeatherID": 5,
+          "Description": "Rain",
+          "PictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/rain.gif"
         },
         {
-          "weatherID": 6,
-          "description": "Showers",
-          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/showers.gif"
+          "WeatherID": 6,
+          "Description": "Showers",
+          "PictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/showers.gif"
         },
         {
-          "weatherID": 7,
-          "description": "Haze",
-          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/haze.gif"
+          "WeatherID": 7,
+          "Description": "Haze",
+          "PictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/haze.gif"
         },
         {
-          "weatherID": 9,
-          "description": "Partly Sunny",
-          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/mostlycloudy.gif"
+          "WeatherID": 9,
+          "Description": "Partly Sunny",
+          "PictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/mostlycloudy.gif"
         },
         {
-          "weatherID": 10,
-          "description": "Mostly Sunny",
-          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/partlycloudy.gif"
+          "WeatherID": 10,
+          "Description": "Mostly Sunny",
+          "PictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/partlycloudy.gif"
         },
         {
-          "weatherID": 11,
-          "description": "Clear",
-          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/sunny.gif"
+          "WeatherID": 11,
+          "Description": "Clear",
+          "PictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/sunny.gif"
         },
         {
-          "weatherID": 12,
-          "description": "Fair",
-          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/partlycloudy.gif"
+          "WeatherID": 12,
+          "Description": "Fair",
+          "PictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/partlycloudy.gif"
         },
         {
-          "weatherID": 14,
-          "description": "Cloudy",
-          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/mostlycloudy.gif"
+          "WeatherID": 14,
+          "Description": "Cloudy",
+          "PictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/mostlycloudy.gif"
         },
         {
-          "weatherID": 15,
-          "description": "N\/A",
-          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/na.gif"
+          "WeatherID": 15,
+          "Description": "N\/A",
+          "PictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/na.gif"
         },
         {
-          "weatherID": 17,
-          "description": "Drizzle",
-          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/drizzle.gif"
+          "WeatherID": 17,
+          "Description": "Drizzle",
+          "PictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/drizzle.gif"
         },
         {
-          "weatherID": 18,
-          "description": "Fog",
-          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/fog.gif"
+          "WeatherID": 18,
+          "Description": "Fog",
+          "PictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/fog.gif"
         },
         {
-          "weatherID": 20,
-          "description": "Flurries",
-          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/blowingsnow.gif"
+          "WeatherID": 20,
+          "Description": "Flurries",
+          "PictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/blowingsnow.gif"
         },
         {
-          "weatherID": 21,
-          "description": "Snow and Fog",
-          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/blowingsnow.gif"
+          "WeatherID": 21,
+          "Description": "Snow and Fog",
+          "PictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/blowingsnow.gif"
         },
         {
-          "weatherID": 26,
-          "description": "Blowing Snow and Fog",
-          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/blowingsnow.gif"
+          "WeatherID": 26,
+          "Description": "Blowing Snow and Fog",
+          "PictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/blowingsnow.gif"
         },
         {
-          "weatherID": 27,
-          "description": "Snow",
-          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/snow.gif"
+          "WeatherID": 27,
+          "Description": "Snow",
+          "PictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/snow.gif"
         },
         {
-          "weatherID": 28,
-          "description": "Rain and Fog",
-          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/rain.gif"
+          "WeatherID": 28,
+          "Description": "Rain and Fog",
+          "PictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/rain.gif"
         },
         {
-          "weatherID": 29,
-          "description": "Blowing Snow",
-          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/blowingsnow.gif"
+          "WeatherID": 29,
+          "Description": "Blowing Snow",
+          "PictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/blowingsnow.gif"
         },
         {
-          "weatherID": 32,
-          "description": "Light Rain",
-          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/rain.gif"
+          "WeatherID": 32,
+          "Description": "Light Rain",
+          "PictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/rain.gif"
         },
         {
-          "weatherID": 33,
-          "description": "Heavy Rain",
-          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/rain.gif"
+          "WeatherID": 33,
+          "Description": "Heavy Rain",
+          "PictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/rain.gif"
         },
         {
-          "weatherID": 34,
-          "description": "Missing Data",
-          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/na.gif"
+          "WeatherID": 34,
+          "Description": "Missing Data",
+          "PictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/na.gif"
         },
         {
-          "weatherID": 35,
-          "description": "Snow, Blowing Snow, and Fog",
-          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/blowingsnow.gif"
+          "WeatherID": 35,
+          "Description": "Snow, Blowing Snow, and Fog",
+          "PictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/blowingsnow.gif"
         },
         {
-          "weatherID": 36,
-          "description": "Unknown Precipitation",
-          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/na.gif"
+          "WeatherID": 36,
+          "Description": "Unknown Precipitation",
+          "PictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/na.gif"
         },
         {
-          "weatherID": 37,
-          "description": "AM CLOUDS",
-          "pictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/partlycloudy.gif"
+          "WeatherID": 37,
+          "Description": "AM CLOUDS",
+          "PictureURL": "http:\/\/ws.cdyne.com\/WeatherWS\/Images\/partlycloudy.gif"
         }
       ]
     }

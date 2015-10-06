@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
@@ -22,6 +23,8 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 import javax.jws.WebMethod;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.soap.SOAPFault;
 import javax.xml.ws.Binding;
 import javax.xml.ws.BindingProvider;
@@ -30,12 +33,16 @@ import javax.xml.ws.WebServiceClient;
 import javax.xml.ws.handler.Handler;
 import javax.xml.ws.soap.SOAPFaultException;
 
+import org.w3c.dom.Node;
+
+import com.google.gson.FieldNamingStrategy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 public class Worker implements Runnable {
 
 	private static final String RAWTYPES = "rawtypes";
+	private static final String DEFAULT_NODE_NAME = "##default";
 	private Socket sock;
 
 	public Worker(Socket sock) {
@@ -46,7 +53,12 @@ public class Worker implements Runnable {
 	public void run() {
 		StringBuilder builder = new StringBuilder("");
 		withSocket(sock, () ->	{
-			Gson gson = new GsonBuilder().registerTypeAdapter(SOAPFault.class, new SoapFaultSerializer()).setPrettyPrinting().create();
+			Gson gson = new GsonBuilder().registerTypeAdapter(SOAPFault.class, new SoapFaultSerializer())
+										 .registerTypeAdapter(JAXBElement.class, new JaxbElementSerializer())
+										 .registerTypeHierarchyAdapter(Node.class, new GenericXmlSerializer())
+										 .setPrettyPrinting()
+										 .setFieldNamingStrategy(new FieldNamer())
+										 .create();
 
 			boolean proceed = true;
 			String readError = null;
@@ -207,7 +219,6 @@ public class Worker implements Runnable {
 				throw new SoapClientException("Unable to locate service class ");
 			}
 
-
 			Method[] methods = serviceClass.getMethods();
 			Method endpointMethod = null;
 			outer:
@@ -305,6 +316,22 @@ public class Worker implements Runnable {
 			return new DefaultRequestHandler(loader, gson, endpointMethod, endpoint);
 		}
 
+	}
+	
+	private static class FieldNamer implements FieldNamingStrategy{
+		@Override
+		public String translateName(Field f) {
+			System.out.println("f.getName() : " + f.getName());
+			XmlElement elt = f.getDeclaredAnnotation(XmlElement.class);
+			if (elt == null || elt.name() == null || elt.name().equals(DEFAULT_NODE_NAME)) {
+				System.out.println("Returning f.getName(): " + f.getName());
+				return f.getName();
+			} else {
+				System.out.println("Returning elt name " + elt.name());
+				return elt.name();
+			}
+		}
+		
 	}
 
 }

@@ -9,14 +9,17 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
+import java.util.Arrays;
 
 import javax.jws.WebParam;
 import javax.jws.WebParam.Mode;
+import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementRef;
+import javax.xml.bind.annotation.XmlType;
+import javax.xml.namespace.QName;
 
 import com.google.gson.Gson;
-
 import com.sun.xml.bind.api.impl.NameConverter;
 
 public class DefaultRequestHandler extends RequestHandler {
@@ -67,7 +70,7 @@ public class DefaultRequestHandler extends RequestHandler {
 					
 					PropertyDescriptor[] pds = info.getPropertyDescriptors();
 					for (PropertyDescriptor pd : pds) {
-						if (NameConverter.standard.toVariableName(xmlEltName).equals(field.getName())) {
+						if (NameConverter.standard.toVariableName(pd.getName()).equals(field.getName())) {
 							getter = pd.getReadMethod();
 						}
 					}
@@ -98,6 +101,19 @@ public class DefaultRequestHandler extends RequestHandler {
 				field.setAccessible(true);
 				try {
 					field.set(responseInstance, response);
+				} catch (IllegalArgumentException | IllegalAccessException e) {
+					throw new SoapClientException("Unable to invoke setter to hold response due to " + e.getClass().getSimpleName() + ": " + e.getMessage(), e);
+				}
+				returnField = field;
+				break;
+			} else if (field.getGenericType() != null && field.getGenericType().toString().equals((JAXBElement.class.getName() + "<" + operationMethod.getReturnType().getName() + ">"))) {
+				
+				XmlType xmlType = operationMethod.getReturnType().getDeclaredAnnotation(XmlType.class);
+				QName qn = new QName(xmlType.namespace(), xmlType.name());
+				
+				field.setAccessible(true);
+				try {
+					field.set(responseInstance, new JAXBElement(qn, operationMethod.getReturnType(), response));
 				} catch (IllegalArgumentException | IllegalAccessException e) {
 					throw new SoapClientException("Unable to invoke setter to hold response due to " + e.getClass().getSimpleName() + ": " + e.getMessage(), e);
 				}
