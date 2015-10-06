@@ -56,17 +56,21 @@ public class WsclientTest {
 		wsclientThread.start();
 		
 		// set up the mock server
-		List<Process> processes = new ArrayList<Process>();
+		Map<String, Process> processes = new HashMap<String, Process>();
 		
 		for (Object casename : data() ) {
 			File f = File.createTempFile("wsclienttest", ".jar");
+			File d = Files.createTempDirectory("wsimport").toFile();
 			String testCase = (String)casename;
-			Process p = Runtime.getRuntime().exec("wsimport -extension -clientjar " + f.getAbsolutePath() + " " + WsclientTest.class.getResource("/wsdl/" + testCase + ".wsdl.xml").toURI().getPath());
-			processes.add(p);
+			String cmd = "wsimport -p temp -extension -clientjar " + f.getAbsolutePath() + " -d " + d.getAbsolutePath()  + " " + WsclientTest.class.getResource("/wsdl/" + testCase + ".wsdl.xml").toURI().getPath();
+			Process p = Runtime.getRuntime().exec(cmd);
+			processes.put(cmd, p);
 			jars.put(testCase, f);
 		}
 		
-		for (Process proc : processes) {
+		for (Map.Entry<String, Process> processEntry : processes.entrySet()) {
+			String cmd = processEntry.getKey();
+			Process proc = processEntry.getValue();
 			int i = proc.waitFor();
 			if (i != 0) {
 				BufferedReader reader = new BufferedReader(new InputStreamReader(proc.getErrorStream()));
@@ -76,7 +80,6 @@ public class WsclientTest {
 					builder.append(line).append("\n");
 				}
 				reader.close();
-				System.out.println(builder.toString());
 				
 				reader = new BufferedReader(new InputStreamReader(proc.getInputStream()));
 				builder = new StringBuilder();
@@ -86,8 +89,7 @@ public class WsclientTest {
 				}
 				reader.close();
 				
-				System.out.println(builder.toString());
-				throw new RuntimeException("Received non-zero exit code from process");
+				throw new RuntimeException("Received non-zero exit code from command: " + cmd);
 			}
 		}
 	}

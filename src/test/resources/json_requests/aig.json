@@ -1,0 +1,13 @@
+{ 
+  "serviceName": "UserProfileService", 
+  "endpointName": "UserProfileServiceSoap", 
+  "operationName": "GetUserProfileByName", 
+  "params": { 
+    "AccountName": "fred's all american family feedhouse" 
+  }, 
+  "jarUrl": "${jarUrl}",
+  "url": "http://localhost:51311"
+}
+  
+  
+  

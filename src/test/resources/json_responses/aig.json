@@ -1,0 +1,85 @@
+{
+  "success": true,
+  "response": {
+    "GetUserProfileByNameResult": {
+      "PropertyData": [
+        {
+          "IsPrivacyChanged": true,
+          "IsValueChanged": true,
+          "Name": "someProperty",
+          "Privacy": "PUBLIC",
+          "Values": {
+            "ValueData": [
+              {
+                "Value": {
+                  "aa": [
+                    "thing",
+                    "otherThing"
+                  ],
+                  "bb": "myThing"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "IsPrivacyChanged": true,
+          "IsValueChanged": true,
+          "Name": "otherProperty",
+          "Privacy": "PUBLIC",
+          "Values": {
+            "ValueData": [
+              {
+                "Value": "aa"
+              }
+            ]
+          }
+        },
+        {
+          "IsPrivacyChanged": true,
+          "IsValueChanged": true,
+          "Name": "thirdProperty",
+          "Privacy": "PUBLIC",
+          "Values": {
+            "ValueData": [
+              {
+                "Value": {
+                  "a": {
+                    "b": "bb",
+                    "c": "cc",
+                    "d": {
+                      "e": "ee"
+                    }
+                  },
+                  "x": "xxx"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "IsPrivacyChanged": true,
+          "IsValueChanged": true,
+          "Name": "fourthProperty",
+          "Privacy": "PUBLIC",
+          "Values": {
+            "ValueData": [
+              {}
+            ]
+          }
+        },
+        {
+          "IsPrivacyChanged": true,
+          "IsValueChanged": true,
+          "Name": "fifthProperty",
+          "Privacy": "PUBLIC",
+          "Values": {
+            "ValueData": [
+              {}
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
