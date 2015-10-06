@@ -321,13 +321,10 @@ public class Worker implements Runnable {
 	private static class FieldNamer implements FieldNamingStrategy{
 		@Override
 		public String translateName(Field f) {
-			System.out.println("f.getName() : " + f.getName());
 			XmlElement elt = f.getDeclaredAnnotation(XmlElement.class);
 			if (elt == null || elt.name() == null || elt.name().equals(DEFAULT_NODE_NAME)) {
-				System.out.println("Returning f.getName(): " + f.getName());
 				return f.getName();
 			} else {
-				System.out.println("Returning elt name " + elt.name());
 				return elt.name();
 			}
 		}
