@@ -1,0 +1,7 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <soap:Body>
+      <GetQuoteResponse xmlns="http://www.webserviceX.NET/">
+         <GetQuoteResult><![CDATA[<StockQuotes><Stock><Symbol>AAPL</Symbol><Last>111.31</Last><Date>10/6/2015</Date><Time>4:00pm</Time><Change>+0.53</Change><Open>110.60</Open><High>111.74</High><Low>109.76</Low><Volume>48710169</Volume><MktCap>634.77B</MktCap><PreviousClose>110.78</PreviousClose><PercentageChange>+0.48%</PercentageChange><AnnRange>92.00 - 134.54</AnnRange><Earns>8.65</Earns><P-E>12.88</P-E><Name>Apple Inc.</Name></Stock></StockQuotes>]]></GetQuoteResult>
+      </GetQuoteResponse>
+   </soap:Body>
+</soap:Envelope>

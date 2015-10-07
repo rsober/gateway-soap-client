@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Body>
+    <GetQuote xmlns="http://www.webserviceX.NET/">
+      <symbol>AAPL</symbol>
+    </GetQuote>
+  </S:Body>
+</S:Envelope>

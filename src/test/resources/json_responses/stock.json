@@ -1,0 +1,6 @@
+{
+  "success": true,
+  "response": {
+    "GetQuoteResult": "\u003cStockQuotes\u003e\u003cStock\u003e\u003cSymbol\u003eAAPL\u003c/Symbol\u003e\u003cLast\u003e111.31\u003c/Last\u003e\u003cDate\u003e10/6/2015\u003c/Date\u003e\u003cTime\u003e4:00pm\u003c/Time\u003e\u003cChange\u003e+0.53\u003c/Change\u003e\u003cOpen\u003e110.60\u003c/Open\u003e\u003cHigh\u003e111.74\u003c/High\u003e\u003cLow\u003e109.76\u003c/Low\u003e\u003cVolume\u003e48710169\u003c/Volume\u003e\u003cMktCap\u003e634.77B\u003c/MktCap\u003e\u003cPreviousClose\u003e110.78\u003c/PreviousClose\u003e\u003cPercentageChange\u003e+0.48%\u003c/PercentageChange\u003e\u003cAnnRange\u003e92.00 - 134.54\u003c/AnnRange\u003e\u003cEarns\u003e8.65\u003c/Earns\u003e\u003cP-E\u003e12.88\u003c/P-E\u003e\u003cName\u003eApple Inc.\u003c/Name\u003e\u003c/Stock\u003e\u003c/StockQuotes\u003e"
+  }
+}
