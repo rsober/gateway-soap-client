@@ -25,6 +25,7 @@ import java.util.jar.JarFile;
 import javax.jws.WebMethod;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.soap.SOAPFault;
 import javax.xml.ws.Binding;
 import javax.xml.ws.BindingProvider;
@@ -322,13 +323,15 @@ public class Worker implements Runnable {
 		@Override
 		public String translateName(Field f) {
 			XmlElement elt = f.getDeclaredAnnotation(XmlElement.class);
-			if (elt == null || elt.name() == null || elt.name().equals(DEFAULT_NODE_NAME)) {
-				return f.getName();
-			} else {
+			XmlElementRef eltRef = f.getDeclaredAnnotation(XmlElementRef.class);
+			if (elt != null && elt.name() != null && !elt.name().equals(DEFAULT_NODE_NAME)) {
 				return elt.name();
+			} else if (eltRef != null && eltRef.name() != null && !eltRef.name().equals(DEFAULT_NODE_NAME)) {
+				return eltRef.name();
+			} else {
+				return f.getName();
 			}
 		}
-		
 	}
 
 }
