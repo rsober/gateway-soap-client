@@ -1,0 +1,28 @@
+{ 
+  "serviceName": "UserProfileService", 
+  "endpointName": "UserProfileServiceSoap", 
+  "operationName": "ModifyUserPropertyByAccountName", 
+  "params": { 
+    "accountName": "fred's all american family feedhouse",
+    "newData": { 
+		"PropertyData": [
+			{
+				"IsPrivacyChanged": true,
+				"IsValueChanged": true,
+				"Name": "SomeProperty",
+				"Privacy": "PRIVATE",
+				"Values": {
+					"ValueData": [
+						{ 
+							"Value": "stuff" 
+						}
+					]
+				}
+			}
+		]
+    }
+  }, 
+  "jarUrl": "${jarUrl}",
+  "url": "http://localhost:51311"
+}
+  
