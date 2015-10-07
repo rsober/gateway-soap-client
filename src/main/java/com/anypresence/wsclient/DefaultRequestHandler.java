@@ -63,6 +63,14 @@ public class DefaultRequestHandler extends RequestHandler {
 					}
 				}
 				
+				if (field == null) {
+					try {
+						field = requestInstance.getClass().getDeclaredField(paramName);
+					} catch (NoSuchFieldException | SecurityException e) {
+						throw new SoapClientException("Unable to find field named " + paramName + " on requestInstance " + requestInstance);
+					}
+				}
+				
 				Method getter = null;
 				
 				try {
