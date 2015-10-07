@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Body>
+    <ModifyUserPropertyByAccountName xmlns="http://microsoft.com/webservices/SharePointPortalServer/UserProfileService">
+      <accountName>fred's all american family feedhouse</accountName>
+      <newData>
+        <PropertyData>
+          <IsPrivacyChanged>true</IsPrivacyChanged>
+          <IsValueChanged>true</IsValueChanged>
+          <Name>SomeProperty</Name>
+          <Privacy>Private</Privacy>
+          <Values>
+            <ValueData>
+              <Value xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">stuff</Value>
+            </ValueData>
+          </Values>
+        </PropertyData>
+      </newData>
+    </ModifyUserPropertyByAccountName>
+  </S:Body>
+</S:Envelope>

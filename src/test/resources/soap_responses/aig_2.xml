@@ -1,0 +1,6 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:user="http://microsoft.com/webservices/SharePointPortalServer/UserProfileService">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <user:ModifyUserPropertyByAccountNameResponse />
+   </soapenv:Body>
+</soapenv:Envelope>
