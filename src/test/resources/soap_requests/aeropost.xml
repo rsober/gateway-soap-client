@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Body>
+    <ns3:AuthenticateMyAeroUser xmlns="http://schemas.microsoft.com/2003/10/Serialization/Arrays" xmlns:ns2="http://schemas.datacontract.org/2004/07/WS_MyAero" xmlns:ns3="http://tempuri.org/" xmlns:ns4="http://schemas.microsoft.com/2003/10/Serialization/">
+      <ns3:MyAeroGateway>SJO</ns3:MyAeroGateway>
+      <ns3:MyAeroAccount>164470</ns3:MyAeroAccount>
+      <ns3:MyAeroPasswordMD5>42aa5e834d17636d8bcb8633035e8b55</ns3:MyAeroPasswordMD5>
+      <ns3:DeviceID>APA91bHKlpChvUaOj2EPRa5Q3bJabwDP9TEQ6ZEhBXLyjmxKQrIVa9y4EyAwiuJUxP6URBOh42fnFLtk53g6bQuqIh36sI-j1JJ_IZo9NMDE59u5AaSWvshgxCuwVZMf2naGjrkZCmVf_uCOTf2z-07xsX1CvMirLQ</ns3:DeviceID>
+      <ns3:MobileType>8</ns3:MobileType>
+      <ns3:OperatingSystemName>Android</ns3:OperatingSystemName>
+      <ns3:OperatingSystemVersion>15</ns3:OperatingSystemVersion>
+      <ns3:DeviceBrand>HTC</ns3:DeviceBrand>
+      <ns3:DeviceModel>HTC One X</ns3:DeviceModel>
+      <ns3:AppName>com.aeropost.myaeroII</ns3:AppName>
+      <ns3:AppVersion>2.3</ns3:AppVersion>
+      <ns3:WebServiceSecurity_User>MyAeroApp</ns3:WebServiceSecurity_User>
+      <ns3:WebServiceSecurity_Password>Pmc#0Mqc!4ZaV</ns3:WebServiceSecurity_Password>
+    </ns3:AuthenticateMyAeroUser>
+  </S:Body>
+</S:Envelope>

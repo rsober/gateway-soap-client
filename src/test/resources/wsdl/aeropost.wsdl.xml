@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://tempuri.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" name="Services" targetNamespace="http://tempuri.org/">
+  <wsp:Policy wsu:Id="BasicHttpBinding_IServices_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <sp:HttpsToken RequireClientCertificate="false"/>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256/>
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict/>
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="https://www2.myaeropost.com/Devel/WS_MyAero/Services.svc?xsd=xsd0" namespace="http://tempuri.org/"/>
+      <xsd:import schemaLocation="https://www2.myaeropost.com/Devel/WS_MyAero/Services.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/"/>
+      <xsd:import schemaLocation="https://www2.myaeropost.com/Devel/WS_MyAero/Services.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/WS_MyAero"/>
+      <xsd:import schemaLocation="https://www2.myaeropost.com/Devel/WS_MyAero/Services.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IServices_AttachFileToPackageOrPreAlert_InputMessage">
+    <wsdl:part name="parameters" element="tns:AttachFileToPackageOrPreAlert"/>
+  </wsdl:message>
+  <wsdl:message name="IServices_AttachFileToPackageOrPreAlert_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AttachFileToPackageOrPreAlertResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IServices_AuthenticateMyAeroUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:AuthenticateMyAeroUser"/>
+  </wsdl:message>
+  <wsdl:message name="IServices_AuthenticateMyAeroUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AuthenticateMyAeroUserResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IServices_GetAccountPackages_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAccountPackages"/>
+  </wsdl:message>
+  <wsdl:message name="IServices_GetAccountPackages_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAccountPackagesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IServices_GetAccountPreAlerts_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAccountPreAlerts"/>
+  </wsdl:message>
+  <wsdl:message name="IServices_GetAccountPreAlerts_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAccountPreAlertsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IServices_GetAllCountries_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllCountries"/>
+  </wsdl:message>
+  <wsdl:message name="IServices_GetAllCountries_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllCountriesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IServices_InsertStatusToPackage_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertStatusToPackage"/>
+  </wsdl:message>
+  <wsdl:message name="IServices_InsertStatusToPackage_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertStatusToPackageResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IServices_GetPackageCharges_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPackageCharges"/>
+  </wsdl:message>
+  <wsdl:message name="IServices_GetPackageCharges_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPackageChargesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IServices_GetPackageHistory_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPackageHistory"/>
+  </wsdl:message>
+  <wsdl:message name="IServices_GetPackageHistory_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPackageHistoryResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IServices_GetPackageInformation_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPackageInformation"/>
+  </wsdl:message>
+  <wsdl:message name="IServices_GetPackageInformation_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPackageInformationResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IServices_Logout_InputMessage">
+    <wsdl:part name="parameters" element="tns:Logout"/>
+  </wsdl:message>
+  <wsdl:message name="IServices_Logout_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LogoutResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IServices_PackagePrealert_InputMessage">
+    <wsdl:part name="parameters" element="tns:PackagePrealert"/>
+  </wsdl:message>
+  <wsdl:message name="IServices_PackagePrealert_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PackagePrealertResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IServices_SetPushNotificationsSettings_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetPushNotificationsSettings"/>
+  </wsdl:message>
+  <wsdl:message name="IServices_SetPushNotificationsSettings_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetPushNotificationsSettingsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IServices_ValidateToken_InputMessage">
+    <wsdl:part name="parameters" element="tns:ValidateToken"/>
+  </wsdl:message>
+  <wsdl:message name="IServices_ValidateToken_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ValidateTokenResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="IServices">
+    <wsdl:operation name="AttachFileToPackageOrPreAlert">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServices/AttachFileToPackageOrPreAlert" message="tns:IServices_AttachFileToPackageOrPreAlert_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/IServices/AttachFileToPackageOrPreAlertResponse" message="tns:IServices_AttachFileToPackageOrPreAlert_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="AuthenticateMyAeroUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServices/AuthenticateMyAeroUser" message="tns:IServices_AuthenticateMyAeroUser_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/IServices/AuthenticateMyAeroUserResponse" message="tns:IServices_AuthenticateMyAeroUser_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountPackages">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServices/GetAccountPackages" message="tns:IServices_GetAccountPackages_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/IServices/GetAccountPackagesResponse" message="tns:IServices_GetAccountPackages_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountPreAlerts">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServices/GetAccountPreAlerts" message="tns:IServices_GetAccountPreAlerts_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/IServices/GetAccountPreAlertsResponse" message="tns:IServices_GetAccountPreAlerts_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllCountries">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServices/GetAllCountries" message="tns:IServices_GetAllCountries_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/IServices/GetAllCountriesResponse" message="tns:IServices_GetAllCountries_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="InsertStatusToPackage">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServices/InsertStatusToPackage" message="tns:IServices_InsertStatusToPackage_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/IServices/InsertStatusToPackageResponse" message="tns:IServices_InsertStatusToPackage_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetPackageCharges">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServices/GetPackageCharges" message="tns:IServices_GetPackageCharges_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/IServices/GetPackageChargesResponse" message="tns:IServices_GetPackageCharges_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetPackageHistory">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServices/GetPackageHistory" message="tns:IServices_GetPackageHistory_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/IServices/GetPackageHistoryResponse" message="tns:IServices_GetPackageHistory_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetPackageInformation">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServices/GetPackageInformation" message="tns:IServices_GetPackageInformation_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/IServices/GetPackageInformationResponse" message="tns:IServices_GetPackageInformation_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServices/Logout" message="tns:IServices_Logout_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/IServices/LogoutResponse" message="tns:IServices_Logout_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="PackagePrealert">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServices/PackagePrealert" message="tns:IServices_PackagePrealert_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/IServices/PackagePrealertResponse" message="tns:IServices_PackagePrealert_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="SetPushNotificationsSettings">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServices/SetPushNotificationsSettings" message="tns:IServices_SetPushNotificationsSettings_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/IServices/SetPushNotificationsSettingsResponse" message="tns:IServices_SetPushNotificationsSettings_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateToken">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServices/ValidateToken" message="tns:IServices_ValidateToken_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/IServices/ValidateTokenResponse" message="tns:IServices_ValidateToken_OutputMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IServices" type="tns:IServices">
+    <wsp:PolicyReference URI="#BasicHttpBinding_IServices_policy"/>
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="AttachFileToPackageOrPreAlert">
+      <soap:operation soapAction="http://tempuri.org/IServices/AttachFileToPackageOrPreAlert" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AuthenticateMyAeroUser">
+      <soap:operation soapAction="http://tempuri.org/IServices/AuthenticateMyAeroUser" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountPackages">
+      <soap:operation soapAction="http://tempuri.org/IServices/GetAccountPackages" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountPreAlerts">
+      <soap:operation soapAction="http://tempuri.org/IServices/GetAccountPreAlerts" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllCountries">
+      <soap:operation soapAction="http://tempuri.org/IServices/GetAllCountries" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InsertStatusToPackage">
+      <soap:operation soapAction="http://tempuri.org/IServices/InsertStatusToPackage" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPackageCharges">
+      <soap:operation soapAction="http://tempuri.org/IServices/GetPackageCharges" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPackageHistory">
+      <soap:operation soapAction="http://tempuri.org/IServices/GetPackageHistory" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPackageInformation">
+      <soap:operation soapAction="http://tempuri.org/IServices/GetPackageInformation" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <soap:operation soapAction="http://tempuri.org/IServices/Logout" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PackagePrealert">
+      <soap:operation soapAction="http://tempuri.org/IServices/PackagePrealert" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetPushNotificationsSettings">
+      <soap:operation soapAction="http://tempuri.org/IServices/SetPushNotificationsSettings" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateToken">
+      <soap:operation soapAction="http://tempuri.org/IServices/ValidateToken" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Services">
+    <wsdl:port name="BasicHttpBinding_IServices" binding="tns:BasicHttpBinding_IServices">
+      <soap:address location="https://www2.myaeropost.com/Devel/WS_MyAero/Services.svc"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,47 @@
+{
+  "success": true,
+  "response": {
+    "AuthenticateMyAeroUserResult": {
+      "PersonID": 1330466,
+      "IsValid": true,
+      "IsFirstLogin": false,
+      "IsOwner": true,
+      "Language": "0",
+      "CurrencySymbol": "¢",
+      "CurrencyISO": "CRC",
+      "CountryCultureInfo": "es-CR",
+      "Account": 164470,
+      "Gateway": "SJO",
+      "AccountStatus": "ACTIVE",
+      "AccountStatusCode": "1",
+      "FullName": "Juan Manuel Rodriguez Alvarado",
+      "AccountEmail": "juan.manuel.rodriguez@gmail.com",
+      "UserEmail": "juan.manuel.rodriguez@gmail.com",
+      "AccountAddressLine1": "Counter Trilogía Escazú",
+      "AccountAddressLine2": "",
+      "DeliveryInstructions": "Counter Trilogía Escazú",
+      "Packages_AddressLine1": "6703 NW 7th St.",
+      "Packages_AddressLine2": "SJO-164470",
+      "Packages_City": "Miami",
+      "Packages_State": "FL",
+      "Packages_ZipCode": "33126",
+      "Packages_Phone": "(305) 592-7754",
+      "Mail_Line1": "P.P.Box 25331",
+      "Mail_Line2": "SJO-164470",
+      "Mail_Line3": "Miami,FL 33126",
+      "Token": "B3EECC97-F76F-4FF3-9E12-53CDE6936CD6",
+      "Device": {
+        "OperatingSystemName": "Android",
+        "OperatingSystemVersion": "15",
+        "DeviceId": "APA91bHKlpChvUaOj2EPRa5Q3bJabwDP9TEQ6ZEhBXLyjmxKQrIVa9y4EyAwiuJUxP6URBOh42fnFLtk53g6bQuqIh36sI-j1JJ_IZo9NMDE59u5AaSWvshgxCuwVZMf2naGjrkZCmVf_uCOTf2z-07xsX1CvMirLQ",
+        "DeviceBrand": "HTC",
+        "DeviceModel": "HTC One X",
+        "AppName": "com.aeropost.myaeroII",
+        "AppVersion": "2.3",
+        "IP_Address": "96.241.182.71"
+      },
+      "ErrorDescriptions": {},
+      "ErrorCodes": {}
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "serviceName": "Services",
+  "endpointName": "BasicHttpBinding_IServices",
+  "operationName": "AuthenticateMyAeroUser",
+  "params": {
+    "MyAeroGateway": "SJO",
+    "MyAeroAccount": 164470,
+    "MyAeroPasswordMD5": "42aa5e834d17636d8bcb8633035e8b55",
+    "DeviceID": "APA91bHKlpChvUaOj2EPRa5Q3bJabwDP9TEQ6ZEhBXLyjmxKQrIVa9y4EyAwiuJUxP6URBOh42fnFLtk53g6bQuqIh36sI-j1JJ_IZo9NMDE59u5AaSWvshgxCuwVZMf2naGjrkZCmVf_uCOTf2z-07xsX1CvMirLQ",
+    "MobileType": 8,
+    "OperatingSystemName": "Android",
+    "OperatingSystemVersion": "15",
+    "DeviceBrand": "HTC",
+    "DeviceModel": "HTC One X",
+    "AppName": "com.aeropost.myaeroII",
+    "AppVersion": "2.3",
+    "WebServiceSecurity_User": "MyAeroApp",
+    "WebServiceSecurity_Password": "Pmc#0Mqc!4ZaV"
+  },
+  "jarUrl": "${jarUrl}",
+  "url": "http://localhost:51311"
+}

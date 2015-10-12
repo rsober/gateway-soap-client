@@ -1,0 +1,48 @@
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+   <s:Body>
+      <AuthenticateMyAeroUserResponse xmlns="http://tempuri.org/">
+         <AuthenticateMyAeroUserResult xmlns:a="http://schemas.datacontract.org/2004/07/WS_MyAero" xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+            <a:ErrorDescriptions xmlns:b="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+            <a:ErrorCodes xmlns:b="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+            <a:PersonID>1330466</a:PersonID>
+            <a:IsValid>true</a:IsValid>
+            <a:IsFirstLogin>false</a:IsFirstLogin>
+            <a:IsOwner>true</a:IsOwner>
+            <a:Language>0</a:Language>
+            <a:CurrencySymbol>¢</a:CurrencySymbol>
+            <a:CurrencyISO>CRC</a:CurrencyISO>
+            <a:CountryCultureInfo>es-CR</a:CountryCultureInfo>
+            <a:Account>164470</a:Account>
+            <a:Gateway>SJO</a:Gateway>
+            <a:AccountStatus>ACTIVE</a:AccountStatus>
+            <a:AccountStatusCode>1</a:AccountStatusCode>
+            <a:FullName>Juan Manuel Rodriguez Alvarado</a:FullName>
+            <a:AccountEmail>juan.manuel.rodriguez@gmail.com</a:AccountEmail>
+            <a:UserEmail>juan.manuel.rodriguez@gmail.com</a:UserEmail>
+            <a:AccountAddressLine1>Counter Trilogía Escazú</a:AccountAddressLine1>
+            <a:AccountAddressLine2></a:AccountAddressLine2>
+            <a:DeliveryInstructions>Counter Trilogía Escazú</a:DeliveryInstructions>
+            <a:Packages_AddressLine1>6703 NW 7th St.</a:Packages_AddressLine1>
+            <a:Packages_AddressLine2>SJO-164470</a:Packages_AddressLine2>
+            <a:Packages_City>Miami</a:Packages_City>
+            <a:Packages_State>FL</a:Packages_State>
+            <a:Packages_ZipCode>33126</a:Packages_ZipCode>
+            <a:Packages_Phone>(305) 592-7754</a:Packages_Phone>
+            <a:Mail_Line1>P.P.Box 25331</a:Mail_Line1>
+            <a:Mail_Line2>SJO-164470</a:Mail_Line2>
+            <a:Mail_Line3>Miami,FL 33126</a:Mail_Line3>
+            <a:Token>B3EECC97-F76F-4FF3-9E12-53CDE6936CD6</a:Token>
+            <a:Device>
+               <a:OperatingSystemName>Android</a:OperatingSystemName>
+               <a:OperatingSystemVersion>15</a:OperatingSystemVersion>
+               <a:DeviceId>APA91bHKlpChvUaOj2EPRa5Q3bJabwDP9TEQ6ZEhBXLyjmxKQrIVa9y4EyAwiuJUxP6URBOh42fnFLtk53g6bQuqIh36sI-j1JJ_IZo9NMDE59u5AaSWvshgxCuwVZMf2naGjrkZCmVf_uCOTf2z-07xsX1CvMirLQ</a:DeviceId>
+               <a:DeviceBrand>HTC</a:DeviceBrand>
+               <a:DeviceModel>HTC One X</a:DeviceModel>
+               <a:AppName>com.aeropost.myaeroII</a:AppName>
+               <a:AppVersion>2.3</a:AppVersion>
+               <a:IP_Address>96.241.182.71</a:IP_Address>
+            </a:Device>
+         </AuthenticateMyAeroUserResult>
+      </AuthenticateMyAeroUserResponse>
+   </s:Body>
+</s:Envelope>
