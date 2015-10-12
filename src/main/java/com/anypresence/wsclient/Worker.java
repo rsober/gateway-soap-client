@@ -55,7 +55,7 @@ public class Worker implements Runnable {
 		StringBuilder builder = new StringBuilder("");
 		withSocket(sock, () ->	{
 			Gson gson = new GsonBuilder().registerTypeAdapter(SOAPFault.class, new SoapFaultSerializer())
-										 .registerTypeAdapter(JAXBElement.class, new JaxbElementSerializer())
+										 .registerTypeAdapter(JAXBElement.class, new JaxbTypeAdapter())
 										 .registerTypeHierarchyAdapter(Node.class, new GenericXmlSerializer())
 										 .setPrettyPrinting()
 										 .setFieldNamingStrategy(new FieldNamer())

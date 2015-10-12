@@ -88,7 +88,12 @@ public class DefaultRequestHandler extends RequestHandler {
 				
 				
 				try {
-					parameterValues[idx++] = getter.invoke(requestInstance);
+					if (getter.getReturnType() == JAXBElement.class) {
+						JAXBElement<?> jaxbElt = (JAXBElement<?>)getter.invoke(requestInstance);
+						parameterValues[idx++] = jaxbElt == null ? null : jaxbElt.getValue();
+					} else {
+						parameterValues[idx++] = getter.invoke(requestInstance);
+					}
 				} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 					throw new SoapClientException("Unable to invoke getter method " + getter.getName() + " due to " + e.getClass().getSimpleName() + ": " + e.getMessage(), e);
 				}
