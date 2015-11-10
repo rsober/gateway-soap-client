@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.ibm.com/maximo" elementFormDefault="qualified" attributeFormDefault="unqualified" targetNamespace="http://www.ibm.com/maximo">
+  <xsd:include schemaLocation="./MXMeta.xsd" />
+  <xsd:complexType name="CRC_MPOC_ASSETType">
+    <xsd:sequence>
+      <xsd:element name="MAXINTERRORMSG" type="xsd:string" minOccurs="0" />
+      <xsd:element name="ASSETNUM" type="MXStringType" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Unique Key Component</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="LOCATION" type="MXStringType" minOccurs="0" />
+      <xsd:element name="NEWLOCATION" type="MXStringType" minOccurs="0" />
+      <xsd:element name="NEWPARENT" type="MXStringType" minOccurs="0" />
+      <xsd:element name="NEWSITE" type="MXStringType" minOccurs="0" />
+      <xsd:element name="ORGID" type="MXStringType" minOccurs="0" />
+      <xsd:element name="PARENT" type="MXStringType" minOccurs="0" />
+      <xsd:element name="SITEID" type="MXStringType" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Unique Key Component</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="STATUS" type="MXDomainType" minOccurs="0" />
+      <xsd:element name="STATUSIFACE" type="MXBooleanType" minOccurs="0" />
+    </xsd:sequence>
+    <xsd:attributeGroup ref="ObjectStructurePropertyGroup" />
+    <xsd:attribute name="transLanguage" type="xsd:string" use="optional" />
+  </xsd:complexType>
+  <xsd:complexType name="CRC_MPOCType">
+    <xsd:sequence>
+      <xsd:element name="ASSET" type="CRC_MPOC_ASSETType" minOccurs="0" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="CRC_MPOCSetType">
+    <xsd:sequence>
+      <xsd:element name="ASSET" type="CRC_MPOC_ASSETType" minOccurs="0" maxOccurs="unbounded" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="CRC_MPOCQueryType">
+    <xsd:sequence>
+      <xsd:element name="WHERE" type="xsd:string" minOccurs="0" />
+      <xsd:element name="ASSET" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="ASSETNUM" type="MXStringQueryType" minOccurs="0" maxOccurs="2">
+              <xsd:annotation>
+                <xsd:documentation>Unique Key Component</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="LOCATION" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="ORGID" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="PARENT" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="SITEID" type="MXStringQueryType" minOccurs="0" maxOccurs="2">
+              <xsd:annotation>
+                <xsd:documentation>Unique Key Component</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="STATUS" type="MXDomainQueryType" minOccurs="0" maxOccurs="2" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attributeGroup ref="QueryClausePropertyGroup" />
+  </xsd:complexType>
+  <xsd:complexType name="CRC_MPOCCombinedKeySetType">
+    <xsd:sequence>
+      <xsd:element name="ASSET" minOccurs="0" maxOccurs="unbounded">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="SITEID" type="MXStringType">
+              <xsd:annotation>
+                <xsd:documentation>Unique Key Component</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="ASSETNUM" type="MXStringType">
+              <xsd:annotation>
+                <xsd:documentation>Unique Key Component</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="ASSETUID" type="MXLongType" nillable="true" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="CRC_MPOC" type="CRC_MPOCType" />
+  <xsd:element name="CRC_MPOCSet" type="CRC_MPOCSetType" />
+  <xsd:element name="CRC_MPOCQuery" type="CRC_MPOCQueryType" />
+</xsd:schema>

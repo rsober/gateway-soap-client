@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.ibm.com/maximo" elementFormDefault="qualified" attributeFormDefault="unqualified" targetNamespace="http://www.ibm.com/maximo">
+  <xsd:include schemaLocation="./MXMeta.xsd" />
+  <xsd:include schemaLocation="./CRC_MPOC.xsd" />
+  <xsd:include schemaLocation="./asset.xsd" />
+  <xsd:complexType name="CreateCRC_MPOCType">
+    <xsd:sequence>
+      <xsd:element ref="CRC_MPOCSet" />
+    </xsd:sequence>
+    <xsd:attributeGroup ref="CommonContentGroup" />
+  </xsd:complexType>
+  <xsd:complexType name="InvokeCRC_MPOCType">
+    <xsd:sequence>
+      <xsd:element ref="CRC_MPOCSet" />
+    </xsd:sequence>
+    <xsd:attributeGroup ref="CommonContentGroup" />
+  </xsd:complexType>
+  <xsd:complexType name="QueryCRC_MPOCType">
+    <xsd:sequence>
+      <xsd:element ref="CRC_MPOCQuery" />
+    </xsd:sequence>
+    <xsd:attributeGroup ref="CommonContentGroup" />
+    <xsd:attributeGroup ref="QueryContentGroup" />
+  </xsd:complexType>
+  <xsd:complexType name="SyncCRC_MPOCType">
+    <xsd:sequence>
+      <xsd:element ref="CRC_MPOCSet" />
+    </xsd:sequence>
+    <xsd:attributeGroup ref="CommonContentGroup" />
+  </xsd:complexType>
+  <xsd:complexType name="PublishCRC_MPOCType">
+    <xsd:sequence>
+      <xsd:element ref="CRC_MPOCSet" />
+    </xsd:sequence>
+    <xsd:attributeGroup ref="CommonContentGroup" />
+    <xsd:attributeGroup ref="PublishingContentGroup" />
+  </xsd:complexType>
+  <xsd:complexType name="UpdateCRC_MPOCType">
+    <xsd:sequence>
+      <xsd:element ref="CRC_MPOCSet" />
+    </xsd:sequence>
+    <xsd:attributeGroup ref="CommonContentGroup" />
+  </xsd:complexType>
+  <xsd:complexType name="DeleteCRC_MPOCType">
+    <xsd:sequence>
+      <xsd:element ref="CRC_MPOCSet" />
+    </xsd:sequence>
+    <xsd:attributeGroup ref="CommonContentGroup" />
+  </xsd:complexType>
+  <xsd:complexType name="InvokeCRC_MPOCResponseType">
+    <xsd:sequence>
+      <xsd:element ref="CRC_MPOCSet" />
+    </xsd:sequence>
+    <xsd:attributeGroup ref="CommonContentGroup" />
+  </xsd:complexType>
+  <xsd:complexType name="CreateCRC_MPOCResponseType">
+    <xsd:sequence>
+      <xsd:element ref="ASSETMboKeySet" minOccurs="0" />
+    </xsd:sequence>
+    <xsd:attributeGroup ref="CommonContentGroup" />
+  </xsd:complexType>
+  <xsd:complexType name="QueryCRC_MPOCResponseType">
+    <xsd:sequence>
+      <xsd:element ref="CRC_MPOCSet" />
+    </xsd:sequence>
+    <xsd:attributeGroup ref="CommonContentGroup" />
+    <xsd:attributeGroup ref="ResponseContentGroup" />
+  </xsd:complexType>
+  <xsd:complexType name="SyncCRC_MPOCResponseType">
+    <xsd:sequence />
+    <xsd:attributeGroup ref="CommonContentGroup" />
+  </xsd:complexType>
+  <xsd:complexType name="DeleteCRC_MPOCResponseType">
+    <xsd:sequence />
+    <xsd:attributeGroup ref="CommonContentGroup" />
+  </xsd:complexType>
+  <xsd:complexType name="UpdateCRC_MPOCResponseType">
+    <xsd:sequence />
+    <xsd:attributeGroup ref="CommonContentGroup" />
+  </xsd:complexType>
+  <xsd:element name="UpdateCRC_MPOC" type="UpdateCRC_MPOCType" />
+  <xsd:element name="QueryCRC_MPOC" type="QueryCRC_MPOCType" />
+  <xsd:element name="CreateCRC_MPOC" type="CreateCRC_MPOCType" />
+  <xsd:element name="SyncCRC_MPOC" type="SyncCRC_MPOCType" />
+  <xsd:element name="DeleteCRC_MPOC" type="DeleteCRC_MPOCType" />
+  <xsd:element name="PublishCRC_MPOC" type="PublishCRC_MPOCType" />
+  <xsd:element name="InvokeCRC_MPOC" type="InvokeCRC_MPOCType" />
+  <xsd:element name="InvokeCRC_MPOCResponse" type="InvokeCRC_MPOCResponseType" />
+  <xsd:element name="QueryCRC_MPOCResponse" type="QueryCRC_MPOCResponseType" />
+  <xsd:element name="CreateCRC_MPOCResponse" type="CreateCRC_MPOCResponseType" />
+  <xsd:element name="SyncCRC_MPOCResponse" type="SyncCRC_MPOCResponseType" />
+  <xsd:element name="UpdateCRC_MPOCResponse" type="UpdateCRC_MPOCResponseType" />
+  <xsd:element name="DeleteCRC_MPOCResponse" type="DeleteCRC_MPOCResponseType" />
+</xsd:schema>

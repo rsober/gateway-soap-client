@@ -10,7 +10,7 @@
 				"IsPrivacyChanged": true,
 				"IsValueChanged": true,
 				"Name": "SomeProperty",
-				"Privacy": "PRIVATE",
+				"Privacy": "Private",
 				"Values": {
 					"ValueData": [
 						{ 

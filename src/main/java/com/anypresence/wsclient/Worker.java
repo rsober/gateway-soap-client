@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -17,15 +16,18 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
-import java.util.Enumeration;
+import java.util.Arrays;
 import java.util.List;
-import java.util.jar.JarEntry;
+import java.util.function.Function;
 import java.util.jar.JarFile;
 
 import javax.jws.WebMethod;
 import javax.xml.bind.JAXBElement;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementRef;
+import javax.xml.bind.annotation.XmlValue;
+import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.soap.SOAPFault;
 import javax.xml.ws.Binding;
 import javax.xml.ws.BindingProvider;
@@ -36,6 +38,7 @@ import javax.xml.ws.soap.SOAPFaultException;
 
 import org.w3c.dom.Node;
 
+import com.anypresence.wsclient.requesthandler.RequestHandler;
 import com.google.gson.FieldNamingStrategy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -56,6 +59,8 @@ public class Worker implements Runnable {
 		withSocket(sock, () ->	{
 			Gson gson = new GsonBuilder().registerTypeAdapter(SOAPFault.class, new SoapFaultSerializer())
 										 .registerTypeAdapter(JAXBElement.class, new JaxbTypeAdapter())
+										 .registerTypeAdapter(XMLGregorianCalendar.class, new XMLGregorianCalendarTypeAdapter())
+										 .registerTypeHierarchyAdapter(Enum.class, new EnumTypeAdapter())
 										 .registerTypeHierarchyAdapter(Node.class, new GenericXmlSerializer())
 										 .setPrettyPrinting()
 										 .setFieldNamingStrategy(new FieldNamer())
@@ -181,62 +186,31 @@ public class Worker implements Runnable {
 				throw new SoapClientException("Unable to open file at " + req.getJarUrl() + " due to IOException: " + e.getMessage(), e);
 			}
 
-			Enumeration<JarEntry> enumerator = file.entries();
-
-			Class<?> serviceClass = null;
-
-			outer:
-			while (enumerator.hasMoreElements()) {
-				JarEntry entry = enumerator.nextElement();
-				String className = entry.getName();
-				Log.debug("Jar entry: " + className);
-				if (className.endsWith(".class")) {
-					className = className.replaceAll("/", ".");
-					className = className.substring(0,  className.length() - 6);
-
-					Class<?> clazzToLoad;
-					try {
-						clazzToLoad = child.loadClass(className);
-					} catch (ClassNotFoundException e) {
-						throw new SoapClientException("Unable to load class for class name " + className + " due to ClassNotFoundException", e);
-					}
-
-					for (Annotation anno : clazzToLoad.getDeclaredAnnotationsByType(WebServiceClient.class)) {
-						if (anno.annotationType() == WebServiceClient.class) {
-							WebServiceClient cl = (WebServiceClient)anno;
-							if (cl.name().equals(req.getServiceName())) {
-
-								// found the service!
-								Log.debug("Successfully located service in class:  " + clazzToLoad);
-								serviceClass = clazzToLoad;
-								break outer;
-							}
+			Class<?> serviceClass = JarUtils.findClassInJar(
+					child, 
+					file, 
+					new Function<Class<?>, Boolean>() {
+						@Override
+						public Boolean apply(Class<?> t) {
+							WebServiceClient cl = ReflectionUtils.findAnnotationOnClass(
+									t, 
+									WebServiceClient.class, 
+									(webServiceClient) -> webServiceClient.name().equals(req.getServiceName())
+							); 
+							
+							return cl != null;
 						}
 					}
-				}
-			}
-
-			if (serviceClass == null) {
-				throw new SoapClientException("Unable to locate service class ");
-			}
-
-			Method[] methods = serviceClass.getMethods();
-			Method endpointMethod = null;
-			outer:
-			for (Method method: methods) {
-				if (method.getParameterCount() > 0) {
-					continue;
-				}
-				Annotation[] annos = method.getAnnotationsByType(WebEndpoint.class);
-				for (Annotation anno: annos) {
-					WebEndpoint we = (WebEndpoint)anno;
-					if (we.name().equals(req.getEndpointName())) {
-						endpointMethod = method;
-						break outer;
-					}
-				}
-			}
-
+			);
+			
+			Method endpointMethod = ReflectionUtils.findMethodAnnotatedWith(
+				serviceClass, 
+				WebEndpoint.class, 
+				(Method method, WebEndpoint webEndpoint) -> 
+					method.getParameterCount() == 0 && 
+					webEndpoint.name().equals(req.getEndpointName())
+			);
+			
 			if (endpointMethod == null) {
 				throw new SoapClientException("Unable to find endpoint");
 			}
@@ -274,24 +248,21 @@ public class Worker implements Runnable {
 
 			Class<?> returnType = endpointMethod.getReturnType();
 
-			Method operationMethod = null;
-			Method[] serviceMethods = returnType.getMethods();
-			outer:
-			for (Method method: serviceMethods) {
-				for (Annotation anno : method.getAnnotationsByType(WebMethod.class)) {
-					WebMethod wm = (WebMethod)anno;
-					if ((req.getActionName() != null && req.getActionName().equals(wm.action())) || (req.getOperationName() != null && req.getOperationName().equals(wm.operationName()))) {
-						operationMethod = method;
-						break outer;
-					}
-				}
-			}
+			
+			Method operationMethod = ReflectionUtils.findMethodAnnotatedWith(
+				returnType, 
+				WebMethod.class, 
+				(method, webMethod) -> 
+					(req.getActionName() != null && req.getActionName().equals(webMethod.action())) || 
+					(req.getOperationName() != null && req.getOperationName().equals(webMethod.operationName()))
+			);
 
 			if (operationMethod == null) {
 				throw new SoapClientException("Unable to find operation to invoke");
 			}
 
-			return getRequestResponseHandler(child, gson, operationMethod, endpoint).handle(req);
+			RequestHandler requestHandler = new RequestHandler(child, gson, operationMethod, endpoint);
+			return requestHandler.handle(req);
 		} finally {
 			if (file != null) {
 				try {
@@ -310,24 +281,23 @@ public class Worker implements Runnable {
 		}
 	}
 
-	private static RequestHandler getRequestResponseHandler(ClassLoader loader, Gson gson, Method endpointMethod, Object endpoint) {
-		if (endpointMethod.getReturnType() == Void.TYPE) {
-			return new VoidRequestHandler(loader, gson, endpointMethod, endpoint);
-		} else {
-			return new DefaultRequestHandler(loader, gson, endpointMethod, endpoint);
-		}
-
-	}
-	
 	private static class FieldNamer implements FieldNamingStrategy{
 		@Override
 		public String translateName(Field f) {
 			XmlElement elt = f.getDeclaredAnnotation(XmlElement.class);
 			XmlElementRef eltRef = f.getDeclaredAnnotation(XmlElementRef.class);
+			XmlAttribute attrib = f.getDeclaredAnnotation(XmlAttribute.class);
+			XmlValue value = f.getDeclaredAnnotation(XmlValue.class);
 			if (elt != null && elt.name() != null && !elt.name().equals(DEFAULT_NODE_NAME)) {
 				return elt.name();
 			} else if (eltRef != null && eltRef.name() != null && !eltRef.name().equals(DEFAULT_NODE_NAME)) {
 				return eltRef.name();
+			} else if (attrib != null && attrib.name() != null && !attrib.name().equals(DEFAULT_NODE_NAME)) { 
+				return "@" + attrib.name();
+			} else if (attrib != null && (attrib.name() == null || attrib.name().equals(DEFAULT_NODE_NAME))) {
+				return "@" + f.getName();
+			} else if (value != null) {
+				return "$$value";
 			} else {
 				return f.getName();
 			}

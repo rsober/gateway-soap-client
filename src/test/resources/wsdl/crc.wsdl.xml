@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:mx="http://www.ibm.com/maximo" xmlns:mxws="http://www.ibm.com/maximo/wsdl/OxyExt_CRC_AMOVE_MPOC" targetNamespace="http://www.ibm.com/maximo/wsdl/OxyExt_CRC_AMOVE_MPOC" name="OxyExt_CRC_AMOVE_MPOC">
+  <types>
+    <xsd:schema>
+      <xsd:import namespace="http://www.ibm.com/maximo" schemaLocation="./crc-xsd/CRC_MPOCService.xsd" />
+    </xsd:schema>
+  </types>
+  <message name="SyncCRC_MPOCRequest">
+    <part name="parameters" element="mx:SyncCRC_MPOC" />
+  </message>
+  <message name="SyncCRC_MPOCResponse">
+    <part name="parameters" element="mx:SyncCRC_MPOCResponse" />
+  </message>
+  <portType name="OxyExt_CRC_AMOVE_MPOCPortType">
+    <operation name="SyncCRC_MPOC">
+      <input message="mxws:SyncCRC_MPOCRequest" />
+      <output message="mxws:SyncCRC_MPOCResponse" />
+    </operation>
+  </portType>
+  <binding name="OxyExt_CRC_AMOVE_MPOCSOAP11Binding" type="mxws:OxyExt_CRC_AMOVE_MPOCPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="SyncCRC_MPOC">
+      <soap:operation soapAction="urn:processDocument" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <binding name="OxyExt_CRC_AMOVE_MPOCSOAP12Binding" type="mxws:OxyExt_CRC_AMOVE_MPOCPortType">
+    <soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="SyncCRC_MPOC">
+      <soap12:operation soapAction="urn:processDocument" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <service name="OxyExt_CRC_AMOVE_MPOC">
+    <port name="OxyExt_CRC_AMOVE_MPOCSOAP11Port" binding="mxws:OxyExt_CRC_AMOVE_MPOCSOAP11Binding">
+      <soap:address location="http://okcwmax1-s:9088/meaweb/services/OxyExt_CRC_AMOVE_MPOC" />
+    </port>
+    <port name="OxyExt_CRC_AMOVE_MPOCSOAP12Port" binding="mxws:OxyExt_CRC_AMOVE_MPOCSOAP12Binding">
+      <soap12:address location="http://okcwmax1-s:9088/meaweb/services/OxyExt_CRC_AMOVE_MPOC" />
+    </port>
+  </service>
+</definitions>
