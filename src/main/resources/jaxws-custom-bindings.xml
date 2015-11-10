@@ -1,0 +1,36 @@
+<!--
+<?xml version="1.0" encoding="UTF-8"?>
+<jaxws:bindings xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" wsdlLocation="file:/Users/rsnyder/Desktop/crc.wsdl"
+    xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" xmlns:jaxws="http://java.sun.com/xml/ns/jaxws">
+    <jaxws:bindings node="wsdl:definitions">
+        <jaxws:bindings node="wsdl:types" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb">
+            <jaxws:bindings
+                node="//xs:schema">
+                <jaxb:bindings
+                    node="//xs:element[@name='isFoobar']">
+                    <jaxb:typesafeEnumClass name="IsFoobar">
+                        <jaxb:typesafeEnumMember value="01" name="TRUE" />
+                        <jaxb:typesafeEnumMember value="02" name="FALSE" />
+                    </jaxb:typesafeEnumClass>
+                </jaxb:bindings>
+            </jaxws:bindings>
+        </jaxws:bindings>
+    </jaxws:bindings>
+</jaxws:bindings>
+-->
+
+<jaxws:bindings xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:jaxws="http://java.sun.com/xml/ns/jaxws"
+    xmlns:javaee="http://java.sun.com/xml/ns/javaee"
+    wsdlLocation="file:/Users/rsnyder/Desktop/crc.wsdl" >
+	<jaxws:bindings node="wsdl:definitions/wsdl:types/xsd:schema[@targetNamespace='http://www.ibm.com/maximo']">
+	    <jaxb:schemaBindings>
+	        <jaxb:bindings node="//xs:element" >
+				<jaxb:javaType name="boolean" parseMethod="com.anypresence.wsclient.ZeroOneBooleanConverter.parseZeroOrOneAsBoolean" printMethod="com.anypresence.wsclient.ZeroOneBooleanConverter.printBooleanAsZeroOrOne" />
+			</jaxb:bindings>
+	    </jaxb:schemaBindings>
+	</jaxws:bindings>
+</jaxws:bindings>

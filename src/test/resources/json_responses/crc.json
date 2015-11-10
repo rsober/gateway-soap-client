@@ -1,0 +1,10 @@
+{
+  "success": true,
+  "response": {
+    "@creationDateTime": "2015-11-01T00:00:00.123Z",
+    "@baseLanguage": "en",
+    "@transLanguage": "en",
+    "@messageID": "111",
+    "@maximoVersion": "2"
+  }
+}

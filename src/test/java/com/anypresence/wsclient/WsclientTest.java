@@ -4,11 +4,13 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.Socket;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,13 +40,41 @@ public class WsclientTest {
 		try {
 			File wsdlDir = new File(uri.toURI());
 			for (File f : wsdlDir.listFiles()) {
-				String filename = f.getName();
-				testNames.add(filename.split("\\.")[0]);
+				if (f.isFile()) {
+					String filename = f.getName();
+					testNames.add(filename.split("\\.")[0]);
+				}
 			}
 		} catch (URISyntaxException e) {
 			throw new RuntimeException("Failed to get list of test cases due to URISyntaxException", e);
 		}
 		return testNames;
+	}
+	
+	private static void listAllHelper(File file, List<String> results) {
+		if (file.isDirectory()) {
+			if (file.listFiles() == null) {
+				return;
+			}
+			for (File f : file.listFiles()) {
+				if (f.getName().endsWith(".java")) {
+					results.add(f.getAbsolutePath());
+				}
+				listAllHelper(f, results);
+			}
+		}
+	}
+	
+	private static List<String> listAll(File directory) {
+		List<String> files = new ArrayList<String>();
+		listAllHelper(directory, files);
+		return files;
+	}
+	
+	private static void debugCmd(String... args) throws IOException, InterruptedException {
+		ProcessBuilder builder = new ProcessBuilder(args).inheritIO();
+		Process p = builder.start();
+		p.waitFor();
 	}
 	
 	@BeforeClass
@@ -62,10 +92,40 @@ public class WsclientTest {
 			File f = File.createTempFile("wsclienttest", ".jar");
 			File d = Files.createTempDirectory("wsimport").toFile();
 			String testCase = (String)casename;
-			String cmd = "wsimport -p temp -extension -clientjar " + f.getAbsolutePath() + " -d " + d.getAbsolutePath()  + " " + WsclientTest.class.getResource("/wsdl/" + testCase + ".wsdl.xml").toURI().getPath();
-			Process p = Runtime.getRuntime().exec(cmd);
-			processes.put(cmd, p);
-			jars.put(testCase, f);
+			String cmd = "wsimport -classpath bin -p temp -extension -d " + d.getAbsolutePath()  + " -Xnocompile " + WsclientTest.class.getResource("/wsdl/" + testCase + ".wsdl.xml").toURI().getPath();
+			Process wsimportProcess = Runtime.getRuntime().exec(cmd);
+			int exitCode = wsimportProcess.waitFor();
+			if (exitCode == 0) {
+				List<String> javaFiles = listAll(d);
+				String javacCmdClasspath = System.getProperty("javac_cmd_classpath");
+				if (javacCmdClasspath == null) { 
+					throw new RuntimeException("System property javac_cmd_classpath ought to be set");
+				}
+				String javacCmd = "javac -cp " + javacCmdClasspath + " "  + String.join(" ", javaFiles);
+				
+				String[] javaFilesArray = javaFiles.toArray(new String[javaFiles.size()]);
+				List<String> args = new ArrayList<String>();
+				args.add("javac");
+				args.add("-cp");
+				args.add(javacCmdClasspath);
+				args.addAll(Arrays.asList(javaFilesArray));
+				ProcessBuilder builder = new ProcessBuilder(args).inheritIO();
+				Process javacProcess = builder.start();
+				int javacExitCode = javacProcess.waitFor();
+				if (javacExitCode == 0) {
+					String jarCmd = "jar -cvf " + f.getAbsolutePath() + " -C " + d.getAbsolutePath() + " .";
+					Process jarProcess = Runtime.getRuntime().exec(jarCmd);
+					processes.put(jarCmd, jarProcess);
+					jarProcess.waitFor();
+					debugCmd("jar", "tvf", f.getAbsolutePath());
+					jars.put(testCase, f);
+				} else {
+					
+					throw new RuntimeException("Unexpected exit code from javac: " + javacExitCode);
+				}
+			} else {
+				throw new RuntimeException("Unexpected exit code from wsimport: " + exitCode);
+			}
 		}
 		
 		for (Map.Entry<String, Process> processEntry : processes.entrySet()) {

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Body>
+    <SyncCRC_MPOC xmlns="http://www.ibm.com/maximo" baseLanguage="en" creationDateTime="2015-06-05T00:00:00.000Z" messageID="11111112" transLanguage="en">
+      <CRC_MPOCSet>
+        <ASSET action="Change" transLanguage="en">
+          <LOCATION changed="0">CVN-A</LOCATION>
+          <ORGID changed="0">DOM</ORGID>
+          <PARENT changed="0">CVN</PARENT>
+          <SITEID changed="1">VT</SITEID>
+        </ASSET>
+      </CRC_MPOCSet>
+    </SyncCRC_MPOC>
+  </S:Body>
+</S:Envelope>

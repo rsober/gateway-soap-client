@@ -1,0 +1,6 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:max="http://www.ibm.com/maximo">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <max:SyncCRC_MPOCResponse creationDateTime="2015-11-01T00:00:00.123Z" baseLanguage="en" transLanguage="en" messageID="111" maximoVersion="2"/>
+   </soapenv:Body>
+</soapenv:Envelope>

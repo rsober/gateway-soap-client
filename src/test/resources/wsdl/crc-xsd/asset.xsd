@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.ibm.com/maximo" elementFormDefault="qualified" attributeFormDefault="unqualified" targetNamespace="http://www.ibm.com/maximo">
+  <xsd:include schemaLocation="./MXMeta.xsd" />
+  <xsd:complexType name="ASSETKeyType">
+    <xsd:sequence>
+      <xsd:element name="SITEID" type="MXStringType">
+        <xsd:annotation>
+          <xsd:documentation>Unique Key Component</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="ASSETNUM" type="MXStringType">
+        <xsd:annotation>
+          <xsd:documentation>Unique Key Component</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ASSETObjectType">
+    <xsd:sequence>
+      <xsd:element name="ANCESTOR" type="MXStringType" minOccurs="0" />
+      <xsd:element name="ASSETID" type="MXLongType" nillable="true" minOccurs="0" />
+      <xsd:element name="ASSETNUM" type="MXStringType" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Unique Key Component</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="ASSETTAG" type="MXStringType" minOccurs="0" />
+      <xsd:element name="ASSETTYPE" type="MXDomainType" minOccurs="0" />
+      <xsd:element name="ASSETUID" type="MXLongType" nillable="true" minOccurs="0" />
+      <xsd:element name="AUTOWOGEN" type="MXBooleanType" minOccurs="0" />
+      <xsd:element name="BINNUM" type="MXStringType" minOccurs="0" />
+      <xsd:element name="BUDGETCOST" type="MXDoubleType" nillable="true" minOccurs="0" />
+      <xsd:element name="CALNUM" type="MXStringType" minOccurs="0" />
+      <xsd:element name="CHANGEBY" type="MXStringType" minOccurs="0" />
+      <xsd:element name="CHANGEDATE" type="MXDateTimeType" nillable="true" minOccurs="0" />
+      <xsd:element name="CHILDREN" type="MXBooleanType" minOccurs="0" />
+      <xsd:element name="CLASSSTRUCTUREID" type="MXStringType" minOccurs="0" />
+      <xsd:element name="CONDITIONCODE" type="MXStringType" minOccurs="0" />
+      <xsd:element name="DESCRIPTION" type="MXStringType" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Multiple languages supported</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element> 
+      <xsd:element name="DISABLED" type="MXBooleanType" minOccurs="0" />
+      <xsd:element name="EQ11" type="MXStringType" minOccurs="0" />
+      <xsd:element name="EXTERNALREFID" type="MXStringType" minOccurs="0" />
+      <xsd:element name="FAILURECODE" type="MXStringType" minOccurs="0" />
+      <xsd:element name="GLACCOUNT" type="MXGLAccountType" minOccurs="0" />
+      <xsd:element name="GROUPNAME" type="MXStringType" minOccurs="0" />
+      <xsd:element name="HASLD" type="MXBooleanType" minOccurs="0" />
+      <xsd:element name="INSTALLDATE" type="MXDateTimeType" nillable="true" minOccurs="0" />
+      <xsd:element name="INVCOST" type="MXDoubleType" nillable="true" minOccurs="0" />
+      <xsd:element name="ISRUNNING" type="MXBooleanType" minOccurs="0" />
+      <xsd:element name="ITEMNUM" type="MXStringType" minOccurs="0" />
+      <xsd:element name="ITEMSETID" type="MXStringType" minOccurs="0" />
+      <xsd:element name="ITEMTYPE" type="MXStringType" minOccurs="0" />
+      <xsd:element name="LANGCODE" type="MXStringType" minOccurs="0" />
+      <xsd:element name="LOCATION" type="MXStringType" minOccurs="0" />
+      <xsd:element name="MAINTHIERCHY" type="MXBooleanType" minOccurs="0" />
+      <xsd:element name="MANUFACTURER" type="MXStringType" minOccurs="0" />
+      <xsd:element name="MOVED" type="MXBooleanType" minOccurs="0" />
+      <xsd:element name="ORGID" type="MXStringType" minOccurs="0" />
+      <xsd:element name="OWNERSYSID" type="MXStringType" minOccurs="0" />
+      <xsd:element name="PARENT" type="MXStringType" minOccurs="0" />
+      <xsd:element name="PRIORITY" type="MXLongType" nillable="true" minOccurs="0" />
+      <xsd:element name="PURCHASEPRICE" type="MXDoubleType" nillable="true" minOccurs="0" />
+      <xsd:element name="REPLACECOST" type="MXDoubleType" nillable="true" minOccurs="0" />
+      <xsd:element name="ROTSUSPACCT" type="MXGLAccountType" minOccurs="0" />
+      <xsd:element name="SENDERSYSID" type="MXStringType" minOccurs="0" />
+      <xsd:element name="SERIALNUM" type="MXStringType" minOccurs="0" />
+      <xsd:element name="SHIFTNUM" type="MXStringType" minOccurs="0" />
+      <xsd:element name="SITEID" type="MXStringType" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Unique Key Component</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="SOURCESYSID" type="MXStringType" minOccurs="0" />
+      <xsd:element name="STATUS" type="MXDomainType" minOccurs="0" />
+      <xsd:element name="STATUSDATE" type="MXDateTimeType" nillable="true" minOccurs="0" />
+      <xsd:element name="TOOLCONTROLACCOUNT" type="MXGLAccountType" minOccurs="0" />
+      <xsd:element name="TOOLRATE" type="MXDoubleType" nillable="true" minOccurs="0" />
+      <xsd:element name="TOTALCOST" type="MXDoubleType" nillable="true" minOccurs="0" />
+      <xsd:element name="TOTDOWNTIME" type="MXDoubleType" nillable="true" minOccurs="0" />
+      <xsd:element name="TOTUNCHARGEDCOST" type="MXDoubleType" nillable="true" minOccurs="0" />
+      <xsd:element name="UNCHARGEDCOST" type="MXDoubleType" nillable="true" minOccurs="0" />
+      <xsd:element name="USAGE" type="MXStringType" minOccurs="0" />
+      <xsd:element name="VENDOR" type="MXStringType" minOccurs="0" />
+      <xsd:element name="WARRANTYEXPDATE" type="MXDateTimeType" nillable="true" minOccurs="0" />
+      <xsd:element name="YTDCOST" type="MXDoubleType" nillable="true" minOccurs="0" />
+      <xsd:element name="DIRECTION" type="MXDomainType" minOccurs="0" />
+      <xsd:element name="ENDDESCRIPTION" type="MXStringType" minOccurs="0" />
+      <xsd:element name="ENDMEASURE" type="MXDoubleType" nillable="true" minOccurs="0" />
+      <xsd:element name="ISLINEAR" type="MXBooleanType" minOccurs="0" />
+      <xsd:element name="STARTDESCRIPTION" type="MXStringType" minOccurs="0" />
+      <xsd:element name="STARTMEASURE" type="MXDoubleType" nillable="true" minOccurs="0" />
+      <xsd:element name="LRM" type="MXStringType" minOccurs="0" />
+      <xsd:element name="OXY_MISCASSET" type="MXStringType" minOccurs="0" />
+      <xsd:element name="OXY_TAGNUM" type="MXStringType" minOccurs="0" />
+      <xsd:element name="OXY_DRAWNUM" type="MXStringType" minOccurs="0" />
+      <xsd:element name="OXY_MODELNUM" type="MXStringType" minOccurs="0" />
+      <xsd:element name="OXY_SHTDWNRQD" type="MXBooleanType" minOccurs="0" />
+      <xsd:element name="OXY_CRITICAL" type="MXBooleanType" minOccurs="0" />
+      <xsd:element name="OXY_ASSETREFNUM" type="MXStringType" minOccurs="0" />
+      <xsd:element name="OXY_MECHINT" type="MXBooleanType" minOccurs="0" />
+      <xsd:element name="PLUSGTARGETAVAIL" type="MXDoubleType" nillable="true" minOccurs="0" />
+      <xsd:element name="PLUSGEXREGISTERED" type="MXBooleanType" minOccurs="0" />
+      <xsd:element name="PLUSGEXATEXSTD" type="MXStringType" minOccurs="0" />
+      <xsd:element name="PLUSGOPENOMUID" type="MXLongType" nillable="true" minOccurs="0" />
+      <xsd:element name="PLUSGPOLICYID" type="MXLongType" nillable="true" minOccurs="0" />
+      <xsd:element name="PLUSGHISTORICMTBF" type="MXLongType" nillable="true" minOccurs="0" />
+      <xsd:element name="PLUSGTARGETMTBF" type="MXLongType" nillable="true" minOccurs="0" />
+      <xsd:element name="PLUSGBENCHMARKMTBF" type="MXLongType" nillable="true" minOccurs="0" />
+      <xsd:element name="PLUSGBENCHSOURCE" type="MXStringType" minOccurs="0" />
+      <xsd:element name="PLUSGPREDICTEDMTBF" type="MXLongType" nillable="true" minOccurs="0" />
+      <xsd:element name="PLUSGDATEOFPREDICTION" type="MXDateTimeType" nillable="true" minOccurs="0" />
+      <xsd:element name="PLUSGMTTR" type="MXLongType" nillable="true" minOccurs="0" />
+      <xsd:element name="OXY_BARCODE" type="MXStringType" minOccurs="0" />
+      <xsd:element name="EQ1" type="MXStringType" minOccurs="0" />
+      <xsd:element name="EQ10" type="MXStringType" minOccurs="0" />
+      <xsd:element name="EQ12" type="MXStringType" minOccurs="0" />
+      <xsd:element name="EQ2" type="MXStringType" minOccurs="0" />
+      <xsd:element name="EQ23" type="MXStringType" minOccurs="0" />
+      <xsd:element name="EQ24" type="MXStringType" minOccurs="0" />
+      <xsd:element name="EQ3" type="MXStringType" minOccurs="0" />
+      <xsd:element name="EQ4" type="MXStringType" minOccurs="0" />
+      <xsd:element name="EQ5" type="MXStringType" minOccurs="0" />
+      <xsd:element name="EQ6" type="MXStringType" minOccurs="0" />
+      <xsd:element name="EQ7" type="MXStringType" minOccurs="0" />
+      <xsd:element name="EQ8" type="MXStringType" minOccurs="0" />
+      <xsd:element name="EQ9" type="MXStringType" minOccurs="0" />
+      <xsd:element name="EQ13" type="MXStringType" minOccurs="0" />
+      <xsd:element name="EQ14" type="MXStringType" minOccurs="0" />
+      <xsd:element name="EQ15" type="MXStringType" minOccurs="0" />
+      <xsd:element name="EQ17" type="MXStringType" minOccurs="0" />
+      <xsd:element name="EQ22" type="MXStringType" minOccurs="0" />
+      <xsd:element name="OXY_BATCHID" type="MXStringType" minOccurs="0" />
+      <xsd:element name="OXY_HESCRITICAL" type="MXBooleanType" minOccurs="0" />
+    </xsd:sequence>
+    <xsd:attribute name="action" type="ProcessingActionType" use="optional" />
+  </xsd:complexType>
+  <xsd:complexType name="ASSETMboKeyType">
+    <xsd:sequence>
+      <xsd:element name="ASSET" type="ASSETKeyType" minOccurs="0" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ASSETMboKeySetType">
+    <xsd:sequence>
+      <xsd:element name="ASSET" type="ASSETKeyType" minOccurs="0" maxOccurs="unbounded" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ASSETMboSetType">
+    <xsd:sequence>
+      <xsd:element name="ASSET" type="ASSETObjectType" minOccurs="0" maxOccurs="unbounded" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ASSETMboType">
+    <xsd:sequence>
+      <xsd:element name="ASSET" type="ASSETObjectType" minOccurs="0" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ASSETMboQueryType">
+    <xsd:sequence>
+      <xsd:element name="WHERE" type="xsd:string" minOccurs="0" />
+      <xsd:element name="ASSET" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="ANCESTOR" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="ASSETID" type="MXLongQueryType" nillable="true" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="ASSETNUM" type="MXStringQueryType" minOccurs="0" maxOccurs="2">
+              <xsd:annotation>
+                <xsd:documentation>Unique Key Component</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="ASSETTAG" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="ASSETTYPE" type="MXDomainQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="ASSETUID" type="MXLongQueryType" nillable="true" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="AUTOWOGEN" type="MXBooleanQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="BINNUM" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="BUDGETCOST" type="MXDoubleQueryType" nillable="true" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="CALNUM" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="CHANGEBY" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="CHANGEDATE" type="MXDateTimeQueryType" nillable="true" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="CHILDREN" type="MXBooleanQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="CLASSSTRUCTUREID" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="CONDITIONCODE" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="DESCRIPTION" type="MXStringQueryType" minOccurs="0" maxOccurs="2">
+              <xsd:annotation>
+                <xsd:documentation>Multiple languages supported</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="DISABLED" type="MXBooleanQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="EQ11" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="EXTERNALREFID" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="FAILURECODE" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="GLACCOUNT" type="MXGLAccountQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="GROUPNAME" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="HASLD" type="MXBooleanQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="INSTALLDATE" type="MXDateTimeQueryType" nillable="true" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="INVCOST" type="MXDoubleQueryType" nillable="true" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="ISRUNNING" type="MXBooleanQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="ITEMNUM" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="ITEMSETID" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="ITEMTYPE" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="LANGCODE" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="LOCATION" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="MAINTHIERCHY" type="MXBooleanQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="MANUFACTURER" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="MOVED" type="MXBooleanQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="ORGID" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="OWNERSYSID" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="PARENT" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="PRIORITY" type="MXLongQueryType" nillable="true" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="PURCHASEPRICE" type="MXDoubleQueryType" nillable="true" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="REPLACECOST" type="MXDoubleQueryType" nillable="true" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="ROTSUSPACCT" type="MXGLAccountQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="SENDERSYSID" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="SERIALNUM" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="SHIFTNUM" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="SITEID" type="MXStringQueryType" minOccurs="0" maxOccurs="2">
+              <xsd:annotation>
+                <xsd:documentation>Unique Key Component</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="SOURCESYSID" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="STATUS" type="MXDomainQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="STATUSDATE" type="MXDateTimeQueryType" nillable="true" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="TOOLCONTROLACCOUNT" type="MXGLAccountQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="TOOLRATE" type="MXDoubleQueryType" nillable="true" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="TOTALCOST" type="MXDoubleQueryType" nillable="true" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="TOTDOWNTIME" type="MXDoubleQueryType" nillable="true" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="TOTUNCHARGEDCOST" type="MXDoubleQueryType" nillable="true" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="UNCHARGEDCOST" type="MXDoubleQueryType" nillable="true" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="USAGE" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="VENDOR" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="WARRANTYEXPDATE" type="MXDateTimeQueryType" nillable="true" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="YTDCOST" type="MXDoubleQueryType" nillable="true" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="DIRECTION" type="MXDomainQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="ENDDESCRIPTION" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="ENDMEASURE" type="MXDoubleQueryType" nillable="true" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="ISLINEAR" type="MXBooleanQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="STARTDESCRIPTION" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="STARTMEASURE" type="MXDoubleQueryType" nillable="true" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="LRM" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="OXY_MISCASSET" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="OXY_TAGNUM" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="OXY_DRAWNUM" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="OXY_MODELNUM" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="OXY_SHTDWNRQD" type="MXBooleanQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="OXY_CRITICAL" type="MXBooleanQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="OXY_ASSETREFNUM" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="OXY_MECHINT" type="MXBooleanQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="PLUSGTARGETAVAIL" type="MXDoubleQueryType" nillable="true" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="PLUSGEXREGISTERED" type="MXBooleanQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="PLUSGEXATEXSTD" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="PLUSGOPENOMUID" type="MXLongQueryType" nillable="true" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="PLUSGPOLICYID" type="MXLongQueryType" nillable="true" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="PLUSGHISTORICMTBF" type="MXLongQueryType" nillable="true" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="PLUSGTARGETMTBF" type="MXLongQueryType" nillable="true" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="PLUSGBENCHMARKMTBF" type="MXLongQueryType" nillable="true" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="PLUSGBENCHSOURCE" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="PLUSGPREDICTEDMTBF" type="MXLongQueryType" nillable="true" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="PLUSGDATEOFPREDICTION" type="MXDateTimeQueryType" nillable="true" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="PLUSGMTTR" type="MXLongQueryType" nillable="true" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="OXY_BARCODE" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="EQ1" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="EQ10" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="EQ12" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="EQ2" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="EQ23" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="EQ24" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="EQ3" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="EQ4" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="EQ5" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="EQ6" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="EQ7" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="EQ8" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="EQ9" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="EQ13" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="EQ14" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="EQ15" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="EQ17" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="EQ22" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="OXY_BATCHID" type="MXStringQueryType" minOccurs="0" maxOccurs="2" />
+            <xsd:element name="OXY_HESCRITICAL" type="MXBooleanQueryType" minOccurs="0" maxOccurs="2" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attributeGroup ref="QueryClausePropertyGroup" />
+  </xsd:complexType>
+  <xsd:element name="ASSETMbo" type="ASSETMboType" />
+  <xsd:element name="ASSETMboSet" type="ASSETMboSetType" />
+  <xsd:element name="ASSETMboKey" type="ASSETMboKeyType" />
+  <xsd:element name="ASSETMboKeySet" type="ASSETMboKeySetType" />
+  <xsd:element name="ASSETMboQuery" type="ASSETMboQueryType" />
+</xsd:schema>

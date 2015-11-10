@@ -1,0 +1,35 @@
+{ 
+  "serviceName": "OxyExt_CRC_AMOVE_MPOC", 
+  "endpointName": "OxyExt_CRC_AMOVE_MPOCSOAP11Port", 
+  "operationName": "SyncCRC_MPOC", 
+  "params": {
+  	"@creationDateTime": "2015-06-05T00:00:00Z",
+  	"@baseLanguage": "en",
+  	"@transLanguage": "en",
+  	"@messageID": "11111112",
+  	"CRC_MPOCSet": {
+  		"ASSET": [{
+  			"@action": "Change",
+  			"@transLanguage": "en",
+  			"LOCATION": {
+  				"@changed": false,
+  				"$$value": "CVN-A"
+  			},
+  			"ORGID": {
+  				"@changed": false,
+  				"$$value": "DOM"
+  			},
+  			"PARENT": {
+  				"@changed": false,
+  				"$$value": "CVN"
+  			},
+  			"SITEID": {
+  				"@changed": true,
+  				"$$value": "VT"
+  			}
+  		}]
+  	}
+  }, 
+  "url": "http://localhost:51311",
+  "jarUrl": "${jarUrl}"
+}

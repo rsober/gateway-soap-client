@@ -34,13 +34,14 @@ task wrapper(type: Wrapper) {
 test {
 	testLogging {
 		showStandardStreams = true
-        exceptionFormat = 'full'
-    }
+		exceptionFormat = 'full'
+	}
     
-    minHeapSize = '256m'
-    maxHeapSize = '512m'
-    
-    //systemProperties = [
-    //	DEBUG: true
-    //]
+	minHeapSize = '256m'
+	maxHeapSize = '512m'
+
+	systemProperties = [
+		DEBUG: true,
+		javac_cmd_classpath: "./build/classes/main"
+	]
 }

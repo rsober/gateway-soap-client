@@ -1,0 +1,23 @@
+<jaxb:bindings
+    jaxb:version="2.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+    xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd">
+	<!-- <jaxb:bindings node="//xs:restriction[@base='boolean']/xs:pattern[@value='1']" schemaLocation="file:/Users/rsnyder/platform/gateway-soap-client/src/test/resources/wsdl/crc-xsd/MXMeta.xsd">-->
+	<!--  when run with -b .../CRC_MPOCService.xsd, the following fails
+	<jaxb:bindings node="//xs:restriction[contains(@base, 'boolean')]/xs:pattern" schemaLocation="file:/Users/rsnyder/platform/gateway-soap-client/src/test/resources/wsdl/crc-xsd/CRC_MPOCService.xsd">
+	 -->
+	 
+	 <!--  the following identifies 3 nodes when -b .../MXMeta.xsd is passed in on the command line 
+	 <jaxb:bindings node="//xs:restriction[contains(@base, 'boolean')]/xs:pattern" schemaLocation="file:/Users/rsnyder/platform/gateway-soap-client/src/test/resources/wsdl/crc-xsd/MXMeta.xsd">
+	 -->
+	 
+	 <!-- also using -b ../MXMeta.xsd on the command line, but extending the pattern to capture the @value here.  get duplicate types error saying that the types are already defined in MXMeta.xsd -->
+	 <jaxb:bindings node="//xs:simpleType/xs:restriction[contains(@base, 'boolean')]/xs:pattern[@value='1']/../.." schemaLocation="file:/Users/rsnyder/platform/gateway-soap-client/src/test/resources/wsdl/crc-xsd/MXMeta.xsd">
+		<jaxb:javaType name="Boolean" parseMethod="com.anypresence.wsclient.ZeroOneBooleanConverter.parseZeroOrOneAsBoolean" printMethod="com.anypresence.wsclient.ZeroOneBooleanConverter.printBooleanAsZeroOrOne" />
+	 </jaxb:bindings>
+	
+	
+</jaxb:bindings>
