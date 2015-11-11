@@ -39,7 +39,7 @@ public class VoidRequestStep implements ProcessorStep {
 		
 		context.setResultHolders(resultHolders);
 		
-		ProcessingUtils.populateParameterArray(inputParamNames, requestInstance, parameterValues);
+		RequestStepUtils.populateParameterArray(inputParamNames, requestInstance, parameterValues);
 		
 		Integer idx = null;
 		for (int i = 0; i < parameters.length; i++) {

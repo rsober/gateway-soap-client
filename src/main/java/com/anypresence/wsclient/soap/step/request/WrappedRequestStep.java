@@ -117,7 +117,7 @@ public class WrappedRequestStep implements ProcessorStep {
 		
 		context.setOperationMethodParameters(parameterValues);
 		
-		ProcessingUtils.populateParameterArray(parameters, requestInstance, parameterValues);
+		RequestStepUtils.populateParameterArray(parameters, requestInstance, parameterValues);
 		
 	}
 	
