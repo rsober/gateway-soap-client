@@ -15,7 +15,7 @@ import javax.xml.bind.annotation.XmlElementRef;
 import com.anypresence.wsclient.SoapClientException;
 import com.sun.xml.bind.api.impl.NameConverter;
 
-class ProcessingUtils {
+class RequestStepUtils {
 
 	static void populateParameterArray(String[] inputParamNames, Object requestInstance, Object[] parameterValues) throws SoapClientException {
 		int idx = 0;
