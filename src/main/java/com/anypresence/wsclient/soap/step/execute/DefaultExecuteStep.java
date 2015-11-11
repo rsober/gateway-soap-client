@@ -20,10 +20,6 @@ public class DefaultExecuteStep implements ProcessorStep {
 	
 	@Override
 	public void handle(OperationRequest req, Context context) throws SoapClientException {
-		if (context.getOutputParameterNames() != null && context.getOutputParameterNames().length > 0) {
-			throw new SoapClientException("Expected no output parameters");
-		}
-		
 		Object[] parameterValues = context.getOperationMethodParameters();
 		
 		Object response;

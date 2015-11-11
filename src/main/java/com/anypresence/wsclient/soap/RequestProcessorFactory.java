@@ -7,8 +7,8 @@ import javax.jws.soap.SOAPBinding;
 
 import com.anypresence.wsclient.soap.step.ProcessorStep;
 import com.anypresence.wsclient.soap.step.execute.DefaultExecuteStep;
-import com.anypresence.wsclient.soap.step.execute.VoidExecuteStep;
 import com.anypresence.wsclient.soap.step.request.BareRequestStep;
+import com.anypresence.wsclient.soap.step.request.VoidRequestStep;
 import com.anypresence.wsclient.soap.step.request.WrappedRequestStep;
 import com.anypresence.wsclient.soap.step.response.BareResponseStep;
 import com.anypresence.wsclient.soap.step.response.VoidResponseStep;
@@ -50,21 +50,21 @@ public class RequestProcessorFactory {
 	private ProcessorStep requestProcessor(SOAPBinding.ParameterStyle paramStyle) {
 		// Bare or Wrapped?
 		ProcessorStep parameterTypeWorker = null;
-		if (paramStyle == SOAPBinding.ParameterStyle.WRAPPED) {
-			parameterTypeWorker = new WrappedRequestStep(loader, gson, endpointMethod);
+		if (endpointMethod.getReturnType() == Void.TYPE) {
+			parameterTypeWorker = new VoidRequestStep(loader, gson, endpointMethod);
 		} else {
-			parameterTypeWorker = new BareRequestStep(gson, endpointMethod);
+			if (paramStyle == SOAPBinding.ParameterStyle.WRAPPED) {
+				parameterTypeWorker = new WrappedRequestStep(loader, gson, endpointMethod);
+			} else {
+				parameterTypeWorker = new BareRequestStep(gson, endpointMethod);
+			}
 		}
 		return parameterTypeWorker;
 	}
 	
 	private ProcessorStep executeProcessor(Method endpointMethod) {
 		ProcessorStep methodTypeWorker = null;
-		if (endpointMethod.getReturnType() == Void.TYPE) {
-			methodTypeWorker = new VoidExecuteStep(endpointMethod, endpoint);
-		} else {
-			methodTypeWorker = new DefaultExecuteStep(endpointMethod, endpoint);
-		}
+		methodTypeWorker = new DefaultExecuteStep(endpointMethod, endpoint);
 		return methodTypeWorker;
 	}
 	
