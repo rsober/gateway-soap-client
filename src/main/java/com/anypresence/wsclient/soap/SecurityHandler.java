@@ -1,4 +1,4 @@
-package com.anypresence.wsclient;
+package com.anypresence.wsclient.soap;
 
 
 import java.io.IOException;
@@ -14,6 +14,8 @@ import javax.xml.soap.SOAPMessage;
 import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.handler.soap.SOAPHandler;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
+
+import com.anypresence.wsclient.Log;
 
 public class SecurityHandler implements SOAPHandler<SOAPMessageContext> {
 

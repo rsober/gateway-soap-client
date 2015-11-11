@@ -1,14 +1,14 @@
-package com.anypresence.wsclient.requesthandler;
+package com.anypresence.wsclient.soap;
 
 import java.lang.reflect.Method;
 
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 
-import com.anypresence.wsclient.OperationRequest;
-import com.anypresence.wsclient.OperationResponse;
-import com.anypresence.wsclient.ReflectionUtils;
 import com.anypresence.wsclient.SoapClientException;
+import com.anypresence.wsclient.dto.OperationRequest;
+import com.anypresence.wsclient.dto.OperationResponse;
+import com.anypresence.wsclient.utils.ReflectionUtils;
 import com.google.gson.Gson;
 
 public class RequestHandler {

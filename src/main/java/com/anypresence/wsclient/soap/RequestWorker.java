@@ -1,7 +1,7 @@
-package com.anypresence.wsclient.requesthandler;
+package com.anypresence.wsclient.soap;
 
-import com.anypresence.wsclient.OperationRequest;
 import com.anypresence.wsclient.SoapClientException;
+import com.anypresence.wsclient.dto.OperationRequest;
 
 interface RequestWorker {
 	

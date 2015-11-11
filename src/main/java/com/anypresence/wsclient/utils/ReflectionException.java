@@ -1,4 +1,4 @@
-package com.anypresence.wsclient;
+package com.anypresence.wsclient.utils;
 
 public class ReflectionException extends RuntimeException {
 	

@@ -1,4 +1,4 @@
-package com.anypresence.wsclient.requesthandler;
+package com.anypresence.wsclient.soap;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -9,8 +9,8 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementRef;
 
-import com.anypresence.wsclient.OperationRequest;
 import com.anypresence.wsclient.SoapClientException;
+import com.anypresence.wsclient.dto.OperationRequest;
 import com.google.gson.Gson;
 
 class BareRequestWorker implements RequestWorker {

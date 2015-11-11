@@ -1,4 +1,4 @@
-package com.anypresence.wsclient;
+package com.anypresence.wsclient.gson;
 
 import java.lang.reflect.Type;
 

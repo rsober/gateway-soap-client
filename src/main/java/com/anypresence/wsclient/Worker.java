@@ -38,7 +38,18 @@ import javax.xml.ws.soap.SOAPFaultException;
 
 import org.w3c.dom.Node;
 
-import com.anypresence.wsclient.requesthandler.RequestHandler;
+import com.anypresence.wsclient.dto.OperationRequest;
+import com.anypresence.wsclient.dto.OperationResponse;
+import com.anypresence.wsclient.dto.WssePasswordSecurityCredentials;
+import com.anypresence.wsclient.gson.EnumTypeAdapter;
+import com.anypresence.wsclient.gson.GenericXmlSerializer;
+import com.anypresence.wsclient.gson.JaxbTypeAdapter;
+import com.anypresence.wsclient.gson.SoapFaultSerializer;
+import com.anypresence.wsclient.gson.XMLGregorianCalendarTypeAdapter;
+import com.anypresence.wsclient.soap.RequestHandler;
+import com.anypresence.wsclient.soap.SecurityHandler;
+import com.anypresence.wsclient.utils.JarUtils;
+import com.anypresence.wsclient.utils.ReflectionUtils;
 import com.google.gson.FieldNamingStrategy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
