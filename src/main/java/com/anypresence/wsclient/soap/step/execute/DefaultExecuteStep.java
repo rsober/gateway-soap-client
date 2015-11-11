@@ -1,17 +1,19 @@
-package com.anypresence.wsclient.soap;
+package com.anypresence.wsclient.soap.step.execute;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import com.anypresence.wsclient.SoapClientException;
 import com.anypresence.wsclient.dto.OperationRequest;
+import com.anypresence.wsclient.soap.step.Context;
+import com.anypresence.wsclient.soap.step.ProcessorStep;
 
-public class DefaultRequestWorker implements RequestWorker {
+public class DefaultExecuteStep implements ProcessorStep {
 
 	private Method operationMethod;
 	private Object endpoint;
 	
-	public DefaultRequestWorker(Method operationMethod, Object endpoint) {
+	public DefaultExecuteStep(Method operationMethod, Object endpoint) {
 		this.operationMethod = operationMethod;
 		this.endpoint = endpoint;
 	}

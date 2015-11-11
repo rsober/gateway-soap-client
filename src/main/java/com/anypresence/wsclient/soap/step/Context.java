@@ -1,11 +1,11 @@
-package com.anypresence.wsclient.soap;
+package com.anypresence.wsclient.soap.step;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.xml.ws.Holder;
 
-class Context 
+public class Context 
 {
 	
 	static final String REQUEST_WRAPPER = "requestWrapper";
@@ -18,71 +18,71 @@ class Context
 	
 	private Map<String, Object> ctxMap;
 	
-	Context() {
+	public Context() {
 		ctxMap = new HashMap<String, Object>();
 	}
 
-	void set(String prop, Object obj) {
+	public void set(String prop, Object obj) {
 		ctxMap.put(prop, obj);
 	}
 	
-	Object get(String prop) {
+	public Object get(String prop) {
 		return ctxMap.get(prop);
 	}
 	
-	Object getRequestWrapper() {
+	public Object getRequestWrapper() {
 		return get(REQUEST_WRAPPER);
 	}
 	
-	void setRequestWrapper(Object requestWrapper) {
+	public void setRequestWrapper(Object requestWrapper) {
 		set(REQUEST_WRAPPER, requestWrapper);
 	}
 	
-	Object getResponseInstance() {
+	public Object getResponseInstance() {
 		return get(RESPONSE_INSTANCE);
 	}
 	
-	void setResponseInstance(Object responseInstance) {
+	public void setResponseInstance(Object responseInstance) {
 		set(RESPONSE_INSTANCE, responseInstance);
 	}
 	
-	String[] getParameterNames() {
+	public String[] getParameterNames() {
 		return (String[])get(PARAMETER_NAMES);
 	}
 	
-	void setParameterNames(String[] paramNames) {
+	public void setParameterNames(String[] paramNames) {
 		set(PARAMETER_NAMES, paramNames);
 	}
 	
-	String[] getOutputParameterNames() {
+	public String[] getOutputParameterNames() {
 		return (String[])get(OUTPUT_PARAMETER_NAMES);
 	}
 	
-	void setOutputParameterNames(String[] paramNames) {
+	public void setOutputParameterNames(String[] paramNames) {
 		set(OUTPUT_PARAMETER_NAMES, paramNames);
 	}
 	
-	Object[] getOperationMethodParameters() {
+	public Object[] getOperationMethodParameters() {
 		return (Object[])get(OPERATION_METHOD_PARAMETERS);
 	}
 	
-	void setOperationMethodParameters(Object[] operationMethodParameters) {
+	public void setOperationMethodParameters(Object[] operationMethodParameters) {
 		set(OPERATION_METHOD_PARAMETERS, operationMethodParameters);
 	}
 	
-	Map<String, Holder<?>> getResultHolders() {
+	public Map<String, Holder<?>> getResultHolders() {
 		return (Map<String, Holder<?>>)get(RESULT_HOLDERS);
 	}
 	
-	void setResultHolders(Map<String, Holder<?>> resultHolders) {
+	public void setResultHolders(Map<String, Holder<?>> resultHolders) {
 		set(RESULT_HOLDERS, resultHolders);
 	}
 	
-	Object getOperationResponse() {
+	public Object getOperationResponse() {
 		return get(OPERATION_RESPONSE);
 	}
 	
-	void setOperationResponse(Object operationResponse) {
+	public void setOperationResponse(Object operationResponse) {
 		set(OPERATION_RESPONSE, operationResponse);
 	}
 	

@@ -1,11 +1,9 @@
-package com.anypresence.wsclient.soap;
+package com.anypresence.wsclient.soap.step.execute;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.xml.ws.Holder;
@@ -13,13 +11,15 @@ import javax.xml.ws.Holder;
 import com.anypresence.wsclient.Log;
 import com.anypresence.wsclient.SoapClientException;
 import com.anypresence.wsclient.dto.OperationRequest;
+import com.anypresence.wsclient.soap.step.Context;
+import com.anypresence.wsclient.soap.step.ProcessorStep;
 
-class VoidRequestWorker implements RequestWorker {
+public class VoidExecuteStep implements ProcessorStep {
 
 	private Method operationMethod;
 	private Object endpoint;
 	
-	VoidRequestWorker(Method operationMethod, Object endpoint) {
+	public VoidExecuteStep(Method operationMethod, Object endpoint) {
 		this.operationMethod = operationMethod;
 		this.endpoint = endpoint;
 	}
@@ -27,7 +27,6 @@ class VoidRequestWorker implements RequestWorker {
 	@Override
 	public void handle(OperationRequest req, Context context) throws SoapClientException {
 		Object requestInstance = context.getRequestWrapper();
-		Object responseInstance = context.getResponseInstance();
 		String[] inputParamNames = context.getParameterNames();
 		String[] outputParams = context.getOutputParameterNames();
 		

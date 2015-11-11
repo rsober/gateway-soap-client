@@ -1,4 +1,4 @@
-package com.anypresence.wsclient.soap;
+package com.anypresence.wsclient.soap.step.response;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -11,16 +11,10 @@ import javax.xml.ws.Holder;
 import com.anypresence.wsclient.Log;
 import com.anypresence.wsclient.SoapClientException;
 import com.anypresence.wsclient.dto.OperationRequest;
+import com.anypresence.wsclient.soap.step.Context;
+import com.anypresence.wsclient.soap.step.ProcessorStep;
 
-public class VoidResponseWorker implements RequestWorker {
-
-	private Method operationMethod;
-	private Object endpoint;
-	
-	VoidResponseWorker(Method operationMethod, Object endpoint) {
-		this.operationMethod = operationMethod;
-		this.endpoint = endpoint;
-	}
+public class VoidResponseStep implements ProcessorStep {
 	
 	@Override
 	public void handle(OperationRequest req, Context context) throws SoapClientException {
