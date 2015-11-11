@@ -1,4 +1,4 @@
-package com.anypresence.wsclient.soap;
+package com.anypresence.wsclient.soap.step.request;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
@@ -24,21 +24,21 @@ import javax.xml.ws.ResponseWrapper;
 import com.anypresence.wsclient.Log;
 import com.anypresence.wsclient.SoapClientException;
 import com.anypresence.wsclient.dto.OperationRequest;
+import com.anypresence.wsclient.soap.step.Context;
+import com.anypresence.wsclient.soap.step.ProcessorStep;
 import com.google.gson.Gson;
 import com.sun.xml.bind.api.impl.NameConverter;
 
-class WrappedRequestWorker implements RequestWorker {
+public class WrappedRequestStep implements ProcessorStep {
 
 	private ClassLoader classLoader;
 	private Gson gson;
 	private Method operationMethod;
-	private Object endpoint;
 
-	WrappedRequestWorker(ClassLoader classLoader, Gson gson, Method operationMethod, Object endpoint) {
+	public WrappedRequestStep(ClassLoader classLoader, Gson gson, Method operationMethod) {
 		this.classLoader = classLoader;
 		this.gson = gson;
 		this.operationMethod = operationMethod;
-		this.endpoint = endpoint;
 	}
 	
 	@Override

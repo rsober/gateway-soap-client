@@ -16,7 +16,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 import java.util.jar.JarFile;
@@ -46,7 +45,8 @@ import com.anypresence.wsclient.gson.GenericXmlSerializer;
 import com.anypresence.wsclient.gson.JaxbTypeAdapter;
 import com.anypresence.wsclient.gson.SoapFaultSerializer;
 import com.anypresence.wsclient.gson.XMLGregorianCalendarTypeAdapter;
-import com.anypresence.wsclient.soap.RequestHandler;
+import com.anypresence.wsclient.soap.RequestProcessor;
+import com.anypresence.wsclient.soap.RequestProcessorFactory;
 import com.anypresence.wsclient.soap.SecurityHandler;
 import com.anypresence.wsclient.utils.JarUtils;
 import com.anypresence.wsclient.utils.ReflectionUtils;
@@ -272,8 +272,11 @@ public class Worker implements Runnable {
 				throw new SoapClientException("Unable to find operation to invoke");
 			}
 
-			RequestHandler requestHandler = new RequestHandler(child, gson, operationMethod, endpoint);
-			return requestHandler.handle(req);
+			//RequestProcessor requestHandler = new RequestProcessor(child, gson, operationMethod, endpoint);
+			RequestProcessorFactory factory = new RequestProcessorFactory(child, gson, operationMethod, endpoint);
+			RequestProcessor requestProcessor = factory.createRequestProcessor();
+			
+			return requestProcessor.process(req);
 		} finally {
 			if (file != null) {
 				try {

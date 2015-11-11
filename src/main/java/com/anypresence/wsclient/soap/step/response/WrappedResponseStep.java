@@ -1,4 +1,4 @@
-package com.anypresence.wsclient.soap;
+package com.anypresence.wsclient.soap.step.response;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -9,22 +9,18 @@ import javax.xml.namespace.QName;
 
 import com.anypresence.wsclient.SoapClientException;
 import com.anypresence.wsclient.dto.OperationRequest;
-import com.google.gson.Gson;
+import com.anypresence.wsclient.soap.step.Context;
+import com.anypresence.wsclient.soap.step.ProcessorStep;
 
-public class WrappedResponseWorker implements RequestWorker {
+public class WrappedResponseStep implements ProcessorStep {
 
-	private ClassLoader classLoader;
-	private Gson gson;
 	private Method operationMethod;
-	private Object endpoint;
 
-	WrappedResponseWorker(ClassLoader classLoader, Gson gson, Method operationMethod, Object endpoint) {
-		this.classLoader = classLoader;
-		this.gson = gson;
+	public WrappedResponseStep(Method operationMethod) {
 		this.operationMethod = operationMethod;
-		this.endpoint = endpoint;
 	}
 	
+	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
 	public void handle(OperationRequest req, Context context) throws SoapClientException {
 		Object responseInstance = context.getResponseInstance();
