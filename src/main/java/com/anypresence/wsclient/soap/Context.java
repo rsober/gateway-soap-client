@@ -1,4 +1,4 @@
-package com.anypresence.wsclient.requesthandler;
+package com.anypresence.wsclient.soap;
 
 import java.util.HashMap;
 import java.util.Map;

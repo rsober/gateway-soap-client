@@ -1,4 +1,4 @@
-package com.anypresence.wsclient;
+package com.anypresence.wsclient.utils;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;

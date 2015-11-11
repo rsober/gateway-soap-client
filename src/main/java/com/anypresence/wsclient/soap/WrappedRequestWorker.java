@@ -1,4 +1,4 @@
-package com.anypresence.wsclient.requesthandler;
+package com.anypresence.wsclient.soap;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
@@ -22,8 +22,8 @@ import javax.xml.ws.RequestWrapper;
 import javax.xml.ws.ResponseWrapper;
 
 import com.anypresence.wsclient.Log;
-import com.anypresence.wsclient.OperationRequest;
 import com.anypresence.wsclient.SoapClientException;
+import com.anypresence.wsclient.dto.OperationRequest;
 import com.google.gson.Gson;
 import com.sun.xml.bind.api.impl.NameConverter;
 

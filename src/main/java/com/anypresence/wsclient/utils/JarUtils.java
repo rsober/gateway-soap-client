@@ -1,4 +1,4 @@
-package com.anypresence.wsclient;
+package com.anypresence.wsclient.utils;
 
 import java.util.Enumeration;
 import java.util.function.Function;

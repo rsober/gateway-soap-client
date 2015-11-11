@@ -1,4 +1,4 @@
-package com.anypresence.wsclient.requesthandler;
+package com.anypresence.wsclient.soap;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -7,8 +7,8 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.namespace.QName;
 
-import com.anypresence.wsclient.OperationRequest;
 import com.anypresence.wsclient.SoapClientException;
+import com.anypresence.wsclient.dto.OperationRequest;
 import com.google.gson.Gson;
 
 public class WrappedResponseWorker implements RequestWorker {
