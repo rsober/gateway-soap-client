@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://com.cwi.framework.webservice.javabean" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://com.cwi.framework.webservice.javabean" xmlns:intf="http://com.cwi.framework.webservice.javabean" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.3
+Built on Oct 05, 2005 (05:23:37 EDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://com.cwi.framework.webservice.javabean" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="xmlMessage" type="xsd:string"/>
+   <element name="performActionReturn" type="xsd:string"/>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="performActionRequest">
+
+      <wsdl:part element="impl:xmlMessage" name="xmlMessage">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="performActionResponse">
+
+      <wsdl:part element="impl:performActionReturn" name="performActionReturn">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="CWOrderIn">
+
+      <wsdl:operation name="performAction" parameterOrder="xmlMessage">
+
+         <wsdl:input message="impl:performActionRequest" name="performActionRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:performActionResponse" name="performActionResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="CWOrderInSoapBinding" type="impl:CWOrderIn">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="performAction">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="performActionRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="performActionResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="CWOrderInService">
+
+      <wsdl:port binding="impl:CWOrderInSoapBinding" name="CWOrderIn">
+
+         <wsdlsoap:address location="http://scws0400/CWDirectCPService/services/CWOrderIn"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>
