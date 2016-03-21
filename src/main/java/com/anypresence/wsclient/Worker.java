@@ -268,6 +268,17 @@ public class Worker implements Runnable {
 					(req.getOperationName() != null && req.getOperationName().equals(webMethod.operationName()))
 			);
 
+			// If there is no operationName specified in the WebMethod annotation, then check to see if the 
+			// method name is the same as the operation name
+			if (operationMethod == null) {
+				operationMethod = ReflectionUtils.findMethodAnnotatedWith(
+					returnType,
+					WebMethod.class,
+					(method, webMethod) ->
+						webMethod.operationName().equals("") && req.getOperationName().equals(method.getName())
+				);
+			}
+
 			if (operationMethod == null) {
 				throw new SoapClientException("Unable to find operation to invoke");
 			}

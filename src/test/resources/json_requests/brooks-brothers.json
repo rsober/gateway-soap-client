@@ -1,0 +1,8 @@
+{
+  "serviceName": "CWOrderInService",
+  "endpointName": "CWOrderIn",
+  "operationName": "performAction",
+  "params": "MY REQUEST MESSAGE",
+  "jarUrl": "${jarUrl}",
+  "url": "http://localhost:51311"
+}

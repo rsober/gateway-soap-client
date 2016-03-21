@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Body>
+    <xmlMessage xmlns="http://com.cwi.framework.webservice.javabean">MY REQUEST MESSAGE</xmlMessage>
+  </S:Body>
+</S:Envelope>
