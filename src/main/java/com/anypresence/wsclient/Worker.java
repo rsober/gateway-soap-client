@@ -209,6 +209,13 @@ public class Worker implements Runnable {
 									(webServiceClient) -> webServiceClient.name().equals(req.getServiceName())
 							); 
 							
+							if (cl != null) {
+								// force a reload on the WSDL -- this must be done in case the jar file has been changed
+								// since the last time it was loaded, or we get an error because JAX-WS keeps a reference
+								// to the old WSDL
+								t.getResourceAsStream("/" + cl.wsdlLocation());
+							}
+
 							return cl != null;
 						}
 					}
