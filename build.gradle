@@ -7,7 +7,7 @@ apply plugin: 'eclipse'
 apply plugin: 'application'
 apply plugin: 'com.github.johnrengelman.shadow'
 
-mainClassName = 'com.anypresence.wsinvoker.Main'
+mainClassName = 'com.anypresence.wsclient.Wsclient'
 
 repositories {
 	mavenCentral()
