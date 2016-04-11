@@ -26,3 +26,5 @@ Run the tests to make sure you have everything set up correctly.
 ```bash
 ./gradlew test
 ```
+
+The tests should pass successfully.
