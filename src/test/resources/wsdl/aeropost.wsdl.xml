@@ -288,7 +288,8 @@
   </wsdl:binding>
   <wsdl:service name="Services">
     <wsdl:port name="BasicHttpBinding_IServices" binding="tns:BasicHttpBinding_IServices">
-      <soap:address location="https://www2.myaeropost.com/Devel/WS_MyAero/Services.svc"/>
+      <!--<soap:address location="https://www2.myaeropost.com/Devel/WS_MyAero/Services.svc"/>-->
+      <soap:address location="https://127.0.0.1:1080/Devel/WS_MyAero/Services.svc"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

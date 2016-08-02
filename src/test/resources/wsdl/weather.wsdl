@@ -346,7 +346,8 @@ Allows you to get your City's Weather, which is updated hourly. U.S. Only
   </wsdl:binding>
   <wsdl:service name="Weather">
     <wsdl:port name="WeatherSoap" binding="tns:WeatherSoap">
-      <soap:address location="http://wsf.cdyne.com/WeatherWS/Weather.asmx"/>
+      <!--<soap:address location="http://wsf.cdyne.com/WeatherWS/Weather.asmx"/>-->
+      <soap:address location="http://127.0.0.1:1080/WeatherWS/Weather.asmx"/>
     </wsdl:port>
     <wsdl:port name="WeatherSoap12" binding="tns:WeatherSoap12">
       <soap12:address location="http://wsf.cdyne.com/WeatherWS/Weather.asmx"/>

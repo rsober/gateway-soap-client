@@ -1993,10 +1993,13 @@
 <wsdl:service name="UserProfileService">
   <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">User Profile Service</wsdl:documentation> 
 <wsdl:port name="UserProfileServiceSoap" binding="tns:UserProfileServiceSoap">
-  <soap:address location="https://mysite.contactd.aig.net/_vti_bin/UserProfileService.asmx" /> 
-  </wsdl:port>
+  <!--<soap:address location="https://mysite.contactd.aig.net/_vti_bin/UserProfileService.asmx" />-->
+  <soap:address location="http://127.0.0.1:1080/_vti_bin/UserProfileService.asmx" />
+
+</wsdl:port>
 <wsdl:port name="UserProfileServiceSoap12" binding="tns:UserProfileServiceSoap12">
-  <soap12:address location="https://mysite.contactd.aig.net/_vti_bin/UserProfileService.asmx" /> 
-  </wsdl:port>
+  <!--<soap12:address location="https://mysite.contactd.aig.net/_vti_bin/UserProfileService.asmx" /> -->
+  <soap12:address location="http://127.0.0.1:1080/_vti_bin/UserProfileService.asmx" />
+</wsdl:port>
   </wsdl:service>
   </wsdl:definitions>

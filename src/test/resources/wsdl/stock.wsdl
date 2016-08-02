@@ -108,16 +108,20 @@
   </wsdl:binding>
   <wsdl:service name="StockQuote">
     <wsdl:port name="StockQuoteSoap" binding="tns:StockQuoteSoap">
-      <soap:address location="http://www.webservicex.net/stockquote.asmx" />
+      <!--<soap:address location="http://www.webservicex.net/stockquote.asmx" />-->
+      <soap:address location="http://127.0.0.1:1080/stockquote.asmx" />
     </wsdl:port>
     <wsdl:port name="StockQuoteSoap12" binding="tns:StockQuoteSoap12">
-      <soap12:address location="http://www.webservicex.net/stockquote.asmx" />
+      <!--<soap12:address location="http://www.webservicex.net/stockquote.asmx" />-->
+        <soap12:address location="http://127.0.0.1:1080/stockquote.asmx" />
     </wsdl:port>
     <wsdl:port name="StockQuoteHttpGet" binding="tns:StockQuoteHttpGet">
-      <http:address location="http://www.webservicex.net/stockquote.asmx" />
+      <!--<http:address location="http://www.webservicex.net/stockquote.asmx" />-->
+        <http:address location="http://127.0.0.1:1080/stockquote.asmx" />
     </wsdl:port>
     <wsdl:port name="StockQuoteHttpPost" binding="tns:StockQuoteHttpPost">
-      <http:address location="http://www.webservicex.net/stockquote.asmx" />
+      <!--<http:address location="http://www.webservicex.net/stockquote.asmx" />-->
+        <http:address location="http://127.0.0.1:1080/stockquote.asmx" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

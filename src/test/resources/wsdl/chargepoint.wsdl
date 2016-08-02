@@ -1735,7 +1735,8 @@
    </wsdl:binding>
   <wsdl:service name="chargepointservices">
     <wsdl:port binding="tns:chargepointservicesSOAP" name="chargepointservicesSOAP">
-      <soap:address location="https://webservices.chargepoint.com/webservices/chargepoint/services/4.1"/>
-    </wsdl:port>
+      <!--<soap:address location="https://webservices.chargepoint.com/webservices/chargepoint/services/4.1"/>-->
+		<soap:address location="http://127.0.0.1:1080/webservices/chargepoint/services/4.1"/>-->
+	</wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

@@ -28,11 +28,7 @@ Built on Oct 05, 2005 (05:23:37 EDT)-->
    <wsdl:portType name="CWOrderIn">
 
       <wsdl:operation name="performAction" parameterOrder="xmlMessage">
-
-         <wsdl:input message="impl:performActionRequest" name="performActionRequest">
-
-       </wsdl:input>
-
+          <wsdl:input name="performActionRequest" message="impl:performActionRequest" />
          <wsdl:output message="impl:performActionResponse" name="performActionResponse">
 
        </wsdl:output>
@@ -69,7 +65,7 @@ Built on Oct 05, 2005 (05:23:37 EDT)-->
 
       <wsdl:port binding="impl:CWOrderInSoapBinding" name="CWOrderIn">
 
-         <wsdlsoap:address location="http://scws0400/CWDirectCPService/services/CWOrderIn"/>
+         <wsdlsoap:address location="http://127.0.0.1:1080/CWDirectCPService/services/CWOrderIn"/>
 
       </wsdl:port>
 

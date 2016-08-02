@@ -1,7 +1,7 @@
 { 
   "serviceName": "chargepointservices", 
   "endpointName": "chargepointservicesSOAP", 
-  "actionName": "urn:provider/interface/chargepointservices/getStations", 
+  "actionName": "getStations",
   "params": { 
   	"searchQuery": { 
   	  "orgID": "1:ORG08313" 

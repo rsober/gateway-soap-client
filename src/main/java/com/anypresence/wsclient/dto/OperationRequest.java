@@ -6,6 +6,7 @@ import com.google.gson.JsonElement;
 public class OperationRequest {
 
 	private String jarUrl;
+	private String wsdlUrl;
 	private String serviceName;
 	private String endpointName;
 	private String operationName;
@@ -20,6 +21,10 @@ public class OperationRequest {
 
 	public String getJarUrl() {
 		return jarUrl;
+	}
+
+	public String getWsdlUrl() {
+		return wsdlUrl;
 	}
 	
 	public String getServiceName() {
@@ -52,7 +57,7 @@ public class OperationRequest {
 
 	@Override
 	public String toString() {
-		return "OperationRequest [jarUrl=" + jarUrl + ", serviceName=" + serviceName + ", endpointName=" + endpointName
+		return "OperationRequest [jarUrl=" + jarUrl + ", wsdlUrl= " + wsdlUrl + ", serviceName=" + serviceName + ", endpointName=" + endpointName
 				+ ", operationName=" + operationName + ", actionName=" + actionName + ", params=" + params
 				+ ", wssePasswordCredentials=" + wssePasswordCredentials + ", url=" + url + "]";
 	}

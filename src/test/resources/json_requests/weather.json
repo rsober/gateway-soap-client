@@ -2,7 +2,9 @@
   "serviceName": "Weather",
   "endpointName": "WeatherSoap",
   "operationName": "GetWeatherInformation",
-  "params": null,
+  "params": {
+    "mime:content": ""
+  },
   "url": "http://localhost:51311", 
   "jarUrl": "${jarUrl}"
 }
