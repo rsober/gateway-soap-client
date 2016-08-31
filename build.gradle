@@ -21,8 +21,8 @@ dependencies {
     compile "com.google.code.gson:gson:2.3.1"
     compile "com.sun.xml.bind:jaxb-xjc:2.1.6"
     compile "org.apache.cxf:cxf-core:3.1.6"
-    compile "org.apache.cxf:cxf-rt-frontend-jaxws:3.1.6"
     compile "org.json:json:20160810"
+    //compile "org.apache.cxf:cxf-rt-frontend-jaxws:3.1.6"
     compile "org.apache.cxf:cxf-rt-transports-http:3.1.6"
     compile "org.apache.cxf:cxf-rt-transports-http-jetty:3.1.6"
     compile "com.predic8:soa-model-core:1.5.4"
@@ -33,6 +33,7 @@ dependencies {
     compile "com.fasterxml.jackson.core:jackson-core:2.8.1"
     compile "com.fasterxml.jackson.core:jackson-databind:2.8.1"
 
+    testCompile "org.apache.cxf:cxf-rt-frontend-jaxws:3.1.6"
     testCompile "org.apache.logging.log4j:log4j-api:2.0.1"
     testCompile "org.apache.logging.log4j:log4j-core:2.0.1"
     testCompile "org.slf4j:slf4j-api:1.7.7"

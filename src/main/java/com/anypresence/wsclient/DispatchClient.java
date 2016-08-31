@@ -34,6 +34,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.apache.cxf.staxutils.StaxUtils;
 
 
@@ -51,7 +54,17 @@ public class DispatchClient {
 	 * @throws MalformedURLException
 	 */
 	private static Dispatch<Source> createDispatch(String wsdl, QName qNameService, QName qNamePort) throws MalformedURLException {
+		Pattern p = Pattern.compile("(file:[/]+)(.*)");
+        Matcher m = p.matcher(wsdl);
+
+        // Try to normalize the url
+        if (m.find()) {
+        	wsdl = "file:///" + m.group(2);
+        }
+
 		URL wsdlURL = new URL(wsdl);
+
+		log.debug("Dispatching: " + wsdlURL + ", " + qNameService.toString());
 		
 		Service service = Service.create(wsdlURL, qNameService);
 		
