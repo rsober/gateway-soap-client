@@ -15,8 +15,14 @@ import com.google.gson.JsonElement;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.XML;
+
 public class ParseUtils {
     static Logger log = LogManager.getLogger(ParseUtils.class.getName());
+
+    public static int PRETTY_PRINT_INDENT_FACTOR = 4;
 
     public static Map<String,Object> parseJsonToMap(String json) {
         HashMap<String, Object> map = new HashMap<String, Object>();
@@ -38,6 +44,23 @@ public class ParseUtils {
         }
 
         return map;
+    }
+
+    /**
+     *
+     * @param xml
+     * @return
+     */
+    public static String xmlToJson(String xml) {
+        String jsonPrettyPrintString = "";
+        try {
+            JSONObject xmlJSONObj = XML.toJSONObject(xml);
+            jsonPrettyPrintString = xmlJSONObj.toString(PRETTY_PRINT_INDENT_FACTOR);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+
+        return jsonPrettyPrintString;
     }
 
     public static boolean isValidJson(String json) {
