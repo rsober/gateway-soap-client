@@ -119,9 +119,8 @@ public class Worker implements Runnable {
 					}
 				} catch(Exception e) {
 					Log.info("Encountered " + e.getClass().getSimpleName() + " while trying to process request: " + e.getMessage());
-					if (Log.isDebugEnabled()) {
-						e.printStackTrace(System.out);
-					}
+					e.printStackTrace(System.out);
+					
 					response = gson.toJson(OperationResponse.newFailedOperationResponse(e.getMessage()));
 				}
 
