@@ -27,7 +27,11 @@ public class DefaultExecuteStep implements ProcessorStep {
 			response = operationMethod.invoke(endpoint, parameterValues);
 			context.setOperationResponse(response);
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-			throw new SoapClientException("Unable to invoke operation due to " + e.getClass().getSimpleName() + ": " + e.getMessage(), e);
+			String message = e.getMessage();
+			if (e.getCause() != null) {
+				message = e.getCause().getMessage();
+			}
+			throw new SoapClientException("Unable to invoke operation due to " + e.getClass().getSimpleName() + ": " + message, e);
 		}
 	}
 	
