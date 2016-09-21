@@ -24,6 +24,12 @@ public class ParseUtils {
 
     public static int PRETTY_PRINT_INDENT_FACTOR = 4;
 
+    /**
+     * Parse json into a map.
+     *
+     * @param json
+     * @return
+     */
     public static Map<String,Object> parseJsonToMap(String json) {
         HashMap<String, Object> map = new HashMap<String, Object>();
 
@@ -47,6 +53,7 @@ public class ParseUtils {
     }
 
     /**
+     * Convert xml to json.
      *
      * @param xml
      * @return
@@ -63,6 +70,12 @@ public class ParseUtils {
         return jsonPrettyPrintString;
     }
 
+    /**
+     * Checks if the json is valid.
+     *
+     * @param json
+     * @return
+     */
     public static boolean isValidJson(String json) {
         try {
             final ObjectMapper mapper = new ObjectMapper();
@@ -73,6 +86,14 @@ public class ParseUtils {
         }
     }
 
+    /**
+     * Inject parameters into the xml.
+     *
+     * @param formParams
+     * @param action
+     * @param params
+     * @param shouldPrependAction
+     */
     public static void injectParametersIntoXml(HashMap<String, String> formParams, String action, JsonElement params, boolean shouldPrependAction) {
         List<Holder> holders = traverseMap(jsonToMap(params.toString()));
         for (Holder h : holders) {

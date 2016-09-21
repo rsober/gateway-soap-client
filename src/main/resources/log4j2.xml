@@ -25,7 +25,6 @@
         </Logger>
         <Root level="debug" additivity="false">
 
-
             <AppenderRef ref="Console" level="info"/>
 
             <AppenderRef ref="Console" />

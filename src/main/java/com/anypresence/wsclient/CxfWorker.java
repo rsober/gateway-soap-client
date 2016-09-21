@@ -98,8 +98,6 @@ public class CxfWorker implements Runnable {
                         ParseUtils.injectParametersIntoXml(formParams, action, rawParams, true);
                     }
                     if (!formParams.isEmpty()) {
-
-
                         for (Map.Entry<String,String> f : formParams.entrySet()) {
                             log.debug("form: (" + f.getKey() + ", " + f.getValue() + ")");
                         }
@@ -108,7 +106,6 @@ public class CxfWorker implements Runnable {
 
                     String binding =  MembraneUtils.findFirstBinding(defs).getName();
                     log.debug("wsdl: " + wsdlUrl + ", service: " + service + ", action: " + action + ", binding: " + binding);
-                    System.out.println("wsdl: " + wsdlUrl + ", service: " + service + ", action: " + action + ", binding: " + binding);
                     // The first parameter is actually not needed...
                     creator.createRequest(service, action, binding);
 
@@ -130,12 +127,12 @@ public class CxfWorker implements Runnable {
                     responseWriter.write(response);
                 } catch(IOException e) {
                     log.info("Unable to fully write response due to IOException: " + e.getMessage());
-                    log.debug(e);
+                    log.error(e);
                 }
                 log.debug("Done");
             } catch(IOException e) {
                 Log.info("Unable to fully read request due to IOException: " + e.getMessage());
-                log.debug(e);
+                log.error(e);
             } catch(JsonSyntaxException e) {
                 log.error(e.getMessage(), e);
             }

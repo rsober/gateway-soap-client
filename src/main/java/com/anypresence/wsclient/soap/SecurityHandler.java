@@ -39,7 +39,7 @@ public class SecurityHandler implements SOAPHandler<SOAPMessageContext> {
 		Boolean outboundProperty = (Boolean) messageContext.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
 
 		if (outboundProperty.booleanValue()) {
-			Log.debug("Adding security credentials to outbound request via SecurityHandler");
+			Log.info("Adding security credentials to outbound request via SecurityHandler");
 
 			Log.debug("Sending the following request to SOAP service:");
 			try {
@@ -66,7 +66,7 @@ public class SecurityHandler implements SOAPHandler<SOAPMessageContext> {
 
 				if (Log.isDebugEnabled()) {
 					messageContext.getMessage().writeTo(System.out);
-					System.out.println();
+					System.out.println("\n");
 				}
 			} catch (SOAPException e) {
 				e.printStackTrace();
@@ -78,7 +78,7 @@ public class SecurityHandler implements SOAPHandler<SOAPMessageContext> {
 			try {
 				if (Log.isDebugEnabled()) {
 					messageContext.getMessage().writeTo(System.out);
-					System.out.println();
+					System.out.println("\n");
 				}
 			} catch (SOAPException e) {
 				e.printStackTrace();
@@ -96,5 +96,6 @@ public class SecurityHandler implements SOAPHandler<SOAPMessageContext> {
 	}
 
 	public void close(MessageContext messageContext) {
+		//
 	}
 }
