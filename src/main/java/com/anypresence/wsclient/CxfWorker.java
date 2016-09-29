@@ -122,9 +122,9 @@ public class CxfWorker implements Runnable {
                 }
 
                 log.debug("Writing response to the socket");
-                log.debug("Response: " + response);
+                log.debug("Raw Response: " + response);
                 try(BufferedWriter responseWriter = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()))) {
-                    responseWriter.write(response);
+                    responseWriter.write(ParseUtils.xmlToJson(response));
                 } catch(IOException e) {
                     log.info("Unable to fully write response due to IOException: " + e.getMessage());
                     log.error(e);
