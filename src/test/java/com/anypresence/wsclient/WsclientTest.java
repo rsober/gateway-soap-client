@@ -4,18 +4,17 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.Socket;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+import com.anypresence.wsclient.utils.ParseUtils;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonParser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.*;
@@ -23,7 +22,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import org.mockserver.integration.ClientAndProxy;
 import org.mockserver.integration.ClientAndServer;
@@ -168,6 +166,7 @@ public class WsclientTest {
         return contents;
     }
 
+
     @Test
     public void executeCase() {
         Socket sock = null;
@@ -191,18 +190,16 @@ public class WsclientTest {
                 actualResponseBuilder.append(line).append("\n");
             }
 
-            Document actual = Utilities.stringToDocument(actualResponseBuilder.toString());
-            actual.normalizeDocument();
             Document expected = Utilities.stringToDocument(soapResponse(testCase));
             expected.normalizeDocument();
 
-            String actualAsString = Utilities.docToString(actual);
+            String actualAsString = actualResponseBuilder.toString();
             actualAsString = actualAsString.trim().replaceAll("\n ", "");
 
-            String expectedAsString = Utilities.docToString(expected);
-            expectedAsString = actualAsString.trim().replaceAll("\n ", "");
-
-            if (!expectedAsString.equals(actualAsString)) {
+            String expectedAsString = ParseUtils.xmlToJson(Utilities.docToString(expected));
+            expectedAsString = expectedAsString.trim().replaceAll("\n ", "");
+            
+            if (!Utilities.compareJsonAsMaps(actualAsString, expectedAsString)) {
                 Assert.fail("Expected response and actual response do not match\n\nActual:\n\n'" + actualAsString + "'\n\nExpected:\n\n'" + expectedAsString + "'");
             }
 
