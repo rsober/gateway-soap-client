@@ -71,7 +71,63 @@ import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.Map;
+import java.util.Properties;
+
+import javax.xml.namespace.QName;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.TransformerFactoryConfigurationError;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.ws.BindingProvider;
+import javax.xml.ws.Dispatch;
+import javax.xml.ws.Endpoint;
+import javax.xml.ws.Service;
+import javax.xml.ws.handler.MessageContext;
+import javax.xml.ws.http.HTTPBinding;
+
+import org.w3c.dom.Document;
+import org.apache.cxf.message.Message;
+import org.apache.cxf.staxutils.StaxUtils;
+
+import org.apache.cxf.jaxws.DispatchImpl;
+import org.apache.cxf.binding.soap.interceptor.AbstractSoapInterceptor;
+import org.apache.cxf.bus.spring.SpringBusFactory;
+import org.apache.cxf.interceptor.Fault;
+import org.apache.cxf.interceptor.Interceptor;
+import org.apache.cxf.interceptor.LoggingInInterceptor;
+
+import org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor;
+import org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor;
+import org.apache.wss4j.dom.WSConstants;
+import org.apache.wss4j.dom.handler.WSHandlerConstants;
+
 public class SecurityUtils {
+    private static final String WSSE_NS   = "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd";
+    private static final String WSU_NS    = "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd";
+	private static final String PROP_FILE = "Client_Encrypt.properties";
 
 	public static Set<QName> getHeaders() {
 		QName securityHeader = new QName(
@@ -87,6 +143,18 @@ public class SecurityUtils {
         Dispatch<Source> disp = service.createDispatch(qNamePort, Source.class, Service.Mode.MESSAGE);
         disp.getRequestContext().put(MessageContext.WSDL_OPERATION, new QName(ns, operationName));
         return disp;
+    }
+
+    public static void changeEndpoint(Dispatch<Source> disp, String endpoint) {
+    	disp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpoint);
+    }
+
+    public static void applyEncryptionProperties(Dispatch<Source> disp, String alias, String username, String password) {
+    	disp.getRequestContext().put("ws-security.encryption.properties", PROP_FILE);
+    	// The certificate in the keystore defined in Client_Encrypt.properties
+	    disp.getRequestContext().put("ws-security.encryption.username", alias);	    
+	    disp.getRequestContext().put("ws-security.username", username);	    
+	    disp.getRequestContext().put("ws-security.password", password);
     }
 
     public static void signHeader(String userInfo) {

@@ -58,3 +58,5 @@ fabric.properties
 # modules.xml
 # .idea/misc.xml 
 # *.ipr
+
+Client_Encrypt.properties
