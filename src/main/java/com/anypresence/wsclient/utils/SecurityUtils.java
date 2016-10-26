@@ -86,14 +86,14 @@ import org.apache.cxf.message.Message;
 import org.apache.cxf.staxutils.StaxUtils;
 
 //import org.apache.cxf.jaxws.DispatchImpl;
-import org.apache.cxf.binding.soap.interceptor.AbstractSoapInterceptor;
+//import org.apache.cxf.binding.soap.interceptor.AbstractSoapInterceptor;
 import org.apache.cxf.bus.spring.SpringBusFactory;
 import org.apache.cxf.interceptor.Fault;
 import org.apache.cxf.interceptor.Interceptor;
 import org.apache.cxf.interceptor.LoggingInInterceptor;
 
-import org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor;
-import org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor;
+//import org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor;
+//import org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor;
 //import org.apache.wss4j.dom.WSConstants;
 //import org.apache.wss4j.dom.handler.WSHandlerConstants;
 

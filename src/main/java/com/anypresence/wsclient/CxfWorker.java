@@ -5,6 +5,8 @@ import java.net.MalformedURLException;
 import java.net.Socket;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,6 +37,8 @@ import javax.xml.soap.SOAPFault;
 public class CxfWorker implements Runnable {
     private Socket sock;
 
+    private static Path certTempDir = null;
+
     static Logger log = LogManager.getLogger(CxfWorker.class.getName());
 
     static Gson gson = new GsonBuilder().registerTypeAdapter(SOAPFault.class, new SoapFaultSerializer())
@@ -47,6 +51,20 @@ public class CxfWorker implements Runnable {
 
     public CxfWorker(Socket sock) {
         this.sock = sock;
+    }
+
+    public static final Path getCertTempDir() throws IOException {
+        if (certTempDir != null) {
+            return certTempDir;
+        }
+
+        certTempDir = Files.createTempDirectory("cert");
+        // deletes file when the virtual machine terminate
+        certTempDir.toFile().deleteOnExit();
+
+        System.out.println("Temporary directory created: " + certTempDir.toString());
+
+        return certTempDir;
     }
 
     @Override
@@ -185,5 +203,7 @@ public class CxfWorker implements Runnable {
             }
         }
     }
+
+
 
 }

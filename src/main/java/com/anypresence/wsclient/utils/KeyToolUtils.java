@@ -1,6 +1,7 @@
 package com.anypresence.wsclient.utils;
 
 import java.io.*;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -85,59 +86,113 @@ import org.apache.cxf.message.Message;
 import org.apache.cxf.staxutils.StaxUtils;
 
 //import org.apache.cxf.jaxws.DispatchImpl;
-import org.apache.cxf.binding.soap.interceptor.AbstractSoapInterceptor;
+//import org.apache.cxf.binding.soap.interceptor.AbstractSoapInterceptor;
 import org.apache.cxf.bus.spring.SpringBusFactory;
 import org.apache.cxf.interceptor.Fault;
 import org.apache.cxf.interceptor.Interceptor;
 import org.apache.cxf.interceptor.LoggingInInterceptor;
 
-import org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor;
-import org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor;
+//import org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor;
+//import org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor;
 
 
 public class KeyToolUtils {
-	static Logger log = LogManager.getLogger(KeyToolUtils.class.getName());
+    static Logger log = LogManager.getLogger(KeyToolUtils.class.getName());
 
-	private static String PEM_FILE_NAME= "certificate.pem";
-	private static String DER_FILE_NAME= "certificate.der";
+    private static String PEM_FILE_NAME= "certificate.pem";
+    private static String DER_FILE_NAME= "certificate.der";
 
-	public static void addPemCertToKeystore(String pathToKeystore, String alias, String pemCert) throws IOException {
-		// Work in a temp directory
-		Path tmp = Files.createTempDirectory("cert");
+    /**
+     * Adds pem to keystore
+     *
+     * @param pathToKeystore
+     * @param alias
+     * @param pemCert
+     * @throws IOException
+     */
+    public synchronized static void addPemCertToKeystore(String pathToKeystore, String keystorePassword, String alias, String pemCert) throws IOException, InterruptedException {
 
-		log.info("Temporary directory created: " + tmp.toString());
+        Path path = Paths.get(pathToKeystore);
+        if (!Files.exists(path)) {
+            throw new IOException("The keystore does not exist: " + pathToKeystore);
+        }
+        // Work in a temp directory
 
-		// Files.newBufferedWriter() uses UTF-8 encoding by default
-		try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(tmp.toString() + "/" + PEM_FILE_NAME))) {
-			writer.write(pemCert);
-		} // the file will be automatically closed
 
-		// Convert pem to der and import into the keystore
-		String[] cmd = {
-				"openssl",
-				"x509",
-				"-outform",
-				"der",
-				"-in",
-				PEM_FILE_NAME,
-				"-out",
-				DER_FILE_NAME
-		};
-		Runtime.getRuntime().exec(cmd);
+        // Files.newBufferedWriter() uses UTF-8 encoding by default
+        try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(CxfWorker.getCertTempDir().toString() + "/" + PEM_FILE_NAME))) {
+            writer.write(pemCert);
+        }
 
-		String cmdImport[] = {
-				"keytool",
-				"-import",
-				"-alias",
-				alias,
-				"-keystore",
-				pathToKeystore,
-				"-file",
-				DER_FILE_NAME
+        log.info("Wrote to: " + Paths.get(CxfWorker.getCertTempDir().toString() + "/" + PEM_FILE_NAME));
 
-		};
-		Runtime.getRuntime().exec(cmdImport);
+        // Convert pem to der and import into the keystore
+        String[] cmd = {
+                "openssl",
+                "x509",
+                "-outform",
+                "der",
+                "-in",
+                Paths.get(CxfWorker.getCertTempDir().toString() + "/" + PEM_FILE_NAME).toAbsolutePath().toString(),
+                "-out",
+                Paths.get(CxfWorker.getCertTempDir().toString() + "/" + DER_FILE_NAME).toAbsolutePath().toString(),
+        };
+        Process pemProc = Runtime.getRuntime().exec(cmd);
 
-	}
-	
+        BufferedReader inStream = null;
+
+        int pemExitVal = pemProc.waitFor();
+
+        try
+        {
+            inStream = new BufferedReader(new InputStreamReader(pemProc.getInputStream()));
+            System.out.println(inStream.readLine());
+        }
+        catch(IOException e)
+        {
+            System.err.println("Error on inStream.readLine()");
+            e.printStackTrace();
+        }
+
+        if (pemExitVal != 0) {
+            throw new IOException("The command may have failed...: " + pemExitVal);
+        }
+
+
+        String cmdImport[] = {
+                "keytool",
+                "-import",
+                "-noprompt",
+                "-alias",
+                alias,
+                "-keystore",
+                pathToKeystore,
+                "-file",
+                Paths.get(CxfWorker.getCertTempDir().toString() + "/" + DER_FILE_NAME).toAbsolutePath().toString(),
+                "-storepass",
+                keystorePassword
+        };
+
+        Process proc = Runtime.getRuntime().exec(cmdImport);
+
+        int exitVal = proc.waitFor();
+
+        inStream = null;
+        try
+        {
+            inStream = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+            System.out.println(inStream.readLine());
+        }
+        catch(IOException e)
+        {
+            System.err.println("Error on inStream.readLine()");
+            e.printStackTrace();
+        }
+
+        if (exitVal != 0) {
+            throw new IOException("The command may have failed...: " + exitVal);
+        }
+
+    }
+
 }
