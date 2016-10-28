@@ -102,6 +102,27 @@ public class KeyToolUtils {
     private static String PEM_FILE_NAME= "certificate.pem";
     private static String DER_FILE_NAME= "certificate.der";
 
+    private synchronized static boolean containsAlias(String pathToKeystore, String keystorePassword, String alias) throws IOException, InterruptedException {
+
+        String[] cmd = {
+                "keytool",
+                "-list",
+                "-keystore",
+                pathToKeystore,
+                "-storepass",
+                keystorePassword,
+                "-alias",
+                alias
+        };
+        Process proc = Runtime.getRuntime().exec(cmd);
+
+        int exitVal = proc.waitFor();
+
+        printOutput(proc);
+
+        return (exitVal == 0) ? true : false;
+    }
+
     /**
      * Adds pem to keystore
      *
@@ -116,8 +137,10 @@ public class KeyToolUtils {
         if (!Files.exists(path)) {
             throw new IOException("The keystore does not exist: " + pathToKeystore);
         }
-        // Work in a temp directory
 
+        if (containsAlias(pathToKeystore, keystorePassword, alias)) {
+            throw new IOException("The alias already exist.");
+        }
 
         // Files.newBufferedWriter() uses UTF-8 encoding by default
         try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(CxfWorker.getCertTempDir().toString() + "/" + PEM_FILE_NAME))) {
@@ -139,25 +162,13 @@ public class KeyToolUtils {
         };
         Process pemProc = Runtime.getRuntime().exec(cmd);
 
-        BufferedReader inStream = null;
-
         int pemExitVal = pemProc.waitFor();
 
-        try
-        {
-            inStream = new BufferedReader(new InputStreamReader(pemProc.getInputStream()));
-            System.out.println(inStream.readLine());
-        }
-        catch(IOException e)
-        {
-            System.err.println("Error on inStream.readLine()");
-            e.printStackTrace();
-        }
+        printOutput(pemProc);
 
         if (pemExitVal != 0) {
             throw new IOException("The command may have failed...: " + pemExitVal);
         }
-
 
         String cmdImport[] = {
                 "keytool",
@@ -177,22 +188,24 @@ public class KeyToolUtils {
 
         int exitVal = proc.waitFor();
 
-        inStream = null;
-        try
-        {
-            inStream = new BufferedReader(new InputStreamReader(proc.getInputStream()));
-            System.out.println(inStream.readLine());
-        }
-        catch(IOException e)
-        {
-            System.err.println("Error on inStream.readLine()");
-            e.printStackTrace();
-        }
+        printOutput(proc);
 
         if (exitVal != 0) {
             throw new IOException("The command may have failed...: " + exitVal);
         }
 
+    }
+
+    private static void printOutput(Process proc) {
+        BufferedReader inStream = null;
+        try {
+            inStream = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+            System.out.println(inStream.readLine());
+        } catch (IOException e) {
+            System.err.println("Error on inStream.readLine()");
+            e.printStackTrace();
+
+        }
     }
 
 }

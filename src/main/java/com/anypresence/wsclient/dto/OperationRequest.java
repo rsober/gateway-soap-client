@@ -14,6 +14,8 @@ public class OperationRequest {
 	private JsonElement params;
 	private WssePasswordSecurityCredentials wssePasswordCredentials;
 	private String url;
+	private String pemfile;
+	private String alias;
 	
 	public OperationRequest() {
 		// Empty constructor
@@ -46,6 +48,10 @@ public class OperationRequest {
 	public JsonElement getParams() {
 		return params;
 	}
+
+	public String getPemfile() { return pemfile; }
+
+	public String getAlias() { return alias; }
 	
 	public WssePasswordSecurityCredentials getWssePasswordCredentials() {
 		return wssePasswordCredentials;
