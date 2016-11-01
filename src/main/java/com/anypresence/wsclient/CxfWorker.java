@@ -179,7 +179,17 @@ public class CxfWorker implements Runnable {
             URI u = new URI(req.getJarUrl());
             String wsdlUrl = u.toURL().toString();
 
-            String response = DispatchClient.processRequest("file://" + u.toURL().getPath(), qService, qPort, requestEnvelope);
+
+            DispatchClient.Builder builder = new DispatchClient.Builder();
+
+            if (!req.getPemfile().isEmpty()) {
+                builder.useAuth(true);
+                builder.username(req.getWssePasswordCredentials().getUsername());
+                builder.username(req.getWssePasswordCredentials().getPassword());
+                builder.alias(req.getAlias());
+            }
+
+            String response = builder.create().processRequest("file://" + u.toURL().getPath(), qService, qPort, requestEnvelope);
             return response;
         } catch (MalformedURLException e) {
             log.error("Unable to get response: " + e.getMessage(), e);
