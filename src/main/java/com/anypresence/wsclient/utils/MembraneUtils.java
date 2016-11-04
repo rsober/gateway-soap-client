@@ -2,17 +2,25 @@ package com.anypresence.wsclient.utils;
 
 import com.anypresence.wsclient.CxfWorker;
 import com.anypresence.wsclient.SoapClientException;
-import com.predic8.wsdl.Binding;
-import com.predic8.wsdl.Definitions;
-import com.predic8.wsdl.Port;
-import com.predic8.wsdl.Service;
+import com.predic8.wsdl.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 public class MembraneUtils {
     static Logger log = LogManager.getLogger(MembraneUtils.class.getName());
+
+    public static Definitions parseWsdl(String wsdlContent) {
+        WSDLParser parser = new WSDLParser();
+        InputStream stream = new ByteArrayInputStream(wsdlContent.getBytes(StandardCharsets.UTF_8));
+        Definitions defs = parser.parse(stream);
+
+        return defs;
+    }
 
     public static Binding findFirstBinding(Definitions defs) throws SoapClientException {
         if (defs.getBindings().isEmpty()) {

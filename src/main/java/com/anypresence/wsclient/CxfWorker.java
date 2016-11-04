@@ -23,7 +23,6 @@ import com.predic8.wsdl.Port;
 import com.predic8.wsdl.Service;
 import com.predic8.wsdl.WSDLParser;
 import com.predic8.wstool.creator.RequestCreator;
-import com.predic8.wstool.creator.RequestTemplateCreator;
 import com.predic8.wstool.creator.SOARequestCreator;
 import groovy.xml.MarkupBuilder;
 import org.apache.logging.log4j.*;
@@ -182,11 +181,11 @@ public class CxfWorker implements Runnable {
 
             DispatchClient.Builder builder = new DispatchClient.Builder();
 
-            if (!req.getPemfile().isEmpty()) {
+            if (req.getKey() != null && !req.getKey().isEmpty()) {
                 builder.useAuth(true);
                 builder.username(req.getWssePasswordCredentials().getUsername());
                 builder.username(req.getWssePasswordCredentials().getPassword());
-                builder.alias(req.getAlias());
+                builder.alias(req.getKeyAlias());
             }
 
             String response = builder.create().processRequest("file://" + u.toURL().getPath(), qService, qPort, requestEnvelope);
