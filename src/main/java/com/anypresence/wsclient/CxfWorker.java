@@ -101,7 +101,7 @@ public class CxfWorker implements Runnable {
                 try {
                     WSDLParser parser = new WSDLParser();
 
-                    Definitions defs = parser.parse(wsdlUrl);
+                    Definitions defs = ParseUtils.definitionsFromUrl(wsdlUrl);
 
                     StringWriter writer = new StringWriter();
 

@@ -37,6 +37,8 @@ dependencies {
     compile "org.apache.cxf:cxf-rt-ws-policy:3.1.7"
     // https://mvnrepository.com/artifact/org.apache.wss4j/wss4j-ws-security-dom
     compile "org.apache.wss4j:wss4j-ws-security-dom:2.1.7"
+    compile "commons-collections:commons-collections:3.0"
+
 
 
     testCompile "org.apache.cxf:cxf-rt-frontend-jaxws:3.1.6"

@@ -1,10 +1,9 @@
 package com.anypresence.wsclient.utils;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.*;
 
 import com.anypresence.wsclient.CxfWorker;
 import com.fasterxml.jackson.core.JsonGenerationException;
@@ -12,17 +11,60 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonElement;
+import com.predic8.wsdl.Definitions;
+import com.predic8.wsdl.WSDLParser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.XML;
+import org.apache.commons.collections.map.LRUMap;
 
 public class ParseUtils {
     static Logger log = LogManager.getLogger(ParseUtils.class.getName());
 
     public static int PRETTY_PRINT_INDENT_FACTOR = 4;
+    private static int MAX_CAPACITY = 3;
+
+    private static Map<String, Definitions> lruMap = (Map<String, Definitions>) Collections.synchronizedMap(new org.apache.commons.collections.LRUMap(MAX_CAPACITY));
+
+    private static String keyForWsdl(String message) throws NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        byte[] hash = md.digest(message.getBytes());
+
+        StringBuffer hexString = new StringBuffer();
+        for (int i = 0; i < hash.length; i++) {
+            if ((0xff & hash[i]) < 0x10) {
+                hexString.append("0"
+                        + Integer.toHexString((0xFF & hash[i])));
+            } else {
+                hexString.append(Integer.toHexString(0xFF & hash[i]));
+            }
+        }
+
+        return hexString.toString();
+    }
+
+    public static Definitions definitionsFromUrl(String wsdlUrl) {
+        WSDLParser parser = new WSDLParser();
+
+        try {
+            String key = keyForWsdl(wsdlUrl);
+            if (lruMap.containsKey(key)) {
+                return lruMap.get(key);
+            } else {
+                Definitions defs = parser.parse(wsdlUrl);
+                lruMap.put(key, defs);
+
+                return defs;
+            }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 
     /**
      * Parse json into a map.
