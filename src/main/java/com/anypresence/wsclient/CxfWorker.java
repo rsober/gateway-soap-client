@@ -96,7 +96,7 @@ public class CxfWorker implements Runnable {
                 }
                 String service = operationRequest.getServiceName();
 
-                String wsdlUrl = operationRequest.getJarUrl();
+                String wsdlUrl = operationRequest.getWsdl();
                 String response = "";
                 try {
                     WSDLParser parser = new WSDLParser();
@@ -175,7 +175,7 @@ public class CxfWorker implements Runnable {
         QName qPort = new QName(b.getNamespaceUri(), b.getName());
 
         try {
-            URI u = new URI(req.getJarUrl());
+            URI u = new URI(req.getWsdl());
             String wsdlUrl = u.toURL().toString();
 
 
