@@ -146,7 +146,6 @@ public class CxfWorker implements Runnable {
                     log.info("Unable to fully write response due to IOException: " + e.getMessage());
                     log.error(e);
                 }
-                log.debug("Done");
             } catch(IOException e) {
                 Log.info("Unable to fully read request due to IOException: " + e.getMessage());
                 log.error(e);
