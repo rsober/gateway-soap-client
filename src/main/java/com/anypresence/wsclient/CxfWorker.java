@@ -168,7 +168,7 @@ public class CxfWorker implements Runnable {
     private String executeWithRequest(Definitions defs, String service, String binding, String requestEnvelope, Gson gson, String payload) {
         OperationRequest req = gson.fromJson(payload,OperationRequest.class);
 
-        log.debug("Executing request with. Service: " + service + ", defs: " + defs.toString());
+        log.debug("Executing request: service: " + service + ", defs: " + defs.toString());
         Service s = MembraneUtils.serviceByName(defs, service);
         QName qService = new QName(s.getNamespaceUri(), s.getName());
         Port b = MembraneUtils.portForBinding(s, binding);
@@ -177,7 +177,6 @@ public class CxfWorker implements Runnable {
         try {
             URI u = new URI(req.getWsdl());
             String wsdlUrl = u.toURL().toString();
-
 
             DispatchClient.Builder builder = new DispatchClient.Builder();
 
