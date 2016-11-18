@@ -38,7 +38,7 @@ public class KeyToolTest {
         byte[] encoded = Files.readAllBytes(Paths.get(path));
         String contents = new String(encoded, StandardCharsets.UTF_8);
 
-        KeyToolUtils.addPemCertToKeystore(jksPath, System.getenv("KEYSTORE_PASS"), "foo_pem", contents);
+        KeyToolUtils.addPemCertToKeystore(jksPath, "password" /* password for fake keystore */, "foo_pem", contents);
         System.out.println(path);
     }
 
