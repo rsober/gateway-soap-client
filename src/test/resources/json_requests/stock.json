@@ -5,8 +5,8 @@
   "params": { 
     "symbol": "AAPL" 
   },
-  "url": "http://localhost:51311", 
-  "jarUrl": "${jarUrl}"
+  "url": "http://localhost:51311",
+  "wsdl": "${wsdl}"
 }
   
   

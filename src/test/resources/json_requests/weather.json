@@ -6,5 +6,5 @@
     "mime:content": ""
   },
   "url": "http://localhost:51311", 
-  "jarUrl": "${jarUrl}"
+  "wsdl": "${wsdl}"
 }

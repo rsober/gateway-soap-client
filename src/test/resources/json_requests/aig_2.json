@@ -21,8 +21,8 @@
 			}
 		]
     }
-  }, 
-  "jarUrl": "${jarUrl}",
+  },
+	"wsdl": "${wsdl}",
   "url": "http://localhost:51311"
 }
   

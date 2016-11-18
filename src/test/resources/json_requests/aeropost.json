@@ -17,6 +17,6 @@
     "WebServiceSecurity_User": "MyAeroApp",
     "WebServiceSecurity_Password": "Pmc#0Mqc!4ZaV"
   },
-  "jarUrl": "${jarUrl}",
+  "wsdl": "${wsdl}",
   "url": "http://localhost:51311"
 }

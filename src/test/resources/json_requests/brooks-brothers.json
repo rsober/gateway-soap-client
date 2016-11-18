@@ -5,6 +5,6 @@
   "params": {
     "message": "MY REQUEST MESSAGE"
   },
-  "jarUrl": "${jarUrl}",
+  "wsdl": "${wsdl}",
   "url": "http://localhost:51311"
 }

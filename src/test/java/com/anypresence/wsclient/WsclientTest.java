@@ -139,7 +139,7 @@ public class WsclientTest {
         Map<String, Object> ctx = new HashMap<String, Object>();
         URL uri = WsclientTest.class.getResource("/wsdl/" + caseName + ".wsdl");
         
-        ctx.put("jarUrl", uri.toString());
+        ctx.put("wsdl", uri.toString());
         return Utilities.prettyJson(resourceAsString(caseName, "json_requests", "json", ctx));
     }
 
@@ -156,6 +156,7 @@ public class WsclientTest {
     }
 
     private String resourceAsString(String caseName, String folderName, String extension, Map<String, Object> ctx) throws Exception {
+        System.out.println("File is: " + "/" + folderName + "/" + caseName + "." + extension);
         File f = new File(getClass().getResource("/" + folderName + "/" + caseName + "." + extension).toURI());
         String contents = new String(Files.readAllBytes(f.toPath()));
         if (ctx != null) {

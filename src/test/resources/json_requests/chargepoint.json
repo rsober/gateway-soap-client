@@ -6,8 +6,8 @@
   	"searchQuery": { 
   	  "orgID": "1:ORG08313" 
     } 
-  }, 
-  "jarUrl": "${jarUrl}",
+  },
+  "wsdl": "${wsdl}",
   "url": "http://localhost:51311", 
   "wssePasswordCredentials": { 
   	"username": "e39e34c98def1db64229f0554306133b53fd057661b271409090934", 

@@ -17,6 +17,10 @@ import javax.xml.ws.handler.soap.SOAPMessageContext;
 
 import com.anypresence.wsclient.Log;
 
+/**
+ * @deprecated To be removed in the next release.
+ */
+@Deprecated
 public class SecurityHandler implements SOAPHandler<SOAPMessageContext> {
 
 	private String username;

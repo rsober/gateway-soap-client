@@ -4,8 +4,8 @@
   "operationName": "GetUserProfileByName", 
   "params": { 
     "AccountName": "fred's all american family feedhouse" 
-  }, 
-  "jarUrl": "${jarUrl}",
+  },
+  "wsdl": "${wsdl}",
   "url": "http://localhost:51311"
 }
   
