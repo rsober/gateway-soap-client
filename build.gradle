@@ -6,6 +6,8 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'application'
 apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'maven'
+
 
 mainClassName = 'com.anypresence.wsclient.Wsclient'
 
@@ -58,6 +60,19 @@ jar {
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.2.1'
+}
+
+
+task createPom << {
+    pom {
+        project {
+            groupId 'com.anypresence'
+            artifactId 'soapclient'
+            version '1.0.0'
+
+            inceptionYear '2016'
+        }
+    }.writeTo("pom.xml")
 }
 
 test {

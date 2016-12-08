@@ -133,9 +133,9 @@ public class CxfWorker implements Runnable {
 
                     response = executeWithRequest(defs, service, binding, requestEnvelope, gson, payload);
                 } catch (SoapClientException e) {
-                    log.error("Unable to execute...", e);
+                    Log.error("Unable to execute...", e);
                 }catch(Exception e) {
-                    log.error("Runtime error..." + e.getMessage(), e);
+                    Log.error("Runtime error..." + e.getMessage(), e);
                 }
 
                 log.debug("Writing response to the socket");
@@ -143,14 +143,16 @@ public class CxfWorker implements Runnable {
                 try(BufferedWriter responseWriter = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()))) {
                     responseWriter.write(ParseUtils.xmlToJson(response));
                 } catch(IOException e) {
-                    log.info("Unable to fully write response due to IOException: " + e.getMessage());
-                    log.error(e);
+                    Log.info("Unable to fully write response due to IOException: " + e.getMessage());
+                    Log.error(e);
                 }
             } catch(IOException e) {
-                Log.info("Unable to fully read request due to IOException: " + e.getMessage());
-                log.error(e);
+                Log.info("Unable to fully write response due to IOException: " + e.getMessage());
+                Log.error(e);
             } catch(JsonSyntaxException e) {
                 log.error(e.getMessage(), e);
+
+                Log.info(e.getMessage());
             }
 
         });
@@ -188,9 +190,11 @@ public class CxfWorker implements Runnable {
             }
 
             String response = builder.create().processRequest("file://" + u.toURL().getPath(), qService, qPort, requestEnvelope);
+            Log.info("Response: " + response);
+
             return response;
         } catch (MalformedURLException e) {
-            log.error("Unable to get response: " + e.getMessage(), e);
+            Log.error("Unable to get response: " + e.getMessage(), e);
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }

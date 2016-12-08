@@ -21,6 +21,15 @@ public class Log {
 	public static void info(String msg) {
 		System.out.println(format(msg));
 	}
+
+	public static void error(String msg, Throwable err) {
+		info(msg);
+		err.printStackTrace();
+	}
+
+	public static void error(Throwable err) {
+		err.printStackTrace();
+	}
 	
 	private static String format(String msg) {
 		return FORMAT.format(new Date()) + "    [soap] " + msg;
