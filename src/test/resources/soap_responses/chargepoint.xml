@@ -1,0 +1,68 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+   <soapenv:Header>
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
+         <wsu:Timestamp xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+            <wsu:Created>2015-09-26T17:43:24.572Z</wsu:Created>
+            <wsu:Expires>2015-09-26T17:48:24.572Z</wsu:Expires>
+         </wsu:Timestamp>
+      </wsse:Security>
+   </soapenv:Header>
+   <soapenv:Body>
+      <ns1:getStationsResponse xmlns:ns1="urn:dictionary:com.chargepoint.webservices">
+         <responseCode>100</responseCode>
+         <responseText>API input request executed successfully.</responseText>
+         <stationData>
+            <stationID>1:87815</stationID>
+            <stationManufacturer>Schneider</stationManufacturer>
+            <stationModel>EV230PDRACNG</stationModel>
+            <stationMacAddr>DUMMY</stationMacAddr>
+            <stationSerialNum>DUMMY</stationSerialNum>
+            <Address></Address>
+            <City></City>
+            <State></State>
+            <Country>United States</Country>
+            <postalCode></postalCode>
+            <Port>
+               <portNumber>1</portNumber>
+               <stationName>SCHNEIDER DEMO / SCHNEIDERNGW1</stationName>
+               <Geo>
+                  <Lat>DUMMY</Lat>
+                  <Long>DUMMY</Long>
+               </Geo>
+               <Reservable>0</Reservable>
+               <Status>INUSE</Status>
+               <Level>L2</Level>
+               <Connector>J1772</Connector>
+               <Voltage>240</Voltage>
+               <Current>30</Current>
+               <Power>7.2</Power>
+               <estimatedCost>0.00</estimatedCost>
+            </Port>
+            <Port>
+               <portNumber>2</portNumber>
+               <stationName>SCHNEIDER DEMO / SCHNEIDERNGW1</stationName>
+               <Geo>
+                  <Lat>DUMMY</Lat>
+                  <Long>DUMMY</Long>
+               </Geo>
+               <Reservable>0</Reservable>
+               <Status>INUSE</Status>
+               <Level>L2</Level>
+               <Connector>J1772</Connector>
+               <Voltage>240</Voltage>
+               <Current>30</Current>
+               <Power>7.2</Power>
+               <estimatedCost>0.00</estimatedCost>
+            </Port>
+            <numPorts>2</numPorts>
+            <mainPhone></mainPhone>
+            <currencyCode>USD</currencyCode>
+            <orgID>1:ORG08313</orgID>
+            <organizationName>DUMMY</organizationName>
+            <sgID>1234</sgID>
+            <sgName>DUMMY</sgName>
+         </stationData>
+
+      </ns1:getStationsResponse>
+   </soapenv:Body>
+</soapenv:Envelope>
