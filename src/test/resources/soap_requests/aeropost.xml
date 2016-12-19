@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Body>
+    <ns3:AuthenticateMyAeroUser xmlns="http://schemas.microsoft.com/2003/10/Serialization/Arrays" xmlns:ns2="http://schemas.datacontract.org/2004/07/WS_MyAero" xmlns:ns3="http://tempuri.org/" xmlns:ns4="http://schemas.microsoft.com/2003/10/Serialization/">
+      <ns3:MyAeroGateway>DUMMY</ns3:MyAeroGateway>
+      <ns3:MyAeroAccount>1234</ns3:MyAeroAccount>
+      <ns3:MyAeroPasswordMD5>DUMMY</ns3:MyAeroPasswordMD5>
+      <ns3:DeviceID>DUMMY</ns3:DeviceID>
+      <ns3:MobileType>8</ns3:MobileType>
+      <ns3:OperatingSystemName>Android</ns3:OperatingSystemName>
+      <ns3:OperatingSystemVersion>15</ns3:OperatingSystemVersion>
+      <ns3:DeviceBrand>HTC</ns3:DeviceBrand>
+      <ns3:DeviceModel>HTC One X</ns3:DeviceModel>
+      <ns3:AppName>com.aeropost.myaeroII</ns3:AppName>
+      <ns3:AppVersion>2.3</ns3:AppVersion>
+      <ns3:WebServiceSecurity_User>DUMMY</ns3:WebServiceSecurity_User>
+      <ns3:WebServiceSecurity_Password>DUMMY</ns3:WebServiceSecurity_Password>
+    </ns3:AuthenticateMyAeroUser>
+  </S:Body>
+</S:Envelope>

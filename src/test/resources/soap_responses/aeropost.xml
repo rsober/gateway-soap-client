@@ -1,0 +1,48 @@
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+   <s:Body>
+      <AuthenticateMyAeroUserResponse xmlns="http://tempuri.org/">
+         <AuthenticateMyAeroUserResult xmlns:a="http://schemas.datacontract.org/2004/07/WS_MyAero" xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+            <a:ErrorDescriptions xmlns:b="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+            <a:ErrorCodes xmlns:b="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+            <a:PersonID>1234</a:PersonID>
+            <a:IsValid>true</a:IsValid>
+            <a:IsFirstLogin>false</a:IsFirstLogin>
+            <a:IsOwner>true</a:IsOwner>
+            <a:Language>0</a:Language>
+            <a:CurrencySymbol>¢</a:CurrencySymbol>
+            <a:CurrencyISO>CRC</a:CurrencyISO>
+            <a:CountryCultureInfo>es-CR</a:CountryCultureInfo>
+            <a:Account>1234</a:Account>
+            <a:Gateway>SJO</a:Gateway>
+            <a:AccountStatus>ACTIVE</a:AccountStatus>
+            <a:AccountStatusCode>1</a:AccountStatusCode>
+            <a:FullName>DUMMY</a:FullName>
+            <a:AccountEmail>DUMMY@fake.com</a:AccountEmail>
+            <a:UserEmail>DUMMY@fake.com</a:UserEmail>
+            <a:AccountAddressLine1></a:AccountAddressLine1>
+            <a:AccountAddressLine2></a:AccountAddressLine2>
+            <a:DeliveryInstructions></a:DeliveryInstructions>
+            <a:Packages_AddressLine1></a:Packages_AddressLine1>
+            <a:Packages_AddressLine2></a:Packages_AddressLine2>
+            <a:Packages_City>Miami</a:Packages_City>
+            <a:Packages_State>FL</a:Packages_State>
+            <a:Packages_ZipCode></a:Packages_ZipCode>
+            <a:Packages_Phone></a:Packages_Phone>
+            <a:Mail_Line1></a:Mail_Line1>
+            <a:Mail_Line2></a:Mail_Line2>
+            <a:Mail_Line3></a:Mail_Line3>
+            <a:Token>DUMMY</a:Token>
+            <a:Device>
+               <a:OperatingSystemName>Android</a:OperatingSystemName>
+               <a:OperatingSystemVersion>15</a:OperatingSystemVersion>
+               <a:DeviceId>DUMMY</a:DeviceId>
+               <a:DeviceBrand>HTC</a:DeviceBrand>
+               <a:DeviceModel>HTC One X</a:DeviceModel>
+               <a:AppName></a:AppName>
+               <a:AppVersion>2.3</a:AppVersion>
+               <a:IP_Address>DUMMY</a:IP_Address>
+            </a:Device>
+         </AuthenticateMyAeroUserResult>
+      </AuthenticateMyAeroUserResponse>
+   </s:Body>
+</s:Envelope>
