@@ -1,0 +1,19 @@
+{ 
+  "serviceName": "chargepointservices", 
+  "endpointName": "chargepointservicesSOAP", 
+  "actionName": "urn:provider/interface/chargepointservices/getStations", 
+  "params": { 
+  	"searchQuery": { 
+  	  "orgID": "1:ORG08313" 
+    } 
+  }, 
+  "jarUrl": "${jarUrl}",
+  "url": "http://localhost:51311", 
+  "wssePasswordCredentials": { 
+  	"username": "DUMMY", 
+  	"password": "DUMMY"
+  } 
+}
+  
+  
+  
