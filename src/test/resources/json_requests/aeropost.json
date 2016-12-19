@@ -1,0 +1,22 @@
+{
+  "serviceName": "Services",
+  "endpointName": "BasicHttpBinding_IServices",
+  "operationName": "AuthenticateMyAeroUser",
+  "params": {
+    "MyAeroGateway": "DUMMY",
+    "MyAeroAccount": 1234,
+    "MyAeroPasswordMD5": "DUMMY",
+    "DeviceID": "DUMMY",
+    "MobileType": 8,
+    "OperatingSystemName": "Android",
+    "OperatingSystemVersion": "15",
+    "DeviceBrand": "HTC",
+    "DeviceModel": "HTC One X",
+    "AppName": "com.aeropost.myaeroII",
+    "AppVersion": "2.3",
+    "WebServiceSecurity_User": "DUMMY",
+    "WebServiceSecurity_Password": "DUMMY"
+  },
+  "jarUrl": "${jarUrl}",
+  "url": "http://localhost:51311"
+}

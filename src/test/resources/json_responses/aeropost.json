@@ -1,0 +1,47 @@
+{
+  "success": true,
+  "response": {
+    "AuthenticateMyAeroUserResult": {
+      "PersonID": 1330466,
+      "IsValid": true,
+      "IsFirstLogin": false,
+      "IsOwner": true,
+      "Language": "0",
+      "CurrencySymbol": "¢",
+      "CurrencyISO": "CRC",
+      "CountryCultureInfo": "es-CR",
+      "Account": 1234,
+      "Gateway": "SJO",
+      "AccountStatus": "ACTIVE",
+      "AccountStatusCode": "1",
+      "FullName": "DUMMY",
+      "AccountEmail": "DUMMY@fake.com",
+      "UserEmail": "DUMMY@fake.com",
+      "AccountAddressLine1": "DUMMY",
+      "AccountAddressLine2": "",
+      "DeliveryInstructions": "DUMMY",
+      "Packages_AddressLine1": "DUMMY",
+      "Packages_AddressLine2": "DUMMY",
+      "Packages_City": "Miami",
+      "Packages_State": "FL",
+      "Packages_ZipCode": "33126",
+      "Packages_Phone": "DUMMY",
+      "Mail_Line1": "DUMMY",
+      "Mail_Line2": "DUMMY",
+      "Mail_Line3": "Miami,FL 33126",
+      "Token": "DUMMY",
+      "Device": {
+        "OperatingSystemName": "Android",
+        "OperatingSystemVersion": "15",
+        "DeviceId": "DUMMY",
+        "DeviceBrand": "HTC",
+        "DeviceModel": "HTC One X",
+        "AppName": "com.aeropost.myaeroII",
+        "AppVersion": "2.3",
+        "IP_Address": "DUMMY"
+      },
+      "ErrorDescriptions": {},
+      "ErrorCodes": {}
+    }
+  }
+}
