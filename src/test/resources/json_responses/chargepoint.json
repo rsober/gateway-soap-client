@@ -1,0 +1,150 @@
+{
+  "success": true,
+  "response": {
+    "responseCode": "100",
+    "responseText": "API input request executed successfully.",
+    "stationData": [
+      {
+        "orgID": "1:ORG08313",
+        "organizationName": "DUMM^",
+        "sgID": "1234",
+        "sgName": "DUMMY",
+        "stationID": "1:87815",
+        "stationManufacturer": "Schneider",
+        "stationModel": "EV230PDRACNG",
+        "stationMacAddr": "DUMMY",
+        "stationSerialNum": "DUMMY",
+        "Address": "",
+        "City": "",
+        "State": "",
+        "Country": "United States",
+        "postalCode": "",
+        "Port": [
+          {
+            "portNumber": 1,
+            "stationName": "SCHNEIDER DEMO \/ SCHNEIDERNGW1",
+            "Geo": {
+              "Lat": "DUMMY",
+              "Long": "DUMMY"
+            },
+            "Reservable": 0,
+            "Status": "INUSE",
+            "Level": "L2",
+            "Connector": "J1772",
+            "Voltage": "240",
+            "Current": "30",
+            "Power": "7.2",
+            "estimatedCost": 0.0
+          },
+          {
+            "portNumber": 2,
+            "stationName": "SCHNEIDER DEMO \/ SCHNEIDERNGW1",
+            "Geo": {
+              "Lat": "DUMMY",
+              "Long": "DUMMY"
+            },
+            "Reservable": 0,
+            "Status": "INUSE",
+            "Level": "L2",
+            "Connector": "J1772",
+            "Voltage": "240",
+            "Current": "30",
+            "Power": "7.2",
+            "estimatedCost": 0.0
+          }
+        ],
+        "numPorts": 2,
+        "mainPhone": "",
+        "currencyCode": "USD"
+      },
+      {
+        "orgID": "1:ORG08313",
+        "organizationName": "Schneider Demo",
+        "sgID": "DUMMY",
+        "sgName": "DUMMY",
+        "stationID": "1:91249",
+        "stationManufacturer": "Schneider",
+        "stationModel": "EV230PSRACG",
+        "stationMacAddr": "",
+        "stationSerialNum": "1234",
+        "Address": "",
+        "City": "",
+        "State": "",
+        "Country": "United States",
+        "postalCode": "",
+        "Port": [
+          {
+            "portNumber": 1,
+            "stationName": "SCHNEIDER DEMO \/ SCE_TEST",
+            "Geo": {
+              "Lat": "DUMMY",
+              "Long": "DUMMY"
+            },
+            "Reservable": 0,
+            "Status": "UNREACHABLE",
+            "Level": "L2",
+            "Connector": "J1772",
+            "Voltage": "240",
+            "Current": "30",
+            "Power": "7.2",
+            "estimatedCost": 0.0
+          }
+        ],
+        "numPorts": 1,
+        "mainPhone": "1-888-758-4389",
+        "currencyCode": "USD"
+      },
+      {
+        "orgID": "1:ORG08313",
+        "organizationName": "Schneider Demo",
+        "sgID": "DUMMY",
+        "sgName": "SchneiderDemo, Public Stations, Available and In Use 2, Level 2 Ports, All OnRamp Stations, SouthEast",
+        "stationID": "1:112151",
+        "stationMacAddr": "",
+        "stationSerialNum": "1234",
+        "Address": "",
+        "City": "",
+        "State": "",
+        "Country": "United States",
+        "postalCode": "",
+        "Port": [
+          {
+            "portNumber": 1,
+            "stationName": "SCHNEIDER DEMO \/ SCHNEIDERGW1",
+            "Geo": {
+              "Lat": "DUMMY",
+              "Long": "DUMMY"
+            },
+            "Reservable": 0,
+            "Status": "INUSE",
+            "Level": "L2",
+            "Connector": "J1772",
+            "Voltage": "240",
+            "Current": "30",
+            "Power": "7.2",
+            "estimatedCost": 0.0
+          },
+          {
+            "portNumber": 2,
+            "stationName": "SCHNEIDER DEMO \/ SCHNEIDERGW1",
+            "Geo": {
+              "Lat": "DUMMY",
+              "Long": "DUMMY"
+            },
+            "Reservable": 0,
+            "Status": "AVAILABLE",
+            "Level": "L2",
+            "Connector": "J1772",
+            "Voltage": "240",
+            "Current": "30",
+            "Power": "7.2",
+            "estimatedCost": 0.0
+          }
+        ],
+        "numPorts": 2,
+        "mainPhone": "",
+        "currencyCode": "USD"
+      }
+    ]
+  }
+}
