@@ -12,8 +12,10 @@ import java.util.Map;
 
 import com.anypresence.wsclient.dto.OperationRequest;
 import com.anypresence.wsclient.gson.*;
+import com.anypresence.wsclient.utils.ErrorHandlingUtils;
 import com.anypresence.wsclient.utils.MembraneUtils;
 import com.anypresence.wsclient.utils.ParseUtils;
+import com.anypresence.wsclient.utils.SoapRequestException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -88,7 +90,7 @@ public class CxfWorker implements Runnable {
                 // Process the request
                 OperationRequest operationRequest = gson.fromJson(payload, OperationRequest.class);
 
-                log.debug("Converted json: " + operationRequest.toString());
+                Log.debug("Converted json: " + operationRequest.toString());
 
                 String action = operationRequest.getActionName();
                 if (action == null || action.isEmpty()) {
@@ -97,6 +99,7 @@ public class CxfWorker implements Runnable {
                 String service = operationRequest.getServiceName();
 
                 String wsdlUrl = operationRequest.getWsdl();
+
                 String response = "";
                 try {
                     WSDLParser parser = new WSDLParser();
@@ -116,47 +119,58 @@ public class CxfWorker implements Runnable {
                     }
                     if (!formParams.isEmpty()) {
                         for (Map.Entry<String,String> f : formParams.entrySet()) {
-                            log.debug("form: (" + f.getKey() + ", " + f.getValue() + ")");
+                            Log.debug("form: (" + f.getKey() + ", " + f.getValue() + ")");
                         }
                         creator.setFormParams(formParams);
                     }
 
                     String binding =  MembraneUtils.findFirstBinding(defs).getName();
-                    log.debug("wsdl: " + wsdlUrl + ", service: " + service + ", action: " + action + ", binding: " + binding);
+                    Log.debug("wsdl: " + wsdlUrl + ", service: " + service + ", action: " + action + ", binding: " + binding);
                     // The first parameter is actually not needed...
                     creator.createRequest(service, action, binding);
 
                     // Finally have the request envelope
                     String requestEnvelope = writer.toString();
 
-                    log.debug("Envelope looks like: " + requestEnvelope);
+                    Log.debug("Envelope looks like: " + requestEnvelope);
 
                     response = executeWithRequest(defs, service, binding, requestEnvelope, gson, payload);
+                    Log.debug("Writing response to the socket");
+                    Log.debug("Raw Response: " + response);
+                    try(BufferedWriter responseWriter = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()))) {
+                        responseWriter.write(ParseUtils.xmlToJson(response));
+                    } catch(IOException e) {
+                        Log.info("Unable to fully write response due to IOException: " + e.getMessage());
+                        Log.error(e);
+                    }
+
+                    return;
                 } catch (SoapClientException e) {
                     Log.error("Unable to execute...", e);
-                }catch(Exception e) {
-                    Log.error("Runtime error..." + e.getMessage(), e);
-                }
-
-                log.debug("Writing response to the socket");
-                log.debug("Raw Response: " + response);
-                try(BufferedWriter responseWriter = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()))) {
-                    responseWriter.write(ParseUtils.xmlToJson(response));
-                } catch(IOException e) {
-                    Log.info("Unable to fully write response due to IOException: " + e.getMessage());
-                    Log.error(e);
+                    handleError(e);
                 }
             } catch(IOException e) {
-                Log.info("Unable to fully write response due to IOException: " + e.getMessage());
-                Log.error(e);
+                Log.error("Unable to fully read request due to IOException: " + e.getMessage(), e);
+                handleError(e);
             } catch(JsonSyntaxException e) {
-                log.error(e.getMessage(), e);
-
-                Log.info(e.getMessage());
+                Log.error(e.getMessage(), e);
+                handleError(e);
+            } catch(Exception e) {
+                Log.error("Runtime error..." + e.getMessage(), e);
+                handleError(e);
             }
 
         });
 
+    }
+
+    private void handleError(final Throwable ex) {
+        try(BufferedWriter responseWriter = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()))) {
+            responseWriter.write(ErrorHandlingUtils.exToJson(ex));
+        } catch(IOException e) {
+            Log.info("Unable to fully write response due to IOException: " + e.getMessage());
+            Log.error(e);
+        }
     }
 
     /**
@@ -167,11 +181,14 @@ public class CxfWorker implements Runnable {
      * @param payload
      * @return the response as a string
      */
-    private String executeWithRequest(Definitions defs, String service, String binding, String requestEnvelope, Gson gson, String payload) {
+    private String executeWithRequest(Definitions defs, String service, String binding, String requestEnvelope, Gson gson, String payload) throws SoapRequestException {
         OperationRequest req = gson.fromJson(payload,OperationRequest.class);
 
-        log.debug("Executing request: service: " + service + ", defs: " + defs.toString());
+        Log.debug("Executing request: service: " + service + ", defs: " + defs.toString());
         Service s = MembraneUtils.serviceByName(defs, service);
+        if (s == null) {
+            throw new SoapRequestException("Service " + service + " cannot be found.");
+        }
         QName qService = new QName(s.getNamespaceUri(), s.getName());
         Port b = MembraneUtils.portForBinding(s, binding);
         QName qPort = new QName(b.getNamespaceUri(), b.getName());

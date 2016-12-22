@@ -130,20 +130,6 @@ public class SecurityUtils {
 	    disp.getRequestContext().put("ws-security.password", password);
     }
 
-//    public static void signHeader(String userInfo) {
-//    	WSSecEncrypt builder = new WSSecEncrypt();
-//        builder.setUserInfo(userInfo);
-//        builder.setKeyIdentifierType(WSConstants.BST_DIRECT_REFERENCE);
-//        builder.setSymmetricEncAlgorithm(WSConstants.TRIPLE_DES);
-//        Document doc = SOAPUtil.toSOAPPart(SOAPUtil.SAMPLE_SOAP_MSG);
-//        WSSecHeader secHeader = new WSSecHeader(doc);
-//        secHeader.insertSecurityHeader();
-//        Document encryptedDoc = builder.build(doc, crypto, secHeader);
-//
-//        String outputString = XMLUtils.prettyDocumentToString(encryptedDoc);
-//        return outputString;
-//    }
-
 	private static String generateNonce()
 			throws NoSuchAlgorithmException, NoSuchProviderException, UnsupportedEncodingException {
 		String dateTimeString = Long.toString(new Date().getTime());
