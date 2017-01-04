@@ -40,7 +40,6 @@ import java.util.regex.Pattern;
 
 import org.apache.cxf.staxutils.StaxUtils;
 
-
 public class DispatchClient {
     static Logger log = LogManager.getLogger(DispatchClient.class.getName());
 
@@ -172,7 +171,6 @@ public class DispatchClient {
         public DispatchClient create() {
             return new DispatchClient(this);
         }
-
 
     }
 }

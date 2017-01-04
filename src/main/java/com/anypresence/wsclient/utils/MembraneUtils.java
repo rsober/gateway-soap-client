@@ -41,7 +41,6 @@ public class MembraneUtils {
         return null;
     }
 
-
     public static Service serviceByName(Definitions defs, String service) {
         for (Service s : defs.getServices()) {
             if (s.getName().equals(service)) {

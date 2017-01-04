@@ -60,3 +60,5 @@ fabric.properties
 # *.ipr
 
 Client_Encrypt.properties
+
+target/

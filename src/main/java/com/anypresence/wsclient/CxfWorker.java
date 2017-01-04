@@ -60,7 +60,7 @@ public class CxfWorker implements Runnable {
         }
 
         certTempDir = Files.createTempDirectory("cert");
-        // deletes file when the virtual machine terminate
+        // Deletes file when the virtual machine terminate
         certTempDir.toFile().deleteOnExit();
 
         System.out.println("Temporary directory created: " + certTempDir.toString());

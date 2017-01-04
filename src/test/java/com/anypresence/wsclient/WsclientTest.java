@@ -111,7 +111,6 @@ public class WsclientTest {
         };
 
         wsclientThread.start();
-        ;
     }
 
     @AfterClass
