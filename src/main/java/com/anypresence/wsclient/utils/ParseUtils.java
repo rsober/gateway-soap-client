@@ -1,6 +1,8 @@
 package com.anypresence.wsclient.utils;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
@@ -148,6 +150,10 @@ public class ParseUtils {
 
             }
         }
+    }
+
+    public static String massageFilePath(String filePath) throws UnsupportedEncodingException {
+        return URLDecoder.decode( filePath, "UTF-8" );
     }
 
     private static HashMap<String, Object> jsonToMap(String json) {
