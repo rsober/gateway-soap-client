@@ -1,6 +1,7 @@
 package com.anypresence.wsclient.utils;
 
 import java.io.IOException;
+import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.security.MessageDigest;
@@ -22,6 +23,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.XML;
 import org.apache.commons.collections.map.LRUMap;
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 public class ParseUtils {
     static Logger log = LogManager.getLogger(ParseUtils.class.getName());
@@ -128,6 +134,24 @@ public class ParseUtils {
         } catch (IOException e) {
             return false;
         }
+    }
+
+    public static Document convertStringToDocument(String xmlStr) {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+
+        factory.setNamespaceAware(true);
+        DocumentBuilder builder;
+
+
+        try {
+            builder = factory.newDocumentBuilder();
+
+            Document doc = builder.parse(new InputSource(new StringReader(xmlStr)));
+            return doc;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**

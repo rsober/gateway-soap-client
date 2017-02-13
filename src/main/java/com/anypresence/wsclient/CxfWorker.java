@@ -122,7 +122,11 @@ public class CxfWorker implements Runnable {
                     }
 
                     String binding =  MembraneUtils.findFirstBinding(defs).getName();
-                    log.debug("wsdl: " + wsdlUrl + ", service: " + service + ", action: " + action + ", binding: " + binding);
+
+                    Port port = MembraneUtils.portForBinding(MembraneUtils.serviceByName(defs, service), binding);
+                    String soapAction = MembraneUtils.getOperationProperty(defs, action, port.getName(), "SOAPAction");
+                    Log.debug("wsdl: " + wsdlUrl + ", service: " + service + ", action: " + action + ", binding: " + binding + ", soap action: " + soapAction);
+
                     // The first parameter is actually not needed...
                     creator.createRequest(service, action, binding);
 
@@ -131,7 +135,7 @@ public class CxfWorker implements Runnable {
 
                     log.debug("Envelope looks like: " + requestEnvelope);
 
-                    response = executeWithRequest(defs, service, binding, requestEnvelope, gson, payload);
+                    response = executeWithRequest(defs, service, binding, requestEnvelope, gson, payload, soapAction);
                 } catch (SoapClientException e) {
                     log.error("Unable to execute...", e);
                 }catch(Exception e) {
@@ -165,14 +169,14 @@ public class CxfWorker implements Runnable {
      * @param payload
      * @return the response as a string
      */
-    private String executeWithRequest(Definitions defs, String service, String binding, String requestEnvelope, Gson gson, String payload) {
+    private String executeWithRequest(Definitions defs, String service, String binding, String requestEnvelope, Gson gson, String payload, String soapAction) {
         OperationRequest req = gson.fromJson(payload,OperationRequest.class);
 
         log.debug("Executing request: service: " + service + ", defs: " + defs.toString());
         Service s = MembraneUtils.serviceByName(defs, service);
         QName qService = new QName(s.getNamespaceUri(), s.getName());
-        Port b = MembraneUtils.portForBinding(s, binding);
-        QName qPort = new QName(b.getNamespaceUri(), b.getName());
+        Port port = MembraneUtils.portForBinding(s, binding);
+        QName qPort = new QName(port.getNamespaceUri(), port.getName());
 
         try {
             URI u = new URI(req.getWsdl());
@@ -187,7 +191,7 @@ public class CxfWorker implements Runnable {
                 builder.alias(req.getKeyAlias());
             }
 
-            String response = builder.create().processRequest("file://" + u.toURL().getPath(), qService, qPort, requestEnvelope);
+            String response = builder.create().processRequest("file://" + u.toURL().getPath(), qService, qPort, requestEnvelope, soapAction);
             return response;
         } catch (MalformedURLException e) {
             log.error("Unable to get response: " + e.getMessage(), e);
