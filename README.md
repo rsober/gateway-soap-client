@@ -46,3 +46,12 @@ Run the tests to make sure you have everything set up correctly.
 ```
 
 The tests should pass successfully.
+
+
+## Proguard
+
+Run the following to reduce the size of the jar. Only proguard 5.0 has been verified to work.
+
+```bash
+proguard.sh @proguard.conf
+```

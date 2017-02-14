@@ -60,6 +60,10 @@ task wrapper(type: Wrapper) {
     gradleVersion = '2.2.1'
 }
 
+shadowJar{
+    archiveName = "soapclient-all.${extension}"
+}
+
 test {
     testLogging {
         showStandardStreams = true
