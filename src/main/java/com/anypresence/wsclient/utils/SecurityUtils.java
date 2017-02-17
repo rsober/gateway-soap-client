@@ -92,6 +92,8 @@ import org.apache.cxf.interceptor.Fault;
 import org.apache.cxf.interceptor.Interceptor;
 import org.apache.cxf.interceptor.LoggingInInterceptor;
 
+import javax.xml.ws.handler.MessageContext;
+
 //import org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor;
 //import org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor;
 //import org.apache.wss4j.dom.WSConstants;

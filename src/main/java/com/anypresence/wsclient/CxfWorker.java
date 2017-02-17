@@ -125,7 +125,11 @@ public class CxfWorker implements Runnable {
                     }
 
                     String binding =  MembraneUtils.findFirstBinding(defs).getName();
-                    Log.debug("wsdl: " + wsdlUrl + ", service: " + service + ", action: " + action + ", binding: " + binding);
+
+                    Port port = MembraneUtils.portForBinding(MembraneUtils.serviceByName(defs, service), binding);
+                    String soapAction = MembraneUtils.getOperationProperty(defs, action, port.getName(), "SOAPAction");
+                    Log.debug("wsdl: " + wsdlUrl + ", service: " + service + ", action: " + action + ", binding: " + binding + ", soap action: " + soapAction);
+
                     // The first parameter is actually not needed...
                     creator.createRequest(service, action, binding);
 
@@ -134,7 +138,8 @@ public class CxfWorker implements Runnable {
 
                     Log.debug("Envelope looks like: " + requestEnvelope);
 
-                    response = executeWithRequest(defs, service, binding, requestEnvelope, gson, payload);
+                    response = executeWithRequest(defs, service, binding, requestEnvelope, gson, payload, soapAction);
+
                     Log.debug("Writing response to the socket");
                     Log.debug("Raw Response: " + response);
                     try(BufferedWriter responseWriter = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()))) {
@@ -145,7 +150,7 @@ public class CxfWorker implements Runnable {
                     }
 
                     return;
-                } catch (SoapClientException e) {
+                 } catch (SoapClientException e) {
                     Log.error("Unable to execute...", e);
                     handleError(e);
                 }
@@ -181,7 +186,7 @@ public class CxfWorker implements Runnable {
      * @param payload
      * @return the response as a string
      */
-    private String executeWithRequest(Definitions defs, String service, String binding, String requestEnvelope, Gson gson, String payload) throws SoapRequestException {
+    private String executeWithRequest(Definitions defs, String service, String binding, String requestEnvelope, Gson gson, String payload, String soapAction)  throws SoapRequestException {
         OperationRequest req = gson.fromJson(payload,OperationRequest.class);
 
         Log.debug("Executing request: service: " + service + ", defs: " + defs.toString());
@@ -190,8 +195,8 @@ public class CxfWorker implements Runnable {
             throw new SoapRequestException("Service " + service + " cannot be found.");
         }
         QName qService = new QName(s.getNamespaceUri(), s.getName());
-        Port b = MembraneUtils.portForBinding(s, binding);
-        QName qPort = new QName(b.getNamespaceUri(), b.getName());
+        Port port = MembraneUtils.portForBinding(s, binding);
+        QName qPort = new QName(port.getNamespaceUri(), port.getName());
 
         try {
             URI u = new URI(req.getWsdl());
@@ -206,7 +211,7 @@ public class CxfWorker implements Runnable {
                 builder.alias(req.getKeyAlias());
             }
 
-            String response = builder.create().processRequest("file://" + u.toURL().getPath(), qService, qPort, requestEnvelope);
+            String response = builder.create().processRequest("file://" + u.toURL().getPath(), qService, qPort, requestEnvelope, soapAction);
             Log.info("Response: " + response);
 
             return response;
