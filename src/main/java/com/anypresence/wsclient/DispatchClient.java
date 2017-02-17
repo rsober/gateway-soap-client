@@ -48,7 +48,6 @@ import javax.xml.ws.soap.SOAPBinding;
 import java.util.List;
 import java.util.*;
 
-
 public class DispatchClient {
     static Logger log = LogManager.getLogger(DispatchClient.class.getName());
 
@@ -182,6 +181,14 @@ public class DispatchClient {
         return new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
     }
 
+    /**
+     * Parses the dom.
+     *
+     * @param source
+     * @return
+     * @throws TransformerFactoryConfigurationError
+     * @throws TransformerException
+     */
     private static String parseDom(Source source) throws TransformerFactoryConfigurationError, TransformerException {
         Transformer transformer = TransformerFactory.newInstance().newTransformer();
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
@@ -240,7 +247,6 @@ public class DispatchClient {
         public DispatchClient create() {
             return new DispatchClient(this);
         }
-
 
     }
 }

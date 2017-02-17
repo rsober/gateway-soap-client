@@ -37,7 +37,6 @@ public class Utilities {
 			Transformer transformer = TransformerFactory.newInstance().newTransformer();
 			transformer.setOutputProperty(OutputKeys.INDENT, "no");
 			transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-			//transformer.setOutputProperty(OutputKeys., value);
 			//initialize StreamResult with File object to save to file
 			StreamResult result = new StreamResult(new StringWriter());
 			DOMSource source = new DOMSource(doc);

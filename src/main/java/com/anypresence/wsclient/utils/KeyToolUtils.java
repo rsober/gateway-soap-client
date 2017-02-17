@@ -92,9 +92,6 @@ import org.apache.cxf.interceptor.Fault;
 import org.apache.cxf.interceptor.Interceptor;
 import org.apache.cxf.interceptor.LoggingInInterceptor;
 
-//import org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor;
-//import org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor;
-
 
 public class KeyToolUtils {
     static Logger log = LogManager.getLogger(KeyToolUtils.class.getName());

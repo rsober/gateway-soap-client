@@ -124,7 +124,6 @@ public class Wsclient implements Runnable {
             System.exit(EXIT_CODE_BAD_ARGS);
         }
 
-
         Wsclient main = new Wsclient(host, port, workerPoolSize);
         main.run();
     }

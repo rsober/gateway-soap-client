@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Utility class to handle errors:
+ * Utility class to massage errors into json to be sent back to the caller:
  *
  * Error messages should look like:
  * {
@@ -21,6 +21,12 @@ public class ErrorHandlingUtils {
 
     private static Gson gson = new Gson();
 
+    /**
+     * Converts the exception to json.
+     *
+     * @param throwable
+     * @return
+     */
     public static String exToJson(final Throwable throwable) {
         String message = throwable.getMessage();
 

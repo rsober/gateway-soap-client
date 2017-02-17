@@ -10,7 +10,7 @@ import java.io.File;
 public class ErrorUtilsTest {
     @Test
     public void checkError() {
-        String json = ErrorHandlingUtils.exToJson(new Exception("eeep"));
+        String json = ErrorHandlingUtils.exToJson(new Exception("error"));
 
         Assert.assertTrue(!json.isEmpty());
     }

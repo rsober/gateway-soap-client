@@ -60,10 +60,10 @@ public class CxfWorker implements Runnable {
         }
 
         certTempDir = Files.createTempDirectory("cert");
-        // deletes file when the virtual machine terminate
+        // Deletes file when the virtual machine terminate
         certTempDir.toFile().deleteOnExit();
 
-        System.out.println("Temporary directory created: " + certTempDir.toString());
+        Log.debug("Temporary directory created: " + certTempDir.toString());
 
         return certTempDir;
     }
@@ -164,11 +164,15 @@ public class CxfWorker implements Runnable {
                 Log.error("Runtime error..." + e.getMessage(), e);
                 handleError(e);
             }
-
         });
 
     }
 
+    /**
+     * Handles the error.
+     *
+     * @param ex
+     */
     private void handleError(final Throwable ex) {
         try(BufferedWriter responseWriter = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()))) {
             responseWriter.write(ErrorHandlingUtils.exToJson(ex));
