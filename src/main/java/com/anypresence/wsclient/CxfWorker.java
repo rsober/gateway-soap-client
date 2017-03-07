@@ -48,8 +48,11 @@ public class CxfWorker implements Runnable {
             .setPrettyPrinting()
             .create();
 
-    public CxfWorker(Socket sock) {
+    private boolean keepAlive = false;
+
+    public CxfWorker(Socket sock, boolean keepAlive) {
         this.sock = sock;
+        this.keepAlive = keepAlive;
     }
 
     public static final Path getCertTempDir() throws IOException {
@@ -66,11 +69,21 @@ public class CxfWorker implements Runnable {
         return certTempDir;
     }
 
+    public void closeSock() {
+        if (sock != null) {
+            try {
+                sock.close();
+            } catch(IOException e) {
+                // Ignore
+            }
+        }
+    }
+
     @Override
     public void run() {
         StringBuilder builder = new StringBuilder("");
 
-        withSocket(sock, () -> {
+        withSocket(sock, keepAlive, () -> {
             try {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
                 String line = null;
@@ -198,16 +211,12 @@ public class CxfWorker implements Runnable {
         return null;
     }
 
-    private void withSocket(Socket sock, Runnable r) {
+    private void withSocket(Socket sock, boolean keepAlive, Runnable r) {
         try {
             r.run();
         } finally {
-            if (sock != null) {
-                try {
-                    sock.close();
-                } catch(IOException e) {
-                    // Ignore
-                }
+            if (!keepAlive) {
+                closeSock();
             }
         }
     }

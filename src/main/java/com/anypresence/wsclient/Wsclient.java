@@ -24,8 +24,9 @@ public class Wsclient implements Runnable {
     private String host;
     private int port;
     private ExecutorService pool;
+    private boolean keepAlive = false;
 
-    public Wsclient(String host, int port, int workerPoolSize) {
+    public Wsclient(String host, int port, int workerPoolSize, boolean keepAlive) {
         this.host = host;
         this.port = port;
 
@@ -97,7 +98,7 @@ public class Wsclient implements Runnable {
                 continue;
             }
 
-            CxfWorker worker = new CxfWorker(sock);
+            CxfWorker worker = new CxfWorker(sock, keepAlive);
             if (pool == null) {
                 new Thread(worker).run();
             } else {
@@ -110,12 +111,14 @@ public class Wsclient implements Runnable {
         String host = null;
         Integer port = null;
         Integer workerPoolSize = null;
+        boolean keepAlive = false;
 
 
-        if (args.length == 3) {
+        if (args.length == 4) {
             host = args[0];
             port = Integer.parseInt(args[1]);
             workerPoolSize = Integer.parseInt(args[2]);
+            keepAlive = Boolean.parseBoolean(args[3]);
         } else if (args.length == 0) {
             host = DEFAULT_HOST;
             port = DEFAULT_PORT;
@@ -126,7 +129,7 @@ public class Wsclient implements Runnable {
         }
 
 
-        Wsclient main = new Wsclient(host, port, workerPoolSize);
+        Wsclient main = new Wsclient(host, port, workerPoolSize, keepAlive);
         main.run();
     }
 
